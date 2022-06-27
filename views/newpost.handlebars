@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Blog</title>
+</head>
+<body>
+
+  <div class="wrapper">
+    <h3>Post a new Article</h3>
+<form action="/newpost"  method="post" class="form">
+  
+  
+
+ {{>-form}}
+
+  <!-- Submit button -->
+  <div class="control_btn">
+   <a class="btn" href="/welcome"> Cancle</a>
+
+
+ <button type="submit" class="btn btn_primary">
+    Save
+  </button>
+
+
+  </div>
+ 
+  
+</form>
+</div>
+
+</body>
+</html>

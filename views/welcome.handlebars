@@ -1,0 +1,171 @@
+<header>
+  <div class="profile">
+    <div class="profile-name">
+
+      {{name}}
+    </div>
+
+    <div class="links">
+      
+
+
+    <a class="btn-link nav-link" href="/">
+      <button class="btn">
+HOME
+      </button> 
+       
+       </a>
+
+      <a class="btn-link nav-link" href="/newpost">
+      <button class="btn">
+New Post
+      </button> 
+       
+       </a>
+<div class="btn-link nav-link">
+
+ <button class="btn btn-link tiggerbtn">Log Out </button>
+</div>
+
+      <div class="modal">
+        <div class="modal-contain">
+          <h4> Do you want to logout?</h4>
+          <button class="canclebtn btn">Cancle</button>
+
+
+      <a  href="/logout">
+      <button class="btn">
+Log Out
+      </button>  
+      
+      
+       </a>
+        </div>
+      </div>
+     
+<div class="btn-link nav-link">
+
+ <button class="btn btn-link tiggerbtn">Delete Account</button>
+</div>
+
+    
+
+      <div class="modal">
+        <div class="modal-contain">
+          <h4> Do you want to Delete your Account?</h4>
+          <button class="canclebtn btn">Cancle</button>
+
+
+      <a  href="/deleteAccount">
+      <button class="btn">
+Delete Account
+      </button>  
+      
+      
+       </a>
+        </div>
+      </div>
+      
+      </div>
+
+
+ <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+    </div>
+
+  </div>
+
+</header>
+<div class="posts">
+
+
+ {{#each userPosts}}
+<div class="post_card">
+<p>
+
+    {{this.creator}}
+   </p>
+<div class="post_date">
+   
+   <p>
+
+   {{this.createdAt}}
+   </p>
+</div>
+    <h4>
+
+    <a href="/post/{{this.id}}" >     {{this.title}} </a>
+    </h4>
+
+    </div>
+{{/each}} 
+
+</div>
+<script defer>
+
+let modals = document.querySelectorAll(".modal");
+let tiggerbtn = document.querySelectorAll(".tiggerbtn") ;
+let canclebtns = document.querySelectorAll(".canclebtn");
+
+//function to toggle modal
+const toggleModal = ()=>{
+ for(const modal of modals){
+    modal.classList.toggle("show-modal")
+  }
+  
+}
+
+// open modal when btn is clicked
+
+for(const tbtn of tiggerbtn){
+
+tbtn.addEventListener("click", toggleModal)
+
+}
+
+for(const canclebtn of canclebtns){
+
+canclebtn.addEventListener("click", toggleModal);
+}
+
+window.addEventListener("click", (e)=>{
+
+for(const modal of modals){
+
+    if(e.target === modal){
+        toggleModal();
+    }
+}
+
+
+})
+
+
+
+
+const hamburger = document.querySelector(".hamburger");
+const navMenu = document.querySelector(".links");
+
+hamburger.addEventListener("click", mobileMenu);
+
+function mobileMenu() {
+    hamburger.classList.toggle("active");
+    navMenu.classList.toggle("active");
+}
+
+
+
+const navLink = document.querySelectorAll(".nav-link");
+
+navLink.forEach(n => n.addEventListener("click", closeMenu));
+
+function closeMenu() {
+    hamburger.classList.remove("active");
+    navMenu.classList.remove("active");
+
+}
+</script>

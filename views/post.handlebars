@@ -1,0 +1,131 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <style>
+      body{
+          padding: 0;
+          margin: 0;
+          box-sizing: border-box;
+           background-color: blueviolet;
+           color: white;
+           font-family: sans-serif;
+           
+      } 
+      body h1{
+     font-size: 1.8rem;
+     line-height: 1.7rem;
+      } 
+     
+.navbar{
+
+margin: 0;
+height: auto;
+  width: 100%;
+  padding: 10px;
+  color: white;
+  display: flex;
+  justify-content: start;
+
+  left: 0;
+    top: 0;
+  background-color: blue;
+  
+}
+.navbar li{
+  left: 20%;
+margin: 10px;
+  color: white;
+  list-style: none;
+  background: none;
+}
+.btn{
+  color: white;
+  text-decoration: none;
+  background-color:brown;
+
+  padding: 5px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  
+}
+
+.post_card{
+  position: absolute;
+  top: 10%;
+ 
+  
+    text-align: center;
+ display: flex;
+ flex-direction: column;
+ width:100%;
+ line-height: 1.3rem;
+ height: auto;
+ margin: 10px;
+ padding: 10px;
+ 
+}
+.post_date p{
+  opacity: 0.6;
+}
+.post_date p, .post_title, .creator{
+  margin: 0;
+}
+.post_contain{
+  width: 90%;
+text-align: left; 
+height: auto;
+margin-left: 2%;
+
+}
+
+
+    </style>
+
+  <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/monokai-sublime.min.css">
+
+</head>
+<body>
+  {{>nav}}
+<div class="post_card">
+{{#each post}}
+
+
+
+<p class="creator">
+
+    {{this.creator}}
+   </p>
+<div class="post_date">
+   
+   <p>
+
+   {{this.createdAt}}
+   </p>
+</div>
+<div >
+    <h4 class="post_title">
+    {{this.title}}
+    </h4>
+</div>
+
+
+<div class="post_contain">
+
+    {{{this.html}}}
+</div>
+
+{{/each}}
+</div>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</body>
+</html>

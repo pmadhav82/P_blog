@@ -1,0 +1,23 @@
+   
+<nav>
+    <ul class="navbar">
+         <li>
+             <a class="btn" href="/"> HOME</a>
+        </li>
+
+        {{#if login}}
+        <li>
+ <a class="btn" href="/welcome">Profile</a>
+        </li>
+{{else}}
+
+        <li>
+                        <a class="btn" href="/login">LOGIN</a>
+
+        </li>
+        <li>
+             <a class="btn" href="/singup">SING UP</a>
+        </li>
+        {{/if}}
+    </ul>
+</nav>
