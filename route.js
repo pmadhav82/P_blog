@@ -20,7 +20,7 @@ const DOMPurify = createDomPurify(window);
 let errorMessages ={};
 
 
-let posts = [];
+//let posts = [];
  
 router.use(session({secret: process.env.SECRET
 , resave:true,saveUninitialized:true}))
@@ -46,11 +46,11 @@ let islogin = (req,res,next)=>{
 //get routes
 router.get("/welcome", (req,res)=>{
     if(req.session.name && req.session.email){
-        const userPosts = posts.filter(post=>{return post.uid === req.session.uid})
+        //const userPosts = posts.filter(post=>{return post.uid === req.session.uid})
 res.render("welcome",{
     name:req.session.name,
     email:req.session.email,
-    userPosts,
+   // userPosts,
     login:true
    
 })
@@ -59,15 +59,21 @@ res.render("welcome",{
     }
 })
 
-
-router.get("/",  (req,res)=>{
+// Home Route
+router.get("/",   async (req,res)=>{
     let login = req.session.name? true:false;
-    
+    try{
+const posts = await Posts.find().lean();
+
+
 res.render("home",{
    posts, 
    login
     
 });
+    }catch(err){
+        console.error(err);
+    }
 })
 
 router.get("/login" , islogin, (req,res)=>{
@@ -96,31 +102,44 @@ router.get("/reset", islogin, (req,res)=>{
 
  //post post route
 
-router.post("/newpost", (req,res)=>{
+router.post("/newpost",  async (req,res)=>{
     
 
         const {title, contain} = req.body;
-        if(title === "" || contain.trim().replace(/^\s+|\s+$/gm,"") === ""){
+        if(title === "" || contain.trim() === ""){
             res.render("newpost",{
-                message:"All field are required to fill."
+                title:req.body.title,
+                contain:req.body.contain.trim(),
+                message:"All fields are required to fill."
             })
-        }
-const html = DOMPurify.sanitize(marked.parse(contain));
+        } else{
+            const html = DOMPurify.sanitize(marked.parse(contain));
+            try{
 
-        const post = {
-            id: Date.now().toString(),
-            creator:req.session.name,
-            title,
-            html,
-            contain,
-            uid: req.session.uid,
+                  await new Posts({
+                
+                    creator:req.session.name,
+                    title,
+                    html,
+                    contain,
+                    createdAt: new  Date().toLocaleDateString(),
+                    uid: req.session.uid
+                
+                }).save();
 
-            createdAt: new  Date().toLocaleDateString()
-        
+                res.redirect("/")
+            }
+                catch(er){
+                    res.render("newPost",{
+                        title,
+                        contain
+                    })
+                    console.log(er)
+                }  
+               
+
         }
-        posts.push(post);
-    
-    res.redirect("/")
+            
   
 })
 

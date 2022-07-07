@@ -20,7 +20,13 @@ const postSchema = new mongoose.Schema({
     contain:{
         type: String,
         required:true
+    },
+    createdAt:{
+        type:String,
+        
+        required:true
     }
+
 
 
 })

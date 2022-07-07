@@ -1,6 +1,6 @@
  
   <div class="form-outline mb-4">
-    <input type="text"   required name="title" placeholder="Title" class="form-control" />
+    <input type="text"  value="{{title}}"  name="title" placeholder="Title" class="form-control" />
   </div>
 
  
@@ -9,7 +9,9 @@
 
     <textarea
   
-     class="form-control"  name="contain"  required placeholder="Write your article here..." id="form4Example3" rows="10"></textarea>
+     class="form-control"  name="contain"   placeholder="Write your article here..." id="form4Example3" rows="10">
+     {{contain}}
+     </textarea>
 
     
   </div>
