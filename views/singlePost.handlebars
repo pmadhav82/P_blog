@@ -94,35 +94,36 @@ margin-left: 2%;
 </head>
 <body>
   {{>nav}}
+  
 <div class="post_card">
-{{#each post}}
+
 
 
 
 <p class="creator">
 
-    {{this.creator}}
+    {{post.creator}}
    </p>
 <div class="post_date">
    
    <p>
 
-   {{this.createdAt}}
+   {{post.createdAt}}
    </p>
 </div>
 <div >
     <h4 class="post_title">
-    {{this.title}}
+    {{post.title}}
     </h4>
 </div>
 
 
 <div class="post_contain">
 
-    {{{this.html}}}
+    {{{post.html}}}
 </div>
 
-{{/each}}
+
 </div>
 </div>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>

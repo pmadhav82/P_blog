@@ -44,17 +44,24 @@ let islogin = (req,res,next)=>{
 
 
 //get routes
-router.get("/welcome", (req,res)=>{
+router.get("/welcome",  async (req,res)=>{
     if(req.session.name && req.session.email){
-        //const userPosts = posts.filter(post=>{return post.uid === req.session.uid})
+        try{
+            const userPosts = await Posts.find({uid:req.session.uid}).sort({data:"desc"}).lean()
+      
 res.render("welcome",{
     name:req.session.name,
     email:req.session.email,
-   // userPosts,
+    userPosts,
     login:true
    
 })
-    }else{
+     }catch(err){
+        console.log(err)
+     }
+    
+    }
+    else{
         res.redirect("login");
     }
 })
@@ -143,18 +150,6 @@ router.post("/newpost",  async (req,res)=>{
   
 })
 
-router.get("/post/:id", (req,res)=>{
-    const{id}  = req.params;
-  const post =  posts.filter((p)=>{
-      return p.id == id;
-  })
-let login = req.session.name? true:false;
-   res.render("post",{
-       
-       post,
-       login
-   })
-})
 
 //Singup route
 router.post("/singup", async (req,res)=>{
@@ -316,6 +311,35 @@ res.redirect("/")
 })
 
 
+
+
+
+
+
+router.post("/post/:id", async(req,res)=>{
+    
+    const{id}  = req.params;
+
+    let login = req.session.name? true:false;
+
+    try{
+    
+    const post = await Posts.findOne({_id:id}).lean();
+
+        res.render("singlePost",{         
+       post,
+            login
+           })
+
+
+
+    }catch(er){
+
+        console.log(er)
+
+    }
+  
+})
 
 
 module.exports = router;

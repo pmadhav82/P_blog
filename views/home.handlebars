@@ -31,10 +31,12 @@
    </p>
 </div>
 
-    <h4>
-
-    <a href="/post/{{this._id}}" >     {{this.title}} </a>
-    </h4>
+   {{this.title}}
+    
+<form method="post" action="post/{{this._id}}">
+<button class="btn" type="submit">Read More</button>
+</form>
+    
 
     </div>
 {{/each}} 

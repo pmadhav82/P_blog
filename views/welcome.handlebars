@@ -24,7 +24,7 @@ New Post
        </a>
 <div class="btn-link nav-link">
 
- <button class="btn btn-link tiggerbtn">Log Out </button>
+ <button class="btn tiggerbtn">Log Out </button>
 </div>
 
       <div class="modal">
@@ -45,7 +45,7 @@ Log Out
      
 <div class="btn-link nav-link">
 
- <button class="btn btn-link tiggerbtn">Delete Account</button>
+ <button class="btn btn-link tiggerbtn ">Delete Account</button>
 </div>
 
     
@@ -98,9 +98,11 @@ Delete Account
 </div>
     <h4>
 
-    <a href="/post/{{this.id}}" >     {{this.title}} </a>
+      {{this.title}} 
     </h4>
-
+<form method="post" action="post/{{this._id}}">
+<button class="btn" type="submit">Read More</button>
+</form>
     </div>
 {{/each}} 
 
@@ -111,38 +113,44 @@ let modals = document.querySelectorAll(".modal");
 let tiggerbtn = document.querySelectorAll(".tiggerbtn") ;
 let canclebtns = document.querySelectorAll(".canclebtn");
 
-//function to toggle modal
-const toggleModal = ()=>{
- for(const modal of modals){
-    modal.classList.toggle("show-modal")
-  }
-  
-}
 
-// open modal when btn is clicked
 
-for(const tbtn of tiggerbtn){
 
-tbtn.addEventListener("click", toggleModal)
+// open modal
+tiggerbtn.forEach((btn,i)=>{
+tiggerbtn[i].addEventListener("click",()=>{
+modals[i].classList.toggle("show-modal");
 
-}
+})
 
-for(const canclebtn of canclebtns){
+})
 
-canclebtn.addEventListener("click", toggleModal);
-}
+//cancle modal when cancle btn is clicked
+canclebtns.forEach((btn,i)=>{
+  canclebtns[i].addEventListener("click",()=>{
+    modals[i].classList.toggle("show-modal");
+  })
+})
 
+
+
+
+// cancle modal when user clicked outside the box
 window.addEventListener("click", (e)=>{
 
 for(const modal of modals){
 
     if(e.target === modal){
-        toggleModal();
+        modal.classList.toggle("show-modal");
     }
 }
 
 
 })
+
+
+
+
 
 
 
