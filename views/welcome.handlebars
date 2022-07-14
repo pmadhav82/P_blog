@@ -34,7 +34,7 @@ New Post
 
 
       <a  href="/logout">
-      <button class="btn">
+      <button class="btn btn_primary">
 Log Out
       </button>  
       
@@ -57,7 +57,7 @@ Log Out
 
 
       <a  href="/deleteAccount">
-      <button class="btn">
+      <button class="btn btn_primary">
 Delete Account
       </button>  
       
@@ -100,9 +100,38 @@ Delete Account
 
       {{this.title}} 
     </h4>
+    <div class="btn-group">
 <form method="post" action="post/{{this._id}}">
 <button class="btn" type="submit">Read More</button>
 </form>
+<button class="tiggerbtn btn">Delete</button>
+
+
+
+      <div class="modal">
+        <div class="modal-contain">
+          <h4> Do you want to Delete your Post?</h4>
+          <div class="btn-group">
+
+  <button class="canclebtn btn">Cancle</button>
+<form method="post" action="delete/{{this._id}}">
+<button class="btn btn_primary" type="submit">Delete</button>
+</form>
+          </div>
+        
+        </div>
+      </div>
+
+
+
+<form action="/edit/{{this._id}}" method="post">
+
+<button class="btn" type="submit"> Edit </button>
+</form>
+
+
+    </div>
+
     </div>
 {{/each}} 
 

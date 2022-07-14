@@ -8,20 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog</title>
     <style>
-      body{
-          padding: 0;
-          margin: 0;
-          box-sizing: border-box;
-           background-color: blueviolet;
-           color: white;
-           font-family: sans-serif;
-           
-      } 
-      body h1{
-     font-size: 1.8rem;
-     line-height: 1.7rem;
-      } 
-     
+ 
+{{!--      
 .navbar{
 
 margin: 0;
@@ -30,6 +18,7 @@ height: auto;
   padding: 10px;
   color: white;
   display: flex;
+  flex-wrap: wrap;
   justify-content: start;
 
   left: 0;
@@ -54,39 +43,9 @@ margin: 10px;
   border: none;
   cursor: pointer;
   
-}
+} --}}
+    </style>  
 
-.post_card{
-  position: absolute;
-  top: 10%;
- 
-  
-    text-align: center;
- display: flex;
- flex-direction: column;
- width:100%;
- line-height: 1.3rem;
- height: auto;
- margin: 10px;
- padding: 10px;
- 
-}
-.post_date p{
-  opacity: 0.6;
-}
-.post_date p, .post_title, .creator{
-  margin: 0;
-}
-.post_contain{
-  width: 90%;
-text-align: left; 
-height: auto;
-margin-left: 2%;
-
-}
-
-
-    </style>
 
   <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/monokai-sublime.min.css">
@@ -95,16 +54,16 @@ margin-left: 2%;
 <body>
   {{>nav}}
   
-<div class="post_card">
+<div class="single_post_card">
 
 
 
 
-<p class="creator">
+<p class="single_creator">
 
     {{post.creator}}
    </p>
-<div class="post_date">
+<div class="single_post_date">
    
    <p>
 
@@ -112,13 +71,13 @@ margin-left: 2%;
    </p>
 </div>
 <div >
-    <h4 class="post_title">
+    <h3 class=" single_post_title">
     {{post.title}}
-    </h4>
+    </h>
 </div>
 
 
-<div class="post_contain">
+<div class="single_post_contain">
 
     {{{post.html}}}
 </div>

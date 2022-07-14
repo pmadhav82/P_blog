@@ -2,7 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-   background-color: blueviolet;
+
    line-height:  1.5em;
    color: white;
 }
@@ -12,17 +12,18 @@ html {
 
 body{
     font-family: sans-serif;
+    background-color: blueviolet;
   
 }
 .navbar{
   width: 100%;
-  position: fixed;
+  /* position: fixed; */
   flex-wrap: wrap;
   color: white;
   display: flex;
   justify-content: start;
   
-  background-color:  rgba(85, 95, 142, 0.44);
+  background-color: blue;
   top: 0;
 }
 .navbar li{
@@ -69,6 +70,7 @@ visibility: hidden;
   padding: 20px;
   width: 80%;
   border-radius: 10px;
+  background-color: blueviolet;
 }
 
 .show-modal{
@@ -93,6 +95,7 @@ visibility: hidden;
  border: 2px solid red;
  margin: 10px;
  padding: 10px;
+ border-radius:10px;
  
 
 }
@@ -146,6 +149,10 @@ visibility: hidden;
     padding: 0;
     color: #fff;
     text-align: center;
+  }
+  .btn-group{
+    display: flex;
+    justify-content: center;
   }
 
   .singup-box input{
@@ -422,6 +429,43 @@ justify-content: space-between;
   transition: all 0.3s ease-in-out;
   background-color: white;
 }
+
+/* singlePost style */
+
+
+.single_post_title{
+  margin-top: 10px;
+}
+.single_post_card{
+  
+  position: relative;
+  z-index: -1;
+    text-align: center;
+ display: flex;
+ flex-direction: column;
+ width:100%;
+ line-height: 1.3rem;
+ height: auto;
+ margin: 10px;
+ padding: 10px;
+ 
+}
+.single_post_date p{
+  opacity: 0.6;
+}
+.single_post_date p,  .single_creator{
+  margin: 0;
+}
+.single_post_contain{
+  width: 90%;
+text-align: left; 
+height: auto;
+margin-left: 2%;
+
+}
+
+
+
 
 
 @media(max-width:480px){

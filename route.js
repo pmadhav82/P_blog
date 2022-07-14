@@ -20,7 +20,7 @@ const DOMPurify = createDomPurify(window);
 let errorMessages ={};
 
 
-//let posts = [];
+
  
 router.use(session({secret: process.env.SECRET
 , resave:true,saveUninitialized:true}))
@@ -42,12 +42,11 @@ let islogin = (req,res,next)=>{
 }
 
 
-
 //get routes
 router.get("/welcome",  async (req,res)=>{
     if(req.session.name && req.session.email){
         try{
-            const userPosts = await Posts.find({uid:req.session.uid}).sort({data:"desc"}).lean()
+            const userPosts = await Posts.find({uid:req.session.uid}).sort({"title": -1}).lean()
       
 res.render("welcome",{
     name:req.session.name,
@@ -70,8 +69,7 @@ res.render("welcome",{
 router.get("/",   async (req,res)=>{
     let login = req.session.name? true:false;
     try{
-const posts = await Posts.find().lean();
-
+const posts = await Posts.find().sort({"_id": -1}).lean()
 
 res.render("home",{
    posts, 
@@ -111,48 +109,54 @@ router.get("/reset", islogin, (req,res)=>{
 
 router.post("/newpost",  async (req,res)=>{
     
+if(req.session.name && req.session.email){
 
-        const {title, contain} = req.body;
-        if(title === "" || contain.trim() === ""){
-            res.render("newpost",{
-                title:req.body.title,
-                contain:req.body.contain.trim(),
-                message:"All fields are required to fill."
-            })
-        } else{
-            const html = DOMPurify.sanitize(marked.parse(contain));
-            try{
 
-                  await new Posts({
-                
-                    creator:req.session.name,
-                    title,
-                    html,
-                    contain,
-                    createdAt: new  Date().toLocaleDateString(),
-                    uid: req.session.uid
-                
-                }).save();
+    const {title, contain} = req.body;
+    if(title === "" || contain.trim() === ""){
+        res.render("newpost",{
+            title:req.body.title,
+            contain:req.body.contain.trim(),
+            message:"All fields are required to fill."
+        })
+    } else{
+        const html = DOMPurify.sanitize(marked.parse(contain));
+        try{
 
-                res.redirect("/")
-            }
-                catch(er){
-                    res.render("newPost",{
-                        title,
-                        contain
-                    })
-                    console.log(er)
-                }  
-               
-
-        }
+              await new Posts({
             
-  
+                creator:req.session.name,
+                title,
+                html,
+                contain,
+                createdAt: new  Date().toLocaleDateString(),
+                uid: req.session.uid
+            
+            }).save();
+
+            res.redirect("/")
+        }
+            catch(er){
+                res.render("newPost",{
+                    title,
+                    contain
+                })
+                console.log(er)
+            }  
+           
+
+    }
+}else{
+    res.redirect("/login")
+}
+        
+
 })
 
 
+
 //Singup route
-router.post("/singup", async (req,res)=>{
+router.post("/singup",  async (req,res)=>{
 try{
 
     let name = req.body.name;
@@ -315,7 +319,7 @@ res.redirect("/")
 
 
 
-
+// Getting a single post
 router.post("/post/:id", async(req,res)=>{
     
     const{id}  = req.params;
@@ -340,6 +344,56 @@ router.post("/post/:id", async(req,res)=>{
     }
   
 })
+
+
+
+// Deteling a post
+
+
+router.post("/delete/:id", async (req,res)=>{
+ if(req.session.name && req.session.email){
+let success =  await Posts.deleteOne({_id:req.params.id});
+if(success){
+  
+    res.redirect("/welcome");
+}else{
+    console.log("something went wrong. Try again latter.");
+    res.render("welcome")
+}
+
+
+ }else{
+    console.error("something went wrong.")
+ }
+})
+
+
+
+
+// Edit Article
+router.post("/edit/:id", async (req,res)=>{
+if( req.session.name && req.session.email){
+    try{
+        const article = await Posts.findById(req.params.id);
+        res.render("editPost",{
+            id:article._id,
+            title:article.title,
+            contain:article.contain
+        })
+
+
+    }catch(er){
+        console.log(er);
+    }
+
+
+}else{
+    res.redirect("/login");
+}
+
+})
+
+
 
 
 module.exports = router;

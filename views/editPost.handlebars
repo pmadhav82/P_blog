@@ -4,18 +4,17 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Blog</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Edit Blog</title>
 </head>
 <body>
 
   <div class="wrapper">
-    <h3>Post a new Article</h3>
+    <h3>Edit Article</h3>
     <div class="errorMessage">
 
     {{message}}
     </div>
-<form action="/newpost"  method="post" class="form">
+<form action="/editPost/{{id}}"  method="post" class="form">
   
   
 
