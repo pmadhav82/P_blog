@@ -113,7 +113,7 @@ if(req.session.name && req.session.email){
 
 
     const {title, contain} = req.body;
-    if(title === "" || contain.trim() === ""){
+    if(title.trim() === "" || contain.trim() === ""){
         res.render("newpost",{
             title:req.body.title,
             contain:req.body.contain.trim(),
@@ -371,6 +371,9 @@ if(success){
 
 
 // Edit Article
+
+//Send edip post in edit form
+
 router.post("/edit/:id", async (req,res)=>{
 if( req.session.name && req.session.email){
     try{
@@ -393,7 +396,55 @@ if( req.session.name && req.session.email){
 
 })
 
+// updating database to edit article
 
+router.post("/editPost/:id", async (req,res)=>{
+if(req.session.name && req.session.email){
+let {title, contain}= req.body;
+
+if(title.trim()=== "" || contain.trim()=== ""){
+    res.render("editPost",{
+        title,
+        contain:contain.trim(),
+        message:"All fields are required to field"
+    })
+}else{
+let html = DOMPurify.sanitize(marked.parse(contain));
+try{
+    let success = await Posts.findByIdAndUpdate(req.params.id,{
+        title,
+        contain:contain.trim(),
+        html
+    });
+    if(success){
+        res.redirect("/welcome")
+    }else{
+        res.render("editPost",{
+            title,
+            contain:contain.trim(),
+            message:"Something wrong, try again latter"
+        })
+    }
+
+}catch(err){
+    console.log(err);
+    res.render("editPost",{
+        title,
+        contain:contain.trim(),
+        message:"Something wrong, try again latter"
+    })
+}
+
+}
+
+
+
+
+}else{
+    res.redirect("/login");
+}
+
+})
 
 
 module.exports = router;

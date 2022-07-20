@@ -92,12 +92,16 @@ visibility: hidden;
 
 }
 .post_card{
- border: 2px solid red;
+
  margin: 10px;
  padding: 10px;
  border-radius:10px;
+ background-color:darkgreen ;
  
 
+}
+.post_card h4{
+  color: yellow;
 }
 .post_card a{
   text-decoration: none;
@@ -438,7 +442,7 @@ justify-content: space-between;
 }
 .single_post_card{
   
-  position: relative;
+  
   z-index: -1;
     text-align: center;
  display: flex;
