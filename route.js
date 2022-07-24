@@ -41,12 +41,24 @@ let islogin = (req,res,next)=>{
 
 }
 
+// API to get blogs
+router.get("/api/madhavblogs", async(req,res)=>{
+    let uid = "62cd89d53e61de6c5bfbfe02"
+    try{
+    let blogs = await Posts.find({uid}).sort({_id:-1});
+    res.status(200).json(blogs)
+    }catch(err){
+    res.status(404).json({message:"Something went wrong"})
+    }
+    
+    })
+
 
 //get routes
 router.get("/welcome",  async (req,res)=>{
     if(req.session.name && req.session.email){
         try{
-            const userPosts = await Posts.find({uid:req.session.uid}).sort({"title": -1}).lean()
+            const userPosts = await Posts.find({uid:req.session.uid}).sort({"_id": -1}).lean()
       
 res.render("welcome",{
     name:req.session.name,

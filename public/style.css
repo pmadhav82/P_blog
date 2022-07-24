@@ -26,6 +26,7 @@ body{
   background-color: blue;
   top: 0;
 }
+
 .navbar li{
 
 margin: 15px;
@@ -407,7 +408,7 @@ justify-content: space-between;
   background: none;
 }
 .links{
-  background: none;
+  
   display: flex;
 
 }
@@ -422,6 +423,7 @@ justify-content: space-between;
 .hamburger {
   display: none;
   background-color:  rgb(9, 40, 195);
+
 }
 
 .bar {
@@ -429,7 +431,7 @@ justify-content: space-between;
   width: 25px;
   height: 3px;
   margin: 5px auto;
-  -webkit-transition: all 0.3s ease-in-out;
+ 
   transition: all 0.3s ease-in-out;
   background-color: white;
 }
@@ -465,6 +467,7 @@ justify-content: space-between;
 text-align: left; 
 height: auto;
 margin-left: 2%;
+line-height: 1.4rem;
 
 }
 
