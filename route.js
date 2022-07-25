@@ -99,8 +99,15 @@ router.get("/login" , islogin, (req,res)=>{
 router.get("/singup", islogin, (req,res)=>{
     res.render("singup");
 })
-router.get("/reset", islogin, (req,res)=>{
-     res.render("reset");
+router.get("/reset",  (req,res)=>{
+    if(req.session.name && req.session.email){
+
+        res.render("reset",{
+            login:true
+        });
+    }else{
+        res.redirect("login")
+    }
  })
 
 
@@ -290,13 +297,13 @@ router.post("/reset", async (req,res)=>{
     let password = req.body.password;
     let passwordRepeat =req.body.repeatpassword;
 try{
-    let user = await Users.findOne({email:email})
-    if(user.name == name && user.email == email && password == passwordRepeat && password.length>=6){
+    
+    if(name.toUpperCase().trim() == req.session.name.toUpperCase().trim() && email == req.session.email && password == passwordRepeat && password.length>=6){
 let hashPassword = await bcrypt.hash(password, 10);
 let success = await Users.updateOne({email:email},{password:hashPassword})
 if(success){
-    req.flash('message', "Password reset successfully")
-res.redirect("/")
+    
+res.redirect("/welcome")
 }else{
     res.status(500).send("Something wrong, try again ...")
 }
@@ -307,20 +314,21 @@ res.redirect("/")
         }if (password!== passwordRepeat){
             errorMessages.passMatch = "Password is not match";
         }
-        if(user.name !== name || user.email !== email){
+        if(name.toUpperCase().trim() !== req.session.name.toUpperCase().trim() || email !== req.session.email){
             errorMessages.notMatch = "Your credential is not matched"
         }
         res.render("reset",{
             
             passLength:errorMessages.passLength,
             passMatch:errorMessages.passMatch,
-            notMatch:errorMessages.notMatch
+            notMatch:errorMessages.notMatch,
+            login:true
             
         })
     }
 
 }catch(err){
-    console.log("err");
+    console.log(err);
 }
 
 

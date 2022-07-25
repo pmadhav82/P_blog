@@ -227,25 +227,7 @@ form input[type = "submit"]{
     pointer-events: none;
     transition: .5s;
   }
-  .haveaccount{
-      color: white;
-  }
-  .haveaccount a{
-    text-decoration: none;
-    color: white;
-  }
-  .haveaccount a:hover{
-      color:aqua;
-  }
-  .create a{
-    text-decoration: none;
-    color: white;
-    margin-left: 60%;
-    margin-top: 95%;
-  }
-  .create a:hover{
-    color: aqua;
-  }
+
 .wrapper{
  
   color: white;
@@ -375,7 +357,7 @@ font-weight: 600;
   }
   
   .input input:focus ~ label, .input input:valid ~ label{
-    top:-18px;
+    top:-30px;
     color: #03a9f4;
     
   }
@@ -383,7 +365,7 @@ font-weight: 600;
  input[type="submit"]{
     background-color:#03a9f4;
     padding: 10px 20px;
-    margin:0;
+    margin-bottom: 5px;
     outline:none;
     width:100%;
     cursor:pointer;
