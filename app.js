@@ -6,10 +6,10 @@ const mongoose = require("mongoose");
 const route = require("./route");
 const app = express();
 const path = require("path");
+const cors = require("cors");
 
 
-
-
+app.use(cors());
 app.use(express.urlencoded({extended:true}))
 
 //database connection

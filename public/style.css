@@ -426,17 +426,24 @@ justify-content: space-between;
 }
 .single_post_card{
   
-  
+  font-size: 1.15rem;
   z-index: -1;
     text-align: center;
  display: flex;
  flex-direction: column;
+ max-width: 85ch;
  width:100%;
  line-height: 1.3rem;
  height: auto;
- margin: 10px;
+ margin-left: auto;
+ margin-right: auto;
  padding: 10px;
  
+}
+code{
+  border-radius: 10px;
+
+
 }
 .single_post_date p{
   opacity: 0.6;
