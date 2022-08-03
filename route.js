@@ -340,7 +340,7 @@ res.redirect("/welcome")
 
 
 // Getting a single post
-router.post("/post/:id", async(req,res)=>{
+router.get("/post/:id", async(req,res)=>{
     
     const{id}  = req.params;
 

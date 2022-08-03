@@ -4,7 +4,7 @@
     box-sizing: border-box;
 
    line-height:  1.5em;
-   color: white;
+
 }
 html {
     height: 100%;
@@ -13,11 +13,12 @@ html {
 body{
     font-family: sans-serif;
     background-color: blueviolet;
+    color: #FFFFFF;
   
 }
 .navbar{
   width: 100%;
-  /* position: fixed; */
+
   flex-wrap: wrap;
   color: white;
   display: flex;
@@ -152,7 +153,6 @@ visibility: hidden;
   .singup-box h2{
     margin: 0 0 30px;
     padding: 0;
-    color: #fff;
     text-align: center;
   }
   .btn-group{
@@ -196,7 +196,6 @@ color: #33ea25;
   .login-box h2 {
     margin: 0 0 30px;
     padding: 0;
-    color: #fff;
     text-align: center;
   }
 form input[type = "submit"]{
@@ -296,9 +295,7 @@ font-weight: 600;
   .forgot a:hover{
     color: aqua;
   }
-  h2{
-    color: #fff;
-  }
+ 
   .login-box .user-box input:focus ~ label,
   .login-box .user-box input:valid ~ label {
     top: -25px;
@@ -331,7 +328,6 @@ font-weight: 600;
     padding:0;
     text-align: center;
     margin-bottom:30px;
-    color:#fff;
     letter-spacing:2px;
   }
   .input input{
@@ -425,24 +421,27 @@ justify-content: space-between;
   margin-top: 10px;
 }
 .single_post_card{
-  
-  font-size: 1.15rem;
+
   z-index: -1;
     text-align: center;
  display: flex;
  flex-direction: column;
  max-width: 85ch;
  width:100%;
- line-height: 1.3rem;
+ 
  height: auto;
  margin-left: auto;
  margin-right: auto;
  padding: 10px;
+ background: #FFFFFF;
+ color: black;
  
 }
 code{
-  border-radius: 10px;
-
+  
+  
+  background-color: rgba(27,31,35,0.05);
+  border-radius: 6px;
 
 }
 .single_post_date p{
@@ -452,11 +451,11 @@ code{
   margin: 0;
 }
 .single_post_contain{
-  width: 90%;
+  width: 95%;
 text-align: left; 
 height: auto;
-margin-left: 2%;
-line-height: 1.4rem;
+margin-left: 6%;
+
 
 }
 
