@@ -9,7 +9,11 @@ const  session = require("express-session");
 
 const createDomPurify = require("dompurify");
 const {JSDOM} = require("jsdom");
-const {marked} = require("marked")
+const {marked} = require("marked");
+const mongodb = require("mongodb");
+const mongoose = require("mongoose");
+
+
 
 const window = new JSDOM('').window;
 const DOMPurify = createDomPurify(window);
@@ -340,28 +344,30 @@ res.redirect("/welcome")
 
 
 // Getting a single post
-router.get("/post/:id", async(req,res)=>{
+router.get("/:id", async(req,res)=>{
     
     const{id}  = req.params;
 
     let login = req.session.name? true:false;
-
+let post;
     try{
-    
-    const post = await Posts.findOne({_id:id}).lean();
+    post = await Posts.findById({_id: id}).lean();
 
-        res.render("singlePost",{         
-       post,
-            login
-           })
+}catch(er){
+
+    console.log(er)
+
+}
+if(post){
+    res.render("singlePost",{         
+post,
+       login
+ })
+}
 
 
 
-    }catch(er){
-
-        console.log(er)
-
-    }
+   
   
 })
 

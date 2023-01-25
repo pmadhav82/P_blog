@@ -1,26 +1,103 @@
-   
-<nav >
-    <ul class=" navbar">
-         <li>
-             <a class="btn" href="/"> HOME</a>
-        </li>
+ <header>
+<nav>
+<div class="logo"><a href="/">P_Blog</a></div>
+
+<ul class="menu-wrapper">
+<li><a href="/login">Login</a></li>
+<li><a href="/singup">Signup</a></li>
+
+</ul>
+<div class="user_pic">
+    <img src= "{{url}}"/>
+</div>
+
+<div class="modal">
+<div class="sub-menu-wrapper">
+<div class="sub-menu">
+<div class="user-info">
+    <img class="userPic" src= "{{url}}"/>
+<h3>Madhav Pandey</h3>
+</div>
+<hr>
+
+<a href="/edit-profile" class="sub-menu-link">
+<svg class="icons" style="width:24px;height:24px" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+</svg>
+<p>Edit Profile</p>
+<span>></span>
+</a>
+
+<a href="/upload" class="sub-menu-link">
+<svg class="icons" style="width:24px;height:24px" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+</svg>
+{{!-- <img src="images/profile.png" alt="user pic"> --}}
+<p>View Profile</p>
+
+<span>></span>
+</a>
+
+<span  class="sub-menu-link" id="toggleBtn">
+<svg  class = "icons" style="width:24px;height:24px" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12,18V6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M20,15.31L23.31,12L20,8.69V4H15.31L12,0.69L8.69,4H4V8.69L0.69,12L4,15.31V20H8.69L12,23.31L15.31,20H20V15.31Z" />
+</svg>
+<p class="themeName">Dark mode</p>
+<span>></span>
+</span> 
+
+<a href="#" class="sub-menu-link">
+<svg class="icons" style="width:24px;height:24px" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M14.08,15.59L16.67,13H7V11H16.67L14.08,8.41L15.5,7L20.5,12L15.5,17L14.08,15.59M19,3A2,2 0 0,1 21,5V9.67L19,7.67V5H5V19H19V16.33L21,14.33V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5C3,3.89 3.89,3 5,3H19Z" />
+</svg>
+<p>Logout</p>
+<span>></span>
+</a> 
+
+</div>
+
+
+</div>
+
+</div>
+
+</nav>
+    
+    </header>
+
+
+
+
+
+
+
+{{!--    
+
+
+
+<nav class=" navbar">
+<div class="logo"> <a href="/">P_Blog</a></div>
+    <ul >
+       
 
         {{#if login}}
         <li>
- <a class="btn" href="/welcome">Profile</a>
+ <a  href="/welcome">Profile</a>
         </li>
 {{else}}
 
         <li>
-                        <a class="btn" href="/login">LOGIN</a>
+                        <a  href="/login">LOGIN</a>
 
         </li>
         <li>
-             <a class="btn" href="/singup">SING UP</a>
+             <a  href="/singup">SING UP</a>
         </li>
         {{/if}}
     </ul>
  
-
-    </div> 
-</nav>
+<div class="user_pic">
+    <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" alt="user">
+</div>
+    
+</nav> --}}

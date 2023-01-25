@@ -1,0 +1,230 @@
+:root{
+    --bg-color: #fff;
+    --primary-text-color: #222;
+    --secondary-text-color: #444444;
+    --nav-bg-color:#f5f5f5;
+    --logo-color: #d54d7b;
+    --transition-value:0.5s;
+  }
+  
+  
+  * {
+    margin: 0;
+    padding: 0;
+    font-family:  "Poppins", sans-serif;
+    box-sizing: border-box;
+  }
+  
+  
+  
+  body {
+    
+    background: var(--bg-color);
+    color: var(--primary-text-color);
+    transition: var(--transition-value);
+  
+  }
+  
+  .dark-mode{
+    --bg-color:#000;
+    --primary-text-color: #fff;
+    --secondary-text-color: #f5f5f5;
+  --nav-bg-color:#1d1f21;
+  --logo-color: #d54d7b;
+  --transition-value:0.5s;
+  }
+  #toggleBtn{
+    cursor: pointer;
+  }
+  .user_pic {
+    width: 50px;
+    cursor: pointer;
+    
+  }
+  
+  .logo {
+    color:var(--logo-color);
+    font-family: "Great Vibes", cursive;
+    font-size: 1.5rem;
+    font-weight: normal;
+    text-shadow: 0 1px 1px #fff;
+  }
+  
+  .logo a{
+    text-decoration: none;
+    color: #a19196;
+    font-family: "Great Vibes", cursive;
+    font-size: 30px;
+    font-weight: normal;
+    text-shadow: 0 1px 1px #fff;
+  }
+  
+  .user_pic img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+   
+    
+  }
+  
+  nav{
+    background: var(--nav-bg-color);
+    display: flex;
+    width: 100%;
+    padding: 10px 10%;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  
+  }
+  nav ul{
+    width: 100%;
+    text-align: center;
+  }
+  nav ul li{
+    display: inline-block;
+    list-style: none;
+  
+  }
+  nav ul li a, .post_card footer a {
+    color: var(--primary-text-color);
+    text-decoration: none;
+    background: var(--bg-color);
+    display: inline-block;
+    margin: 5px 4px;
+    padding: 0.5rem 0.5rem;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  
+   .modal{
+    position: fixed;
+    top: 0%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.3);
+    visibility: hidden;
+    
+  } 
+  .modal.modalOn{
+    visibility: visible;
+    z-index: 10;
+  }
+  .sub-menu-wrapper{
+    width: 18rem;
+    position: absolute;
+    top:15%;
+    right: 10%;
+    max-height: 0px;
+    overflow: hidden;
+    transition: var(--transition-value);
+    
+  }
+  .sub-menu-wrapper.open{
+  
+    max-height: 400px;
+    
+  }
+  .sub-menu{
+    background: var(--bg-color);
+    padding: 20px;
+    margin: 10px;
+    color: var(--primary-text-color);
+    z-index: 1;
+  }
+  .user-info{
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-info img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  .sub-menu hr{
+    width: 100%;
+    height: 1px;
+    background:var(--bg-color);
+    margin: 15px 0 10px;
+  }
+  .sub-menu-link{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin: 12px 0;
+    color: var(--secondary-text-color)
+   
+  }
+  .sub-menu-link p{
+    width: 100%;
+  
+  }
+  .icons{
+    color: var(--primary-text-color);
+  transform: scale(1.5);
+    margin-right: 20px;
+  }
+  .sub-menu-link img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 8px;
+    margin-right: 15px;
+  }
+  .sub-menu-link span{
+    font-size: 22px;
+    transition: transform 0.5s;
+  }
+  
+  
+  .sub-menu-link:hover span{
+  transform: translateX(5px);
+  }
+  
+  .sub-menu-link:hover p{
+     font-weight: 600;
+  }
+  
+  .user-picture{
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+      height: 200px;
+      width: 200px;
+    
+  }
+  .posts{
+    width: 100%;
+    z-index: -1;
+    height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  }
+  .post_card{
+    min-width: 15rem;
+    max-width: 25rem;
+     background: var(--nav-bg-color);
+    padding: 1rem;
+  border-radius: 15px;
+  margin: 30px;
+  flex-basis: 0;
+  flex-grow: 1;
+  }
+  .post_card footer{
+    margin-top: 0.5rem;
+  }
+  .post_date{
+    opacity: 0.6;
+    margin: 0.5rem;
+  }
+ 
+  .post_card h4 a{
+    text-decoration: solid;
+    color: var(--primary-text-color);
+  }

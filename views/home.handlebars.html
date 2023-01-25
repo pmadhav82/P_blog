@@ -19,16 +19,10 @@
 
  {{#each posts}}
 <div class="post_card">
-<div class="user-info">
-    <img class="userPic" src= "{{url}}"/>
-<h4> <a href="#">
-{{this.creator}}
-</a>
-    </h4>
-</div>
-<hr>
-    
-   
+<p>
+
+    {{this.creator}}
+   </p>
 <div class="post_date">
    
    <p>
@@ -43,10 +37,13 @@
    {{this.title}}
  </h4>
 </div>
-<footer>
-<a  href="/{{this._id}}">Read more</a> 
+<a href="/post/{{this._id}}"></a>
+    
+<!-- <form method="get" action="post/{{this._id}}">
+<button class="btn" type="submit">Read More</button>
+</form> -->
+    
 
-</footer>
     </div>
 {{/each}} 
 </div>
