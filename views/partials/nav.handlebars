@@ -2,11 +2,9 @@
 <nav>
 <div class="logo"><a href="/">P_Blog</a></div>
 
-<ul class="menu-wrapper">
-<li><a href="/login">Login</a></li>
-<li><a href="/singup">Signup</a></li>
+    {{#if userStatus.login}}
 
-</ul>
+
 <div class="user_pic">
     <img src= "{{url}}"/>
 </div>
@@ -16,25 +14,25 @@
 <div class="sub-menu">
 <div class="user-info">
     <img class="userPic" src= "{{url}}"/>
-<h3>Madhav Pandey</h3>
+<h3>{{userStatus.name}}</h3>
 </div>
 <hr>
 
-<a href="/edit-profile" class="sub-menu-link">
-<svg class="icons" style="width:24px;height:24px" viewBox="0 0 24 24">
-    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
-</svg>
-<p>Edit Profile</p>
-<span>></span>
-</a>
-
-<a href="/upload" class="sub-menu-link">
+<a href="/welcome" class="sub-menu-link">
 <svg class="icons" style="width:24px;height:24px" viewBox="0 0 24 24">
     <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
 </svg>
 {{!-- <img src="images/profile.png" alt="user pic"> --}}
 <p>View Profile</p>
 
+<span>></span>
+</a>
+
+<a href="/edit-profile" class="sub-menu-link">
+<svg class="icons" style="width:24px;height:24px" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+</svg>
+<p>Edit Profile</p>
 <span>></span>
 </a>
 
@@ -46,11 +44,11 @@
 <span>></span>
 </span> 
 
-<a href="#" class="sub-menu-link">
+<a href="/logout" class="sub-menu-link">
 <svg class="icons" style="width:24px;height:24px" viewBox="0 0 24 24">
     <path fill="currentColor" d="M14.08,15.59L16.67,13H7V11H16.67L14.08,8.41L15.5,7L20.5,12L15.5,17L14.08,15.59M19,3A2,2 0 0,1 21,5V9.67L19,7.67V5H5V19H19V16.33L21,14.33V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5C3,3.89 3.89,3 5,3H19Z" />
 </svg>
-<p>Logout</p>
+<p>logout </p>
 <span>></span>
 </a> 
 
@@ -60,6 +58,19 @@
 </div>
 
 </div>
+
+    {{else}}
+
+<ul class="menu-wrapper">
+
+<li><a href="/login">Login</a></li>
+<li><a href="/singup">Signup</a></li>
+
+</ul>
+
+
+    {{/if}}
+
 
 </nav>
     

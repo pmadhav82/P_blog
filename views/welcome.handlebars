@@ -1,4 +1,6 @@
-<header>
+{{>nav}}
+
+{{!-- <header>
   <div class="profile">
     <div class="profile-name">
 
@@ -86,7 +88,9 @@ Delete Account
 
   </div>
 
-</header>
+</header> 
+
+
 <div class="posts">
 
 
@@ -142,10 +146,67 @@ Delete Account
     </div>
 {{/each}} 
 
+</div> --}}
+
+
+
+
+
+<div class="posts">
+ {{#each posts}}
+<div class="post_card">
+<div class="user-info">
+    <img class="userPic" src= "{{url}}"/>
+<h4> <a href="#">
+{{this.creator}}
+</a>
+    </h4>
 </div>
+<hr>
+    
+   
+<div class="post_date">
+   
+   <p>
+
+   {{this.createdAt}}
+   </p>
+</div>
+<div class="post_title">
+
+ <h4>
+
+   {{this.title}}
+ </h4>
+</div>
+<footer>
+<a  href="/{{this._id}}">Read more</a> 
+<form action="/{{this._id}}" method="post">
+<button class="btn-fw" type="submit"> Edit </button>
+</form>
+<button class="tiggerbtn btn-fw">Delete</button>
+
+      <div class="modal-wrapper">
+        <div class="modal-contain">
+          <h4> Do you want to Delete this post?</h4>
+          <div class="btn-group">
+
+  <button class="canclebtn btn-primary">Cancle</button>
+<form method="post" action="delete/{{this._id}}">
+<button class="btn-secondary" type="submit">Delete</button>
+</form>
+          </div>
+        
+        </div>
+      </div>
+</footer>
+    </div>
+{{/each}} 
+</div>
+
 <script defer>
 
-let modals = document.querySelectorAll(".modal");
+let modals = document.querySelectorAll(".modal-wrapper");
 let tiggerbtn = document.querySelectorAll(".tiggerbtn") ;
 let canclebtns = document.querySelectorAll(".canclebtn");
 
@@ -191,7 +252,7 @@ for(const modal of modals){
 
 
 
-const hamburger = document.querySelector(".hamburger");
+{{!-- const hamburger = document.querySelector(".hamburger");
 const navMenu = document.querySelector(".links");
 
 hamburger.addEventListener("click", mobileMenu);
@@ -211,5 +272,5 @@ function closeMenu() {
     hamburger.classList.remove("active");
     navMenu.classList.remove("active");
 
-}
+} --}}
 </script>

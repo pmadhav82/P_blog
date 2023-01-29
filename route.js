@@ -5,6 +5,7 @@ const Posts = require("./module/posts");
 const bcrypt = require("bcrypt");
 const  session = require("express-session");
 
+
 // markedjs, dompurify and jsdom init
 
 const createDomPurify = require("dompurify");
@@ -31,18 +32,35 @@ router.use(session({secret: process.env.SECRET
 
 
 
+// User initial status
+let userStatus = {
+    login:false,
+    name:null
+}
 
 
 
-
-//middleware function to check user is already login or not
-let islogin = (req,res,next)=>{
-    if(req.session.name){
-        res.redirect("/welcome")
-    }else{
+//middleware function to check user is already loggedin or not
+const islogin = (req,res,next)=>{
+    if(req.session.name && req.session.email){
         next()
+    }else{
+        res.redirect("/login")
     }
 
+}
+
+//middleware function to check status
+const  userStatusChecker = (req,res,next)=>{
+    if(req.session.name &&  req.session.email){
+userStatus.login = true;
+userStatus.name = req.session.name
+next();
+    }else{
+        userStatus.login = false;
+        userStatus.name = null;
+     next();
+    }
 }
 
 // API to get blogs
@@ -59,37 +77,34 @@ router.get("/api/madhavblogs", async(req,res)=>{
 
 
 //get routes
-router.get("/welcome",  async (req,res)=>{
-    if(req.session.name && req.session.email){
+router.get("/welcome", islogin, userStatusChecker, async (req,res)=>{
         try{
-            const userPosts = await Posts.find({uid:req.session.uid}).sort({"_id": -1}).lean()
+            const posts = await Posts.find({uid:req.session.uid}).sort({"_id": -1}).lean()
       
 res.render("welcome",{
-    name:req.session.name,
+    name:userStatus.name,
     email:req.session.email,
-    userPosts,
-    login:true
+    posts,
+    userStatus
    
 })
      }catch(err){
         console.log(err)
      }
     
-    }
-    else{
-        res.redirect("login");
-    }
+  
 })
 
 // Home Route
-router.get("/",   async (req,res)=>{
-    let login = req.session.name? true:false;
+router.get("/",  userStatusChecker,  async (req,res)=>{
+    console.log(userStatus);
+
     try{
 const posts = await Posts.find().sort({"_id": -1}).lean()
 
 res.render("home",{
    posts, 
-   login
+ userStatus
     
 });
     }catch(err){
@@ -97,12 +112,23 @@ res.render("home",{
     }
 })
 
-router.get("/login" , islogin, (req,res)=>{
+router.get("/login", (req,res)=>{
+    if(req.session.name && req.session.email){
+
+        return res.redirect("/welcome")
+    }
     res.render("login");
 })
-router.get("/singup", islogin, (req,res)=>{
+router.get("/singup",  (req,res)=>{
+    if(req.session.name && req.session.email){
+
+        return res.redirect("/welcome")
+    }
     res.render("singup");
 })
+
+
+//password reset route
 router.get("/reset",  (req,res)=>{
     if(req.session.name && req.session.email){
 
@@ -110,40 +136,37 @@ router.get("/reset",  (req,res)=>{
             login:true
         });
     }else{
-        res.redirect("login")
+        res.redirect("/login")
     }
  })
 
 
 
  //get post route 
- router.get("/newpost", (req,res)=>{
-    if(req.session.name && req.session.email){
+ router.get("/newpost", islogin, userStatusChecker, (req,res)=>{
 
-        res.render("newpost")
-    } else
-{
-    res.redirect("/login")
-}
+        res.render("newpost",{
+            userStatus
+        })
+
+
  })
 
 
  //post post route
 
-router.post("/newpost",  async (req,res)=>{
-    
-if(req.session.name && req.session.email){
-
-
+router.post("/newpost",  islogin, userStatusChecker, async (req,res)=>{
     const {title, contain} = req.body;
     if(title.trim() === "" || contain.trim() === ""){
         res.render("newpost",{
+            userStatus,
             title:req.body.title,
             contain:req.body.contain.trim(),
             message:"All fields are required to fill."
         })
     } else{
         const html = DOMPurify.sanitize(marked.parse(contain));
+        let date = new Date();
         try{
 
               await new Posts({
@@ -152,34 +175,28 @@ if(req.session.name && req.session.email){
                 title,
                 html,
                 contain,
-                createdAt: new  Date().toLocaleDateString(),
+                createdAt: `${date.getDate()}/${date.getMonth()+1}/ ${date.getFullYear()}`,
                 uid: req.session.uid
             
             }).save();
 
-            res.redirect("/")
+            res.redirect("/welcome")
         }
             catch(er){
                 res.render("newPost",{
+                    userStatus,
                     title,
                     contain
                 })
                 console.log(er)
-            }  
-           
-
+            } 
     }
-}else{
-    res.redirect("/login")
-}
-        
-
 })
 
 
 
 //Singup route
-router.post("/singup",  async (req,res)=>{
+router.post("/singup", userStatusChecker, async (req,res)=>{
 try{
 
     let name = req.body.name;
@@ -199,7 +216,8 @@ let newUser = await new Users({
 req.session.name = newUser.name
 req.session.email = newUser.email
 req.session.uid = newUser._id
-res.redirect("welcome")
+
+res.redirect("/welcome")
 
 }else{
     if(password.length<6){
@@ -217,8 +235,9 @@ res.redirect("welcome")
         userExists:errorMessages.userExists,
         passLength:errorMessages.passLength,
         passMatch:errorMessages.passMatch,
-        name:name,
-        email:email,
+        name,
+        email,
+        userStatus
         
     })
 }
@@ -229,7 +248,7 @@ res.redirect("welcome")
 })
 
 //Login route
-router.post("/login", async (req,res)=>{
+router.post("/login", userStatusChecker, async (req,res)=>{
 try{
 let foundUser = await Users.findOne({email:req.body.email})
 
@@ -242,13 +261,14 @@ if(foundUser){
         req.session.email = foundUser.email
         req.session.uid = foundUser._id
        
-      res.redirect("welcome")
+      res.redirect("/welcome")
 
     } else{
 
         res.render("login",{
             message:"Invalid email or passport",
-            email:req.body.email
+            email:req.body.email,
+            userStatus
     
         })
     }
@@ -256,8 +276,8 @@ if(foundUser){
 }else{
     res.render("login",{
         message:"Invalid email or passport",
-        email:req.body.email
-
+        email:req.body.email,
+        userStatus
     })
 }
 
@@ -270,7 +290,7 @@ if(foundUser){
 
 
 //logout
-router.get("/logout",(req,res)=>{
+router.get("/logout",islogin, userStatusChecker,(req,res)=>{
 
     req.session.destroy();
     res.redirect("/");
@@ -278,7 +298,7 @@ router.get("/logout",(req,res)=>{
 
 
 //Delete Account
-router.get("/deleteAccount", async (req,res)=>{
+router.post("/deleteAccount", async (req,res)=>{
     try{
       let success = await Users.deleteOne({email: req.session.email});
       if(success){
@@ -326,7 +346,7 @@ res.redirect("/welcome")
             passLength:errorMessages.passLength,
             passMatch:errorMessages.passMatch,
             notMatch:errorMessages.notMatch,
-            login:true
+            userStatus
             
         })
     }
@@ -344,11 +364,8 @@ res.redirect("/welcome")
 
 
 // Getting a single post
-router.get("/:id", async(req,res)=>{
-    
-    const{id}  = req.params;
-
-    let login = req.session.name? true:false;
+router.get("/:id", userStatusChecker, async(req,res)=>{
+     const{id}  = req.params;
 let post;
     try{
     post = await Posts.findById({_id: id}).lean();
@@ -361,14 +378,10 @@ let post;
 if(post){
     res.render("singlePost",{         
 post,
-       login
+       userStatus
  })
 }
 
-
-
-   
-  
 })
 
 
@@ -376,7 +389,7 @@ post,
 // Deteling a post
 
 
-router.post("/delete/:id", async (req,res)=>{
+router.post("/delete/:id", islogin, userStatusChecker, async (req,res)=>{
  if(req.session.name && req.session.email){
 let success =  await Posts.deleteOne({_id:req.params.id});
 if(success){
@@ -384,7 +397,7 @@ if(success){
     res.redirect("/welcome");
 }else{
     console.log("something went wrong. Try again latter.");
-    res.render("welcome")
+    res.redirect("/welcome");
 }
 
 
@@ -400,14 +413,14 @@ if(success){
 
 //Send edip post in edit form
 
-router.post("/edit/:id", async (req,res)=>{
-if( req.session.name && req.session.email){
+router.post("/:id", islogin,userStatusChecker, async (req,res)=>{
     try{
         const article = await Posts.findById(req.params.id);
         res.render("editPost",{
             id:article._id,
             title:article.title,
-            contain:article.contain
+            contain:article.contain,
+            userStatus
         })
 
 
@@ -415,24 +428,20 @@ if( req.session.name && req.session.email){
         console.log(er);
     }
 
-
-}else{
-    res.redirect("/login");
-}
-
 })
 
 // updating database to edit article
 
-router.post("/editPost/:id", async (req,res)=>{
-if(req.session.name && req.session.email){
+router.post("/editPost/:id", islogin, userStatusChecker, async (req,res)=>{
+
 let {title, contain}= req.body;
 
 if(title.trim()=== "" || contain.trim()=== ""){
     res.render("editPost",{
         title,
         contain:contain.trim(),
-        message:"All fields are required to field"
+        message:"All fields are required to field",
+        userStatus
     })
 }else{
 let html = DOMPurify.sanitize(marked.parse(contain));
@@ -448,7 +457,8 @@ try{
         res.render("editPost",{
             title,
             contain:contain.trim(),
-            message:"Something wrong, try again latter"
+            message:"Something wrong, try again latter",
+           userStatus
         })
     }
 
@@ -457,19 +467,11 @@ try{
     res.render("editPost",{
         title,
         contain:contain.trim(),
-        message:"Something wrong, try again latter"
+        message:"Something wrong, try again latter",
+        userStatus
     })
 }
-
 }
-
-
-
-
-}else{
-    res.redirect("/login");
-}
-
 })
 
 

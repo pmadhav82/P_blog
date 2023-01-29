@@ -3,6 +3,7 @@
 </header>
 <div class="singup-box">
     <h2>Sing Up</h2>
+    
     <div class="messages">
     
        <p class="message">{{userExists}} </p>
@@ -14,26 +15,27 @@
 
     
 <form action="/singup" method="POST">
-<div class="user-input">
+<div class="user-box">
 <input type="text" name="name"  value = "{{name}}"required>
 <label > Name </label>
 </div>
 
-<div class="user-input">
+<div class="user-box">
 <input type="email" name="email" value="{{email}}" required>
 <label > Email </label>
 </div>
 
-<div class="user-input">
+<div class="user-box">
 <input type="password" name="password"  required>
 <label > Password </label>
 </div>
 
-<div class="user-input">
+<div class="user-box">
 <input type="password" name="repeatpassword"  required>
 <label > Repeat Password </label>
 </div>
- <input type="submit" value="Sing Up">
+<button type="submit"> Sing up</button>
+ 
 </form>
 
 </div>
