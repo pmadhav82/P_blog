@@ -1,29 +1,31 @@
-{{>nav}}
-  <div class="wrapper">
-    <h3>Edit Article</h3>
-    <div class="messages">
 
-    {{message}}
-    </div>
-<form action="/editPost/{{id}}"  method="post" class="form">
-  
-  
+<div class="textbox-wrapper">
+  <h3>Write a new post</h3>
 
- {{>-form}}
-
-  <!-- Submit button -->
-  <div class="control_btn">
-   <a class="btn" href="/welcome"> Cancle</a>
-
-
- <button type="submit" class="btn btn_primary">
-    Save
-  </button>
-
-
+  <div class="messages">
+  {{message}}
   </div>
- 
-  
+<form action="/editPost/{{id}}"  method="post" class="form">
+
+{{>-form}}
+
+<!-- Submit button -->
+<div class="btn-group">
+ <a class="btn-link" href="/welcome">
+ Cancle
+ </a>
+
+
+<button type="submit" class="btn btn-secondary">
+  Save
+</button>
+
+
+</div>
+
+
 </form>
 </div>
+
+
 

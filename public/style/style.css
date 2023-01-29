@@ -86,7 +86,7 @@
     list-style: none;
   
   }
-  nav ul li a, .post_card footer a {
+  nav ul li a, .post_card footer a{
     color: var(--primary-text-color);
     text-decoration: none;
     background: var(--bg-color);
@@ -395,6 +395,8 @@ padding: 1rem;
 margin: 0.5rem 0 0.5rem 0;
   }
 
+  
+
 
 
 .btn-primary{
@@ -421,11 +423,86 @@ margin: 0.5rem 0 0.5rem 0;
   border-radius: 4px;
   font-size: 13px;
   height: 30px;
-  padding: 0 20px;
+  padding: 0 1rem;
 }
+
 .btn-secondary:hover{
   background-color: #b481f7;
 }
+.btn-link{
+  color: var(--primary-text-color);
+  text-decoration: none;
+  text-align: center;
+  background: #f4922f;
+  padding: 5px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+
+/* textbox style and scrolbar style */
+
+
+.textbox-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+
+.textbox-wrapper h3{
+  margin: 1rem;
+  text-align:center;
+  text-decoration: underline;
+}
+.textbox-wrapper form{
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+
+}
+.textbox-wrapper label{
+  align-self: flex-start;
+  font-size: 1.3rem;
+}
+.textbox-wrapper form input,textarea{
+  outline: none;
+  margin: 1rem 0 1rem ;
+  padding: 1rem;
+  border: 1px solid var(--primary-text-color);
+  background: var(--bg-color);
+  font-size: 1.3em;
+  border-radius: 0.5rem;
+  color: var(--primary-text-color);
+}
+
+
+.textbox-wrapper textarea{
+  resize: none;
+  overflow: auto;
+ 
+}
+::-webkit-scrollbar{
+  width: 0.5rem;
+}
+::-webkit-scrollbar-track{
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 1rem;
+
+}
+
+::-webkit-scrollbar-thumb{
+  background-color: var(--primary-text-color);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover{
+  background: #b30000;
+  cursor: grab;
+}
+
+
 @media (max-width:420px) {
   .login-box form, .singup-box form{
     width: 90%;

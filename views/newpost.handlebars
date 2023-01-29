@@ -1,9 +1,8 @@
-{{>nav}}
 
-  <div class="wrapper">
-    <h3>Post a new Article</h3>
-    <div class="errorMessage">
+  <div class="textbox-wrapper">
+    <h3>Write a new post</h3>
 
+    <div class="messages">
     {{message}}
     </div>
 <form action="/newpost"  method="post" class="form">
@@ -13,11 +12,13 @@
  {{>-form}}
 
   <!-- Submit button -->
-  <div class="control_btn">
-   <a class="btn" href="/welcome"> Cancle</a>
+  <div class="btn-group">
+   <a class="btn-link" href="/welcome">
+   Cancle
+   </a>
 
 
- <button type="submit" class="btn btn_primary">
+ <button type="submit" class="btn btn-secondary">
     Save
   </button>
 

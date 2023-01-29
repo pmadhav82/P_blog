@@ -1,13 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Edit Blog</title>
-</head>
-<body>
 
+
+
+{{>nav}}
+
+<div class="textbox-wrapper">
+  <h3>Write a new post</h3>
+
+  <div class="messages">
+  {{message}}
+  </div>
+<form action="/editPost/{{id}}"  method="post" class="form">
+
+{{>-form}}
+
+<!-- Submit button -->
+<div class="btn-group">
+ <a class="btn-link" href="/welcome">
+ Cancle
+ </a>
+
+
+<button type="submit" class="btn btn-secondary">
+  Save
+</button>
+
+
+</div>
+
+
+</form>
+</div>
+
+
+
+
+<!-- 
   <div class="wrapper">
     <h3>Edit Article</h3>
     <div class="errorMessage">
@@ -35,6 +62,4 @@
   
 </form>
 </div>
-
-</body>
-</html>
+ -->
