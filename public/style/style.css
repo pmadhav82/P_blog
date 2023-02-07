@@ -5,6 +5,10 @@
     --nav-bg-color:#f5f5f5;
     --logo-color: #d54d7b;
     --transition-value:0.5s;
+
+    --color1:#e3e4e8;
+    --color2:#d2d4d8;
+    --color3:#f1faee;
   }
   
   
@@ -31,7 +35,12 @@
     --secondary-text-color: #f5f5f5;
   --nav-bg-color:#1d1f21;
   --logo-color: #d54d7b;
+  --color1:#3d3b3b;
+    --color2:#5160f9;
+    --color3:#101d30;
+
   --transition-value:0.5s;
+
   }
   #toggleBtn{
     cursor: pointer;
@@ -375,9 +384,9 @@ border-radius: 1rem;
   .modal-contain{
   margin: auto;
     padding: 1rem;
-    width: 80%;
+    width: 18rem;
     border-radius: 1rem;
-    background-color: #98c4b7;
+    background-color: var(--color1);
     
   }
   
@@ -403,21 +412,25 @@ margin: 0.5rem 0 0.5rem 0;
   display: inline-block;
   outline: 0;
   border: none;
+  color: var(--primary-text-color);
   cursor: pointer;
   font-weight: 600;
   border-radius: 4px;
   font-size: 13px;
   height: 30px;
   padding: 0 20px;
+  background-color: var(--color1);
 }
  
   .btn-primary:hover {
-      background-color: #0000001a;
+      background-color: var(--color2);
   }
 .btn-secondary{
   display: inline-block;
   outline: 0;
   border: none;
+  color: var(--primary-text-color);
+  background-color: var(--color3);
   cursor: pointer;
   font-weight: 600;
   border-radius: 4px;
@@ -427,13 +440,13 @@ margin: 0.5rem 0 0.5rem 0;
 }
 
 .btn-secondary:hover{
-  background-color: #b481f7;
+  background-color: var(--color2);
 }
 .btn-link{
   color: var(--primary-text-color);
   text-decoration: none;
   text-align: center;
-  background: #f4922f;
+  background: var(--color3);
   padding: 5px 20px;
   border-radius: 5px;
   font-weight: bold;
@@ -502,11 +515,189 @@ margin: 0.5rem 0 0.5rem 0;
   cursor: grab;
 }
 
+/* single post style */
+
+
+
+.single_post_title{
+  margin-top: 10px;
+}
+.single_post_card{
+  font-size: 1.15em;
+  line-height: 1.5em;
+  z-index: -1;
+    text-align: center;
+ display: flex;
+ flex-direction: column;
+ width:100%;
+}
+.single_post_date p{
+  opacity: 0.6;
+}
+
+.single_post_contain{
+
+text-align: left;
+padding: 1rem 2rem 1rem 2rem;
+}
+code{
+  
+  
+  background-color: rgba(27,31,35,0.05);
+  border-radius: 6px;
+
+}
+
+.profile-wrapper{
+  display: grid;
+  margin: 1rem 0 1rem 0 ;
+  grid-template-columns: repeat(2,1fr);
+  grid-template-rows: auto;
+  background-color: var(--nav-bg-color);
+  
+}
+.profile-pic{
+
+ padding: 1rem;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+  
+}
+.profile-pic img{
+  width: 10rem;
+  object-fit: cover;
+}
+.user-intro{
+  
+  padding: 1rem;
+  
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: flex-start;
+}
+.user-intro p{
+  font-weight: 600;
+  padding: 0.5rem;
+}
+
+.footer-wrapper{
+  margin-top: 2rem;
+  background-color: var(--nav-bg-color);
+  font-size:15px;
+  line-height:24px;
+  color:#737373;
+}
+.footer-wrapper h5{
+  color: var(--primary-text-color);
+  font-size:16px;
+  text-transform:uppercase;
+  letter-spacing:2px
+
+}
+.footer-intro{
+  padding: 0.3rem;
+}
+.copy-right p{
+  text-align: center;
+}
+.footer-wrapper hr{
+  border-top-color:#bbb;
+  opacity:0.5
+}
+
+/* file upload form style */
+.form-wrapper h3{
+  font-size: 30px;
+  padding: 20px 0 20px;
+text-align: center;
+}
+
+.main{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+.main form {
+  width: 16rem;
+  margin: 10px 10px 0;
+  text-align: center;
+  }
+  
+  .main form > input[type=file], form > input[type=file]:before {
+  display: block;
+  margin: 0 auto;
+  line-height: 3rem;
+  text-align: center;
+  cursor: pointer;
+  }
+  form > input[type=file] {
+  position: relative;
+  width: 80%;
+  }
+  
+  .main form > input[type=file]:before {
+  content: 'Choose a Photo';
+  position: absolute;
+font-weight: bold;
+  background: var(--color2);
+  width: 100%;
+  top: -2px;
+  left: -2px;
+  border-radius: 3px;
+  border: 2px solid #3c5b6d;
+
+  }
+  .main form > button[type=submit] {
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  margin: 1rem;
+  width: 80%;
+  height: 3rem;
+background-color: var(--color3);
+  }
+  
+
+
+.image-preview img{
+  height: 13rem;
+  width: 13rem;
+  padding: 0.5rem;
+  background-color: var(--nav-bg-color);
+}
+
+
+
 
 @media (max-width:420px) {
-  .login-box form, .singup-box form{
+  .login-box form, .singup-box form, .main form{
     width: 90%;
 
     
+  }
+
+  .profile-wrapper{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  .profile-pic img{
+width: 90%;
+  }
+  .user-intro{
+    align-items: center;
+  }
+  .sub-menu-wrapper{
+    right: 0;
+    width: 90%;
+  }
+
+  .image-preview img{
+    width: 100%;
+
   }
 }

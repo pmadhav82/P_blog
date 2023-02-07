@@ -12,3 +12,5 @@
 2. User can create an account and post a blog using markdown
 3. Markdown language is supported
 4. Syntax highlight
+5. User can upload profile picture
+6. User can toggle dark mode or light mode

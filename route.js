@@ -11,9 +11,6 @@ const  session = require("express-session");
 const createDomPurify = require("dompurify");
 const {JSDOM} = require("jsdom");
 const {marked} = require("marked");
-const mongodb = require("mongodb");
-const mongoose = require("mongoose");
-
 
 
 const window = new JSDOM('').window;
@@ -85,7 +82,8 @@ res.render("welcome",{
     name:userStatus.name,
     email:req.session.email,
     posts,
-    userStatus
+    userStatus,
+    postNum:posts.length
    
 })
      }catch(err){
@@ -97,7 +95,7 @@ res.render("welcome",{
 
 // Home Route
 router.get("/",  userStatusChecker,  async (req,res)=>{
-    console.log(userStatus);
+    
 
     try{
 const posts = await Posts.find().sort({"_id": -1}).lean()
@@ -246,6 +244,18 @@ res.redirect("/welcome")
 }
 
 })
+
+
+
+// render file upload form
+router.get("/changeProfile", islogin, userStatusChecker, (req,res)=>{
+res.render("uploadForm",{
+  userStatus  
+})
+})
+
+
+
 
 //Login route
 router.post("/login", userStatusChecker, async (req,res)=>{
@@ -473,6 +483,12 @@ try{
 }
 }
 })
+
+
+
+
+
+
 
 
 module.exports = router;
