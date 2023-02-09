@@ -1,15 +1,17 @@
 
 <div class="profile-wrapper">
 <div class="profile-pic">
-<img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp" alt="userPic">
+<img src={{userStatus.profileURL}}
+{{!-- "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"  --}}
+alt="userPic">
 </div>
 
 <div class="user-intro">
   <div class="name">
-    <p>{{name}}</p>
+    <p>{{userStatus.name}}</p>
   </div>
   <div class="email">
-    <p>{{email}}</p>
+    <p>{{userStatus.email}}</p>
   </div>
   <div class="num-post">
    <p>

@@ -23,12 +23,12 @@ const postSchema = new mongoose.Schema({
     },
     createdAt:{
         type:String,
-        
+        required:true
+    },
+    profileURL:{
+        type:String,
         required:true
     }
-
-
-
 })
 
 module.exports = new mongoose.model("posts",postSchema);

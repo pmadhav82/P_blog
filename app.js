@@ -31,6 +31,9 @@ app.use("/", route);
 //uses of public folder
 
 app.use(express.static(path.join(__dirname,"/public")))
+//app.use(express.static(path.join(__dirname,"/upload")))
+app.use(express.static(`${__dirname}/upload`))
+
 
 //init handlebars
 app.engine("handlebars", handlebars());

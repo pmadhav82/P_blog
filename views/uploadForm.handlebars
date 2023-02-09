@@ -3,17 +3,16 @@
 <h3>Upload Profile Picture</h3>
 
 <div class="main">
-<form action="/upload" method="POST" enctype="multipart/form-data">
+<form action="/upload/profile" method="POST" enctype="multipart/form-data">
 
-<input type="file" accept="image/*" id="imageInput"  name="userProfile" />
+<input type="file"  accept="image/*" id="imageInput"  name="userProfile" />
 <button type="submit" id="submit" class="btn btn-primary">Upload</button>
 </form>
 
 <div class="image-preview">
-<img id="imageOutPut"  src= {{url}}/>
+<img id="imageOutPut"  src= "{{userStatus.profileURL}}"/>
 <p id="imageName"></p>
 </div>
-
 
 </div>
 

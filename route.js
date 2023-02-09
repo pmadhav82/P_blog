@@ -4,6 +4,8 @@ const Users = require("./module/user");
 const Posts = require("./module/posts");
 const bcrypt = require("bcrypt");
 const  session = require("express-session");
+const upload = require("./fileUpload");
+
 
 
 // markedjs, dompurify and jsdom init
@@ -32,7 +34,9 @@ router.use(session({secret: process.env.SECRET
 // User initial status
 let userStatus = {
     login:false,
-    name:null
+    name:null,
+    profileURL:null,
+    email:null
 }
 
 
@@ -51,11 +55,15 @@ const islogin = (req,res,next)=>{
 const  userStatusChecker = (req,res,next)=>{
     if(req.session.name &&  req.session.email){
 userStatus.login = true;
-userStatus.name = req.session.name
+userStatus.name = req.session.name;
+userStatus.profileURL = req.session.profileURL;
+userStatus.email = req.session.email;
 next();
     }else{
         userStatus.login = false;
         userStatus.name = null;
+        userStatus.profileURL = null;
+        userStatus.email=null;
      next();
     }
 }
@@ -75,17 +83,16 @@ router.get("/api/madhavblogs", async(req,res)=>{
 
 //get routes
 router.get("/welcome", islogin, userStatusChecker, async (req,res)=>{
-        try{
+      
+    try{
             const posts = await Posts.find({uid:req.session.uid}).sort({"_id": -1}).lean()
       
 res.render("welcome",{
-    name:userStatus.name,
-    email:req.session.email,
     posts,
     userStatus,
-    postNum:posts.length
-   
+    postNum:posts.length,
 })
+console.log(posts);
      }catch(err){
         console.log(err)
      }
@@ -102,7 +109,8 @@ const posts = await Posts.find().sort({"_id": -1}).lean()
 
 res.render("home",{
    posts, 
- userStatus
+ userStatus,
+ 
     
 });
     }catch(err){
@@ -115,14 +123,18 @@ router.get("/login", (req,res)=>{
 
         return res.redirect("/welcome")
     }
-    res.render("login");
+    res.render("login",{
+        userStatus
+    });
 })
 router.get("/singup",  (req,res)=>{
     if(req.session.name && req.session.email){
 
         return res.redirect("/welcome")
     }
-    res.render("singup");
+    res.render("singup",{
+        userStatus
+    });
 })
 
 
@@ -174,8 +186,8 @@ router.post("/newpost",  islogin, userStatusChecker, async (req,res)=>{
                 html,
                 contain,
                 createdAt: `${date.getDate()}/${date.getMonth()+1}/ ${date.getFullYear()}`,
-                uid: req.session.uid
-            
+                uid: req.session.uid,
+                profileURL:req.session.profileURL
             }).save();
 
             res.redirect("/welcome")
@@ -214,6 +226,7 @@ let newUser = await new Users({
 req.session.name = newUser.name
 req.session.email = newUser.email
 req.session.uid = newUser._id
+req.session.profileURL = newUser.profileURL
 
 res.redirect("/welcome")
 
@@ -270,6 +283,7 @@ if(foundUser){
         req.session.name = foundUser.name;
         req.session.email = foundUser.email
         req.session.uid = foundUser._id
+        req.session.profileURL = foundUser.profileURL
        
       res.redirect("/welcome")
 
@@ -486,8 +500,38 @@ try{
 
 
 
+// Upload profile picture
 
-
+router.post("/upload/profile",  upload.single("userProfile"), async(req,res)=>{
+   
+    if(!req.file){
+        return res.redirect("/changeProfile")
+    }
+    else{   
+        let success1 ;
+        let success2;
+        let filePath = `images/${req.file.filename}`;
+        try{
+           success1 = await Posts.updateMany({uid:req.session.uid},{profileURL:filePath});
+           req.session.profileURL = filePath;
+        }catch(er){
+            console.log(er)
+        }
+        try{
+success2 = await Users.findByIdAndUpdate(req.session.uid,{
+    profileURL: filePath
+})
+        }catch(er){
+            console.log(er)
+        }
+        if(success1&&success2){
+           
+            res.redirect("/welcome")
+        } else{
+            res.redirect("/changeProfile")
+        }
+    }
+})
 
 
 

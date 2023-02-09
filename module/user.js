@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
         min: 6,
         max: 1024
     },
+    profileURL:{
+        type:String,
+        default:"images/userProfile.png"
+    }
 
 })
 

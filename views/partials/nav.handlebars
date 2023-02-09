@@ -5,14 +5,14 @@
     {{#if userStatus.login}}
 
       <div class="user_pic">
-        <img src="{{url}}" />
+        <img src="{{userStatus.profileURL}}" />
       </div>
 
       <div class="modal">
         <div class="sub-menu-wrapper">
           <div class="sub-menu">
             <div class="user-info">
-              <img class="userPic" src="{{url}}" />
+              <img class="userPic" src="{{userStatus.profileURL}}" />
               <h3>{{userStatus.name}}</h3>
             </div>
             <hr />

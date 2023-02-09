@@ -20,7 +20,7 @@
   }
   
   
-  
+ 
   body {
     
     background: var(--bg-color);
@@ -73,6 +73,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    border: 2px solid var(--color1);
    
     
   }
@@ -154,6 +155,7 @@
     height: 50px;
     border-radius: 50%;
     margin-right: 15px;
+    border: 2px solid var(--color1);
   }
   .sub-menu hr{
     width: 100%;
@@ -558,15 +560,20 @@ code{
 }
 .profile-pic{
 
- padding: 1rem;
+ padding: 0.5rem;
  display: flex;
  justify-content: center;
  align-items: center;
+ 
   
 }
 .profile-pic img{
-  width: 10rem;
+  width: 13rem;
+  height: 13rem;
+  border: 2px solid var(--color1);
   object-fit: cover;
+  border-radius: 50%;
+  cursor: pointer;
 }
 .user-intro{
   
@@ -676,18 +683,14 @@ background-color: var(--color3);
 
 @media (max-width:420px) {
   .login-box form, .singup-box form, .main form{
-    width: 90%;
-
-    
+    width: 90%;  
   }
 
   .profile-wrapper{
     grid-template-columns: 1fr;
     grid-template-rows: auto;
   }
-  .profile-pic img{
-width: 90%;
-  }
+  
   .user-intro{
     align-items: center;
   }
@@ -696,8 +699,5 @@ width: 90%;
     width: 90%;
   }
 
-  .image-preview img{
-    width: 100%;
-
-  }
+  
 }
