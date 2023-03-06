@@ -12,25 +12,29 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.urlencoded({extended:true}))
 
+
+
 //database connection
 
-mongoose.connect(process.env.MONGO_URL);
+mongoose.connect(process.env.MONGO_URL).then(()=>{
+    console.log("connected to the database")
+}).catch(()=>{
+    console.log("Failed to connect to the database")
+});
 let db = mongoose.connection;
-db.once("open",()=>{
-    console.log("connect successfully..");
-})
-db.on("error",()=>{
-    console.log("error occured..")
-})
 
-//router connection
-app.use("/", route);
-
+// db.once("open",()=>{
+//     console.log("connect successfully..");
+// })
+// db.on("error",()=>{
+//     console.log("error occured..")
+// })
 
 
 //uses of public folder
 
 app.use(express.static(path.join(__dirname,"/public")))
+//app.use(express.static(path.join(__dirname,"/public")))
 //app.use(express.static(path.join(__dirname,"/upload")))
 app.use(express.static(`${__dirname}/upload`))
 
@@ -39,6 +43,12 @@ app.use(express.static(`${__dirname}/upload`))
 app.engine("handlebars", handlebars());
 
 app.set("view engine", "handlebars");
+app.set('views', './views');
+
+
+
+//router connection
+app.use("/", route);
 
 
 app.listen(PORT,()=>console.log(`Server is running on ${PORT}`))

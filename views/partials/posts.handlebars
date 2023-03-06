@@ -1,0 +1,39 @@
+
+<div class="posts">
+ {{#each posts}}
+<div class="post_card">
+<div class="user-info">
+    <img class="userPic" src= "{{this.profileURL}}"/>
+<h4> <a href="/user?id={{this.uid}}">
+{{this.creator}}
+</a>
+
+
+
+    </h4>
+    
+</div>
+<hr>
+    
+   
+<div class="post_date">
+   
+   <p>
+
+   {{this.createdAt}}
+   </p>
+</div>
+<div class="post_title">
+
+ <h4>
+
+   {{this.title}}
+ </h4>
+</div>
+<footer>
+<a  href="/{{this._id}}">Read more</a> 
+
+</footer>
+    </div>
+{{/each}} 
+</div>

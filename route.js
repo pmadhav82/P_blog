@@ -83,16 +83,21 @@ router.get("/api/madhavblogs", async(req,res)=>{
 
 //get routes
 router.get("/welcome", islogin, userStatusChecker, async (req,res)=>{
-      
+   const {name, email,profileURL} = userStatus;   
     try{
             const posts = await Posts.find({uid:req.session.uid}).sort({"_id": -1}).lean()
       
 res.render("welcome",{
+  
     posts,
     userStatus,
     postNum:posts.length,
+    profileURL,
+    name,
+    email
+    
 })
-console.log(posts);
+
      }catch(err){
         console.log(err)
      }
@@ -106,7 +111,6 @@ router.get("/",  userStatusChecker,  async (req,res)=>{
 
     try{
 const posts = await Posts.find().sort({"_id": -1}).lean()
-
 res.render("home",{
    posts, 
  userStatus,
@@ -115,7 +119,35 @@ res.render("home",{
 });
     }catch(err){
         console.error(err);
+    
     }
+})
+
+
+
+
+// A user posts
+
+router.get("/user", userStatusChecker, async(req,res)=>{
+  const id = req.query.id;
+  
+  try{
+  const userInfo = await Users.findById({_id:id},{"profileURL":1,"name":1, "email":1, "_id":0}).lean();
+    const posts = await Posts.find({uid:id}).lean().sort({"id":-1});
+const {name,profileURL,email} = userInfo
+    res.render("userProfile",{
+    userStatus,
+    posts,
+    postNum:posts.length,
+    profileURL,
+    name,
+    email
+    
+})
+  }catch(er){
+res.redirect("/")
+  }
+   
 })
 
 router.get("/login", (req,res)=>{
@@ -127,6 +159,8 @@ router.get("/login", (req,res)=>{
         userStatus
     });
 })
+
+
 router.get("/singup",  (req,res)=>{
     if(req.session.name && req.session.email){
 
@@ -410,6 +444,11 @@ post,
 
 
 
+
+
+
+
+
 // Deteling a post
 
 
@@ -500,6 +539,9 @@ try{
 
 
 
+
+
+
 // Upload profile picture
 
 router.post("/upload/profile",  upload.single("userProfile"), async(req,res)=>{
@@ -532,6 +574,19 @@ success2 = await Users.findByIdAndUpdate(req.session.uid,{
         }
     }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

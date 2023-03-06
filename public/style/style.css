@@ -1,8 +1,9 @@
 :root{
-    --bg-color: #fff;
+    --bg-color:#f5f5f5;
+
     --primary-text-color: #222;
     --secondary-text-color: #444444;
-    --nav-bg-color:#f5f5f5;
+    --nav-bg-color:#fff;
     --logo-color: #d54d7b;
     --transition-value:0.5s;
 
@@ -30,10 +31,10 @@
   }
   
   .dark-mode{
-    --bg-color:#000;
+    --bg-color:#1d1f21;;
     --primary-text-color: #fff;
     --secondary-text-color: #f5f5f5;
-  --nav-bg-color:#1d1f21;
+  --nav-bg-color:#000;
   --logo-color: #d54d7b;
   --color1:#3d3b3b;
     --color2:#5160f9;
@@ -216,7 +217,7 @@
     height: auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   }
   .post_card{
@@ -388,7 +389,7 @@ border-radius: 1rem;
     padding: 1rem;
     width: 18rem;
     border-radius: 1rem;
-    background-color: var(--color1);
+    background-color: var(--color2);
     
   }
   
@@ -545,8 +546,10 @@ padding: 1rem 2rem 1rem 2rem;
 code{
   
   
-  background-color: rgba(27,31,35,0.05);
-  border-radius: 6px;
+  background-color: var(--color1);
+  color: #e5305d;
+  padding: 2px 5px;
+  border-radius: 2px;
 
 }
 
@@ -566,6 +569,9 @@ code{
  align-items: center;
  
   
+}
+.main-wrapper{
+  min-height: 60vh
 }
 .profile-pic img{
   width: 13rem;
