@@ -1,41 +1,21 @@
+<div class="main-wrapper">
 
-  <div class = wrapper> 
-    <div class = reset-box> 
-    <div class = title>
-      <h2> Reset Password </h2>
-      </div>
-       <div class="messages">
-         <p>{{passMatch}}</p>
-         <br>
-          <p>{{passLength}}</p> 
-          <br>
-          {{notMatch}}
+<div class="login-box">
+  <h2>Reset your password</h2>
+ <div class="messages">
+  {{>message}}
+ </div>
+  <form action="/passport-reset" method="POST">
+
+    <div class="user-box">
+     
+      <input placeholder="email" type="text" name="email" value="{{email}}" required>
+      <label>Type your email address</label>
     </div>
-      <form action="reset" method="POST"> 
-        <div class = input> 
-          <input type = "text" name = "name" required> <label>Name</label>
-        </div>
-      
-         <div class = input> 
-          <input type = "text" name="email" required> <label>Email</label>
-        </div>
-      
-         <div class = input> 
-          <input type = "password" name="password" required> <label>New Password</label>
-        </div>
-        
-         <div class = input> 
-          <input type = "password" name="repeatpassword" required> <label>Repeat Password</label>
-        </div>
-        <div class = "update"> 
-        <input type = "submit" value = "Reset Password">
-        </div>
-      </form>
-      
+<button type="submit">Send link</button>
 
+  </form>
 
-    </div>
-  
-  </div>
-  
-  
+</div>
+
+</div>

@@ -23,14 +23,13 @@
    </p>
 </div>
 <div class="post_title">
-
- <h4>
-
-   {{this.title}}
+   <h4>
+<a  href="/{{this._id}}"> {{this.title}}</a> 
  </h4>
+ 
 </div>
 <footer>
-<a  href="/{{this._id}}">Read more</a> 
+
 <form action="/{{this._id}}" method="post">
 <button class="btn-fw" type="submit"> Edit </button>
 </form>

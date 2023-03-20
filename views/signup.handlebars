@@ -1,25 +1,25 @@
 
 <div class="singup-box">
-    <h2>Sing Up</h2>
+    <h2>Sign up</h2>
     
     <div class="messages">
-    
-       <p class="message">{{userExists}} </p>
+    {{>message}}
+       {{!-- <p class="message">{{userExists}} </p>
        <br>
          <p class="message">{{passMatch}}</p>
          <br>
-          <p class="message">{{passLength}}</p> 
+          <p class="message">{{passLength}}</p>  --}}
     </div>
 
     
-<form action="/singup" method="POST">
+<form action="/signup" method="POST">
 <div class="user-box">
-<input type="text" placeholder="name" name="name"  value = "{{name}}"required>
+<input type="text" placeholder="name" name="name"  value = "{{message.name}}"required>
 <label > Name </label>
 </div>
 
 <div class="user-box">
-<input placeholder="email" type="email" name="email" value="{{email}}" required>
+<input placeholder="email" type="email" name="email" value="{{message.email}}" required>
 <label > Email </label>
 </div>
 
@@ -32,7 +32,7 @@
 <input placeholder="repeat password" type="password" name="repeatpassword"  required>
 <label > Repeat Password </label>
 </div>
-<button type="submit"> Sing up</button>
+<button type="submit"> Sign up</button>
  
 </form>
 

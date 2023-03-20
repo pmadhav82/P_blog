@@ -1,7 +1,7 @@
 
 <div class="profile-wrapper">
 <div class="profile-pic">
-<img src={{profileURL}}
+<img id="userPic" src={{profileURL}}
 {{!-- "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"  --}}
 alt="userPic">
 </div>
@@ -19,4 +19,37 @@ alt="userPic">
    </p> 
   </div>
 </div>
+<div class="image-modal-wrapper">
+<div class="image-modal-contain">
+  
+    <span class="close">&times;</span>
+    <img src={{profileURL}} alt="profile-picture">
+  </div>
 </div>
+
+</div>
+
+</div>
+
+<script defer>
+let imageModal = document.querySelector(".image-modal-wrapper");
+let imageCancleBtn = document.querySelector(".close");
+let imageTiggerbtn = document.querySelector("#userPic");
+
+const showImageModal = ()=>{
+  imageModal.classList.toggle("show-modal")
+}
+
+imageTiggerbtn.addEventListener("click",showImageModal);
+imageCancleBtn.addEventListener("click",showImageModal);
+
+imageTiggerbtn.addEventListener("click",showImageModal);
+
+window.addEventListener("click", (e)=>{
+
+  if(e.target.matches(".image-modal-contain")){
+    return showImageModal()
+  }else
+  return
+})
+</script>

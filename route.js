@@ -5,30 +5,15 @@ const Posts = require("./module/posts");
 const bcrypt = require("bcrypt");
 const  session = require("express-session");
 const upload = require("./fileUpload");
-
+const flash = require("connect-flash");
 
 
 // markedjs, dompurify and jsdom init
-
 const createDomPurify = require("dompurify");
 const {JSDOM} = require("jsdom");
 const {marked} = require("marked");
-
-
 const window = new JSDOM('').window;
 const DOMPurify = createDomPurify(window);
-
-
-
-
-let errorMessages ={};
-
-
-
- 
-router.use(session({secret: process.env.SECRET
-, resave:true,saveUninitialized:true}))
-
 
 
 // User initial status
@@ -40,8 +25,13 @@ let userStatus = {
 }
 
 
+// middleware fucntion to associate connect-flash on response
+router.use((req,res,next)=>{
+res.locals.message = req.flash();
+next()
+})
 
-//middleware function to check user is already loggedin or not
+//middleware function to check if the user is already loggedin or not
 const islogin = (req,res,next)=>{
     if(req.session.name && req.session.email){
         next()
@@ -130,6 +120,10 @@ res.render("home",{
 
 router.get("/user", userStatusChecker, async(req,res)=>{
   const id = req.query.id;
+
+  if(req.session.uid === id){
+    return res.redirect("/welcome");
+  }
   
   try{
   const userInfo = await Users.findById({_id:id},{"profileURL":1,"name":1, "email":1, "_id":0}).lean();
@@ -161,30 +155,48 @@ router.get("/login", (req,res)=>{
 })
 
 
-router.get("/singup",  (req,res)=>{
+router.get("/signup",  (req,res)=>{
     if(req.session.name && req.session.email){
 
         return res.redirect("/welcome")
     }
-    res.render("singup",{
+    res.render("signup",{
         userStatus
     });
 })
 
 
 //password reset route
-router.get("/reset",  (req,res)=>{
+router.get("/forgot-pass",  (req,res)=>{
     if(req.session.name && req.session.email){
-
-        res.render("reset",{
-            login:true
-        });
-    }else{
-        res.redirect("/login")
+return res.redirect("/welcome")
     }
+    
+    res.render("reset",{
+ userStatus  
+    })
  })
 
+// password reset post route
 
+router.post("/passport-reset", async (req,res)=>{
+    const {email} = req.body;
+    
+    try{
+let user = await Users.findOne({email});
+console.log(user)
+if(user){
+req.flash("success", "We have sent you the link to your email, please click on that link to reset your password")
+    res.redirect("/forgot-pass")
+}else{
+    req.flash("error","We could not find any user, please check your email address again")
+res.redirect("/forgot-pass")
+}
+    }catch(er){
+        req.flash("error","Something went wrong, please try again later!")
+        res.redirect("/forgot-pass")
+    }
+})
 
  //get post route 
  router.get("/newpost", islogin, userStatusChecker, (req,res)=>{
@@ -240,7 +252,7 @@ router.post("/newpost",  islogin, userStatusChecker, async (req,res)=>{
 
 
 //Singup route
-router.post("/singup", userStatusChecker, async (req,res)=>{
+router.post("/signup", userStatusChecker, async (req,res)=>{
 try{
 
     let name = req.body.name;
@@ -250,11 +262,11 @@ try{
 let foundUser = await Users.findOne({email:email});
 
 if( !foundUser && password == passwordRepeat && password.length>=6){
-    let hashPassword = await bcrypt.hash(password, 10);
+
 let newUser = await new Users({
-    name:name,
-    email:email,
-    password:hashPassword
+    name,
+    email,
+    password
 }).save();
 
 req.session.name = newUser.name
@@ -264,27 +276,20 @@ req.session.profileURL = newUser.profileURL
 
 res.redirect("/welcome")
 
-}else{
+}else {
+    if(foundUser){
+       req.flash("error","User is exists already");
+       res.redirect("/signup")
+   }
+
     if(password.length<6){
-        errorMessages.passLength = "Password need to have minimum 6 characters"
-    }if (password!== passwordRepeat){
-        errorMessages.passMatch = "Password is not match";
+        req.flash("error","Password need to have minimum 6 characters")
+         res.redirect("/signup")
     }
-    if (foundUser){
-        errorMessages.userExists = "User is exists already"
+    if (password!== passwordRepeat){
+        req.flash("error","Password is not match")
+         res.redirect("/signup")
     }
-
-
-
-    res.render("singup",{
-        userExists:errorMessages.userExists,
-        passLength:errorMessages.passLength,
-        passMatch:errorMessages.passMatch,
-        name,
-        email,
-        userStatus
-        
-    })
 }
 }catch(err){
     console.log(err);
@@ -322,27 +327,17 @@ if(foundUser){
       res.redirect("/welcome")
 
     } else{
-
-        res.render("login",{
-            message:"Invalid email or passport",
-            email:req.body.email,
-            userStatus
-    
-        })
+req.flash("error","Invalid email or passport")
+        res.redirect("/login")
     }
     
 }else{
-    res.render("login",{
-        message:"Invalid email or passport",
-        email:req.body.email,
-        userStatus
-    })
-}
-
+    req.flash("error","Invalid email or passport")
+        res.redirect("/login")
+    }
 } catch(err){
     console.log(err);
 }
-
 
 })
 
