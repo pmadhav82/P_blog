@@ -2,12 +2,12 @@ const express = require ("express");
 const router = express.Router();
 const Users = require("./module/user");
 const Posts = require("./module/posts");
+const Token = require("./module/token");
 const bcrypt = require("bcrypt");
 const  session = require("express-session");
 const upload = require("./fileUpload");
 const flash = require("connect-flash");
-
-
+const crypto = require("crypto");
 // markedjs, dompurify and jsdom init
 const createDomPurify = require("dompurify");
 const {JSDOM} = require("jsdom");
@@ -184,19 +184,67 @@ router.post("/passport-reset", async (req,res)=>{
     
     try{
 let user = await Users.findOne({email});
-console.log(user)
+
 if(user){
-req.flash("success", "We have sent you the link to your email, please click on that link to reset your password")
-    res.redirect("/forgot-pass")
+    
+    //check if the token is already saved or not,if saved delete the old token
+let token = await Token.findOne({userId:user._id});
+
+const resetToken = crypto.randomBytes(32).toString('hex');
+const hashedToken = await bcrypt.hash(resetToken,10);
+
+await new Token({
+    userId:user._id,
+    token:hashedToken,
+    createdAt:Date.now()
+}).save()
+
+
+const resetLink = `${req.protocol}://${req.get('host')}/password-reset-link?token=${resetToken}&id=${user._id}`;
+ console.log(resetLink);
+
+
+req.flash("success", "Check your email for the password reset link")
+    res.redirect("/login")
 }else{
     req.flash("error","We could not find any user, please check your email address again")
 res.redirect("/forgot-pass")
 }
     }catch(er){
+        console.log(er);
         req.flash("error","Something went wrong, please try again later!")
         res.redirect("/forgot-pass")
     }
 })
+
+
+//password reset form route
+router.get("/password-reset-link", async (req,res)=>{
+    const{token,id} = req.query;
+try{
+    let savedToken = await Token.findOne({userId:id});
+    if(!savedToken){
+      return  res.json({message:"Invalid token "})
+    }
+let hashedToken= savedToken.token;
+       let isValidToken=   bcrypt.compare(token, hashedToken);
+console.log(isValidToken)
+if(!isValidToken){
+ return res.json({message:"Invalid token "})
+}
+
+res.json({token,
+    userID:id})
+
+}catch(er){
+    console.log(er)
+res.json({message:"something went wrong"})
+}
+
+
+})
+
+
 
  //get post route 
  router.get("/newpost", islogin, userStatusChecker, (req,res)=>{
