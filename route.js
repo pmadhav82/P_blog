@@ -190,6 +190,9 @@ if(user){
     //check if the token is already saved or not,if saved delete the old token
 let token = await Token.findOne({userId:user._id});
 
+if(token){
+    Token.deleteOne({userId:user._id});
+}
 const resetToken = crypto.randomBytes(32).toString('hex');
 const hashedToken = await bcrypt.hash(resetToken,10);
 
@@ -220,27 +223,28 @@ res.redirect("/forgot-pass")
 
 //password reset form route
 router.get("/password-reset-link", async (req,res)=>{
-    const{token,id} = req.query;
-try{
-    let savedToken = await Token.findOne({userId:id});
-    if(!savedToken){
-      return  res.json({message:"Invalid token "})
-    }
-let hashedToken= savedToken.token;
-       let isValidToken=   bcrypt.compare(token, hashedToken);
-console.log(isValidToken)
-if(!isValidToken){
- return res.json({message:"Invalid token "})
-}
+if(req.session.name && req.session.email) return res.redirect("/login");
 
-res.json({token,
-    userID:id})
+if(req.query && req.query.token && req.query.id){
+const{token,id} = req.query;
+try{
+    const savedToken = await Token.findOne({userId:id});
+    const isValid =  await bcrypt.compare(token, savedToken.token);
+   
+    if(isValid){
+res.json({token,id})
+    }else{
+res.json({message:"Invalid token or link is expired"})
+    }
 
 }catch(er){
-    console.log(er)
-res.json({message:"something went wrong"})
+res.json({message:"something went wrong, please try again latter"})
 }
 
+
+}else{
+    res.redirect("/login")
+}
 
 })
 
