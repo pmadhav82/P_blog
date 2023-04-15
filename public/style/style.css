@@ -10,6 +10,7 @@
     --color1:#e3e4e8;
     --color2:#d2d4d8;
     --color3:#f1faee;
+    --color3:#dde2ff;
   }
   
   
@@ -38,7 +39,7 @@
   --logo-color: #d54d7b;
   --color1:#3d3b3b;
     --color2:#5160f9;
-    --color3:#101d30;
+    --color3:#1a033b;
 
   --transition-value:0.5s;
 
@@ -223,7 +224,8 @@ grid-template-columns: repeat(auto-fit,minmax(min(var(--min-column-size),100%),1
   }
   .post_card{
    
-     background: var(--nav-bg-color);
+     background: var(--color3);
+     
     padding: 1rem;
   border-radius: 1rem;
   margin: 1.5rem;

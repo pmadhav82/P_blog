@@ -6,6 +6,9 @@ const Token = require("./module/token");
 const bcrypt = require("bcrypt");
 const  session = require("express-session");
 const upload = require("./fileUpload");
+const sendEmail = require("./utils/sendEmail");
+const {generateToken, isValidToken} = require ("./utils/tokenHandeler");
+const {islogin, ifLogin} = require("./utils/loginHandeler");
 const flash = require("connect-flash");
 const crypto = require("crypto");
 // markedjs, dompurify and jsdom init
@@ -14,6 +17,15 @@ const {JSDOM} = require("jsdom");
 const {marked} = require("marked");
 const window = new JSDOM('').window;
 const DOMPurify = createDomPurify(window);
+
+
+
+
+// middleware fucntion to associate connect-flash on response
+router.use((req,res,next)=>{
+res.locals.message = req.flash();
+next()
+})
 
 
 // User initial status
@@ -25,21 +37,8 @@ let userStatus = {
 }
 
 
-// middleware fucntion to associate connect-flash on response
-router.use((req,res,next)=>{
-res.locals.message = req.flash();
-next()
-})
 
-//middleware function to check if the user is already loggedin or not
-const islogin = (req,res,next)=>{
-    if(req.session.name && req.session.email){
-        next()
-    }else{
-        res.redirect("/login")
-    }
 
-}
 
 //middleware function to check status
 const  userStatusChecker = (req,res,next)=>{
@@ -59,10 +58,12 @@ next();
 }
 
 // API to get blogs
-router.get("/api/madhavblogs", async(req,res)=>{
-    let uid = "62cd89d53e61de6c5bfbfe02"
+router.get("/api/:email", async(req,res)=>{
+    let email = req.params.email;
+    
     try{
-    let blogs = await Posts.find({uid}).sort({_id:-1});
+        let user = await Users.findOne({email});
+    let blogs = await Posts.find({uid:user._id}).sort({_id:-1});
     res.status(200).json(blogs)
     }catch(err){
     res.status(404).json({message:"Something went wrong"})
@@ -144,67 +145,48 @@ res.redirect("/")
    
 })
 
-router.get("/login", (req,res)=>{
-    if(req.session.name && req.session.email){
-
-        return res.redirect("/welcome")
-    }
-    res.render("login",{
-        userStatus
-    });
+router.get("/login",ifLogin, (req,res)=>{
+    res.render("login")
 })
 
 
-router.get("/signup",  (req,res)=>{
-    if(req.session.name && req.session.email){
-
-        return res.redirect("/welcome")
-    }
-    res.render("signup",{
-        userStatus
-    });
+router.get("/signup", ifLogin,  (req,res)=>{
+    res.render("signup");
 })
 
 
 //password reset route
-router.get("/forgot-pass",  (req,res)=>{
-    if(req.session.name && req.session.email){
-return res.redirect("/welcome")
-    }
-    
-    res.render("reset",{
- userStatus  
-    })
+router.get("/forgot-pass", ifLogin, (req,res)=>{
+    res.render("reset")
  })
 
 // password reset post route
 
 router.post("/passport-reset", async (req,res)=>{
     const {email} = req.body;
-    
     try{
 let user = await Users.findOne({email});
 
 if(user){
-    
-    //check if the token is already saved or not,if saved delete the old token
-let token = await Token.findOne({userId:user._id});
+    const resetToken =  await generateToken(user._id);
+    const link= `${req.protocol}://${req.get('host')}/password-reset-link?token=${resetToken}&id=${user._id}`;
+ 
+// html for email
+const html = `<b> Hi ${user.name}, </b>
+<p> You requested to reset your password. </p>
+<p> Please, click the link below to reset your password. </p>
+<a href = "${link}"> Reset Password </a>
+`
 
-if(token){
-    Token.deleteOne({userId:user._id});
+console.log(link);
+
+const payload = {
+    email,
+    subject:"Password reset request",
+    html
 }
-const resetToken = crypto.randomBytes(32).toString('hex');
-const hashedToken = await bcrypt.hash(resetToken,10);
 
-await new Token({
-    userId:user._id,
-    token:hashedToken,
-    createdAt:Date.now()
-}).save()
-
-
-const resetLink = `${req.protocol}://${req.get('host')}/password-reset-link?token=${resetToken}&id=${user._id}`;
- console.log(resetLink);
+//sendEmail(payload);
 
 
 req.flash("success", "Check your email for the password reset link")
@@ -222,17 +204,19 @@ res.redirect("/forgot-pass")
 
 
 //password reset form route
-router.get("/password-reset-link", async (req,res)=>{
-if(req.session.name && req.session.email) return res.redirect("/login");
+router.get("/password-reset-link", ifLogin, async (req,res)=>{
 
 if(req.query && req.query.token && req.query.id){
+    //check token and id are valid
 const{token,id} = req.query;
 try{
-    const savedToken = await Token.findOne({userId:id});
-    const isValid =  await bcrypt.compare(token, savedToken.token);
-   
+   const isValid = await isValidToken({token,id});
     if(isValid){
-res.json({token,id})
+res.render("newPasswordForm",{
+    token,
+    id,
+
+})
     }else{
 res.json({message:"Invalid token or link is expired"})
     }
@@ -247,6 +231,48 @@ res.json({message:"something went wrong, please try again latter"})
 }
 
 })
+
+
+//accept new password and save it to database
+router.post("/newPassword",  async(req,res)=>{
+    
+    if(req.query.token && req.query.id){
+const {token, id}= req.query;
+const isValid = await isValidToken({token,id});
+if(isValid){
+const {password, repeatPassword}=req.body;
+
+if(password.length<6){
+    req.flash("error","Password need to have minimum 6 characters")
+   return  res.render("/newPasswordForm")
+}
+if (password!== passwordRepeat){
+    req.flash("error","Password is not match")
+   return  res.render("/newPasswordForm")
+}
+
+
+if(password == repeatPassword && password.length>6){
+try{
+    let update_success = await Users.updateOne({email},{password:repeatPassword});
+    if(update_success){
+        req.flash("success", "password is changed successfully.")
+res.redirect("/login");
+    }
+}catch(er){
+    console.log(er)
+}
+}
+} else{
+    res.json({message:"Invalid token or link is expired"})  
+
+}
+
+} else{
+    res.json({message:"Something went wrong! try again latter"})  
+}
+    })
+
 
 
 
@@ -270,7 +296,7 @@ router.post("/newpost",  islogin, userStatusChecker, async (req,res)=>{
             userStatus,
             title:req.body.title,
             contain:req.body.contain.trim(),
-            message:"All fields are required to fill."
+            errorMessage:"All fields are required to fill."
         })
     } else{
         const html = DOMPurify.sanitize(marked.parse(contain));
@@ -401,22 +427,6 @@ router.get("/logout",islogin, userStatusChecker,(req,res)=>{
     res.redirect("/");
 })
 
-
-//Delete Account
-router.post("/deleteAccount", async (req,res)=>{
-    try{
-      let success = await Users.deleteOne({email: req.session.email});
-      if(success){
-       req.session.destroy()
-res.redirect("/")
-      }else{
-        res.status(500).send("Something wrong, try again ...")
-      }
-    }catch(err){
-        res.status(500).send("Something wrong, try again ...")
-    }
-  
-})
 
 //reset password
 router.post("/reset", async (req,res)=>{
@@ -550,7 +560,7 @@ if(title.trim()=== "" || contain.trim()=== ""){
     res.render("editPost",{
         title,
         contain:contain.trim(),
-        message:"All fields are required to field",
+        errorMessage:"All fields are required to field",
         userStatus
     })
 }else{
@@ -567,7 +577,7 @@ try{
         res.render("editPost",{
             title,
             contain:contain.trim(),
-            message:"Something wrong, try again latter",
+            errorMessage:"Something wrong, try again latter",
            userStatus
         })
     }
@@ -577,7 +587,7 @@ try{
     res.render("editPost",{
         title,
         contain:contain.trim(),
-        message:"Something wrong, try again latter",
+        errorMessage:"Something wrong, try again latter",
         userStatus
     })
 }
@@ -597,9 +607,10 @@ router.post("/upload/profile",  upload.single("userProfile"), async(req,res)=>{
         return res.redirect("/changeProfile")
     }
     else{   
+        
         let success1 ;
         let success2;
-        let filePath = `images/${req.file.filename}`;
+        let filePath = `/images/${req.file.filename}`;
         try{
            success1 = await Posts.updateMany({uid:req.session.uid},{profileURL:filePath});
            req.session.profileURL = filePath;

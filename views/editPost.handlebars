@@ -1,9 +1,9 @@
 
 <div class="textbox-wrapper">
   <h3>Write a new post</h3>
-
-  <div class="messages">
-  {{message}}
+{{#if errorMessage}}
+  <div class="messages error-message">
+  {{errorMessage}}
   </div>
 <form action="/editPost/{{id}}"  method="post" class="form">
 
