@@ -186,7 +186,7 @@ const payload = {
     html
 }
 
-//sendEmail(payload);
+sendEmail(payload);
 
 
 req.flash("success", "Check your email for the password reset link")
@@ -238,23 +238,37 @@ router.post("/newPassword",  async(req,res)=>{
     
     if(req.query.token && req.query.id){
 const {token, id}= req.query;
-const isValid = await isValidToken({token,id});
+let isValid;
+try{
+
+    isValid = await isValidToken({token,id});
+}catch(er){
+    console.log(er)
+}
 if(isValid){
 const {password, repeatPassword}=req.body;
 
 if(password.length<6){
-    req.flash("error","Password need to have minimum 6 characters")
-   return  res.render("/newPasswordForm")
+    
+   return  res.render("newPasswordForm",{
+    token,
+    id,
+    errorMessage:"Password need to have minimum 6 characters"
+   })
 }
-if (password!== passwordRepeat){
-    req.flash("error","Password is not match")
-   return  res.render("/newPasswordForm")
+if (password!== repeatPassword){
+   return  res.render("newPasswordForm",{
+    token,
+    id,
+    errorMessage:" Password is not match."
+   })
 }
 
 
 if(password == repeatPassword && password.length>6){
 try{
-    let update_success = await Users.updateOne({email},{password:repeatPassword});
+    let hashedPassword = await bcrypt.hash(repeatPassword,10);
+    let update_success = await Users.updateOne({_id:id},{password:hashedPassword});
     if(update_success){
         req.flash("success", "password is changed successfully.")
 res.redirect("/login");
@@ -395,7 +409,12 @@ let foundUser = await Users.findOne({email:req.body.email})
 if(foundUser){
     let submitedPass = req.body.password;
     let hashPassword = foundUser.password;
-    let matchPassword =  await bcrypt.compare(submitedPass, hashPassword)
+    let matchPassword ;
+    try{
+        matchPassword = await bcrypt.compare(submitedPass, hashPassword)
+    }catch(er){
+        console.log(er)
+    }
     if(matchPassword){
         req.session.name = foundUser.name;
         req.session.email = foundUser.email
@@ -426,56 +445,6 @@ router.get("/logout",islogin, userStatusChecker,(req,res)=>{
     req.session.destroy();
     res.redirect("/");
 })
-
-
-//reset password
-router.post("/reset", async (req,res)=>{
-    
-    let name = req.body.name;
-    let email = req.body.email;
-    let password = req.body.password;
-    let passwordRepeat =req.body.repeatpassword;
-try{
-    
-    if(name.toUpperCase().trim() == req.session.name.toUpperCase().trim() && email == req.session.email && password == passwordRepeat && password.length>=6){
-let hashPassword = await bcrypt.hash(password, 10);
-let success = await Users.updateOne({email:email},{password:hashPassword})
-if(success){
-    
-res.redirect("/welcome")
-}else{
-    res.status(500).send("Something wrong, try again ...")
-}
-    }else{
-
-        if(password.length<6){
-            errorMessages.passLength = "Password need to have minimum 6 characters"
-        }if (password!== passwordRepeat){
-            errorMessages.passMatch = "Password is not match";
-        }
-        if(name.toUpperCase().trim() !== req.session.name.toUpperCase().trim() || email !== req.session.email){
-            errorMessages.notMatch = "Your credential is not matched"
-        }
-        res.render("reset",{
-            
-            passLength:errorMessages.passLength,
-            passMatch:errorMessages.passMatch,
-            notMatch:errorMessages.notMatch,
-            userStatus
-            
-        })
-    }
-
-}catch(err){
-    console.log(err);
-}
-
-
-})
-
-
-
-
 
 
 // Getting a single post
@@ -632,9 +601,6 @@ success2 = await Users.findByIdAndUpdate(req.session.uid,{
         }
     }
 })
-
-
-
 
 
 

@@ -241,6 +241,7 @@ grid-template-columns: repeat(auto-fit,minmax(min(var(--min-column-size),100%),1
   .post_card footer button{
     font-weight: 600;
   }
+  
   .post_date{
     opacity: 0.6;
     margin: 0.5rem;
