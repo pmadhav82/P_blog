@@ -1,6 +1,6 @@
 
 <div class="singup-box">
-    <h2>Sign up</h2>
+  
     
     <div class="messages">
     {{>message}}
@@ -13,6 +13,7 @@
 
     
 <form action="/signup" method="POST">
+  <h2>Sign up</h2>
 <div class="user-box">
 <input type="text" placeholder="name" name="name"  value = "{{message.name}}"required>
 <label > Name </label>
