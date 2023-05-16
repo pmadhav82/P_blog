@@ -209,6 +209,7 @@ router.get("/password-reset-link", ifLogin, async (req,res)=>{
 if(req.query && req.query.token && req.query.id){
     //check token and id are valid
 const{token,id} = req.query;
+
 try{
    const isValid = await isValidToken({token,id});
     if(isValid){
@@ -222,6 +223,7 @@ res.json({message:"Invalid token or link is expired"})
     }
 
 }catch(er){
+    console.log(er)
 res.json({message:"something went wrong, please try again latter"})
 }
 

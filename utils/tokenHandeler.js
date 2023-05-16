@@ -31,10 +31,17 @@ return resetToken;
 
 
 const isValidToken = async({token,id})=>{
-const savedToken = await Token.findOne({userId:id}).lean();
-//compare the token
-const isValidToken = await bcrypt.compare(token,savedToken.token);
-return isValidToken;
+    try{
+        const savedToken = await Token.findOne({userId:id}).lean();
+        //compare the token
+        if(savedToken){
+            const isValidToken = await bcrypt.compare(token,savedToken.token);
+            return isValidToken;
+        }else return false
+
+    } catch(er){
+        console.log("something went wrong..." )
+    }
 
 }
 
