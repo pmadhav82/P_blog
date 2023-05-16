@@ -259,6 +259,7 @@ grid-template-columns: repeat(auto-fit,minmax(min(var(--min-column-size),100%),1
   /* Login and sign up form */
   .login-box, .singup-box{
     width: 100%;
+    margin-top:2rem;
     display: flex;
     align-items: center;
     justify-content: center;
