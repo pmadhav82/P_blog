@@ -433,10 +433,11 @@ border-radius: 1rem;
     
   } 
 .image-modal-contain{
-  position: relative;
+  position: fixed;
   height: 100%;
   width: 100%;
-  margin: auto;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -445,13 +446,12 @@ border-radius: 1rem;
 
 }
 .image-modal-contain img{
-  padding: 1rem;
+  display: block;
   border-radius: 2rem;
-  width: 80%;
-  height: 70%;
-  object-fit: fit;
-  object-position: bottom;
-  
+  max-width: 60%;
+  max-height: 80%;
+  margin: 10rem auto;
+  border: 2px solid var(--nav-bg-color);
 }
 .close{
   
@@ -811,7 +811,7 @@ background-color: var(--color3);
   }
  
   .image-modal-contain img{
-    width: 100%;
+    max-width: 90%;
   } 
   .single_post_card{
     width: 100%;
