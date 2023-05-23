@@ -3,8 +3,9 @@
  {{#each posts}}
 <div class="post_card">
 <div class="user-info">
+    <a href="/user?id={{this.uid}}">
     <img class="userPic" src= "{{this.profileURL}}"/>
-<h4> <a href="/user?id={{this.uid}}">
+<h4> 
 {{this.creator}}
 </a>
 
