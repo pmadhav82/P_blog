@@ -33,14 +33,6 @@ mongoose
   .catch(() => {
     console.log("Failed to connect to the database");
   });
-let db = mongoose.connection;
-
-// db.once("open",()=>{
-//     console.log("connect successfully..");
-// })
-// db.on("error",()=>{
-//     console.log("error occured..")
-// })
 
 //uses of public folder
 

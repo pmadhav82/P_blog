@@ -216,7 +216,8 @@
   }
   .posts{
     --min-column-size:18rem;
-    align-items: stretch;
+    align-items: flex-start;
+
     width: 100%;
     z-index: -1;
 display: grid;
@@ -234,10 +235,10 @@ grid-template-columns: repeat(auto-fit,minmax(min(var(--min-column-size),100%),1
   max-width: 30rem ;
   }
   .post_card footer{
-    margin-top: 0.5rem;
-    width: 100%;
-    flex-direction: column;
-    display: flex;
+    margin-top: 1rem;
+  display: flex;
+   gap:0.5rem;
+   align-items: flex-start;
     
   }
   .post_card footer button{
@@ -254,6 +255,38 @@ grid-template-columns: repeat(auto-fit,minmax(min(var(--min-column-size),100%),1
     color: var(--primary-text-color);
   }
 
+.post-card-footer{
+  margin-top: 1rem;
+
+}
+
+
+.post-card-footer a{
+  text-decoration: none;
+  color: var(--primary-text-color);
+}
+
+.btn{
+  border: none;
+  padding: 0.5em 0.75em;
+  border-radius: .5rem;
+  background: var(--color2);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--primary-text-color);
+}
+.btn:hover, .btn:focus{
+  background: var(--color3);
+}
+.btn + .btn{
+  margin-left: .25rem;
+}
+.btn-outline{
+  background: none;
+    color: var(--primary-text-color);
+
+}
 
 
   /* Login and sign up form */
