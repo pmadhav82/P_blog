@@ -228,7 +228,8 @@ grid-template-columns: repeat(auto-fit,minmax(min(var(--min-column-size),100%),1
   .post_card{
    
      background: var(--nav-bg-color);
-     
+     border: none;
+     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
     padding: 1rem;
   border-radius: 1rem;
   margin: 1.5rem;
@@ -324,9 +325,7 @@ grid-template-columns: repeat(auto-fit,minmax(min(var(--min-column-size),100%),1
     background-color: var(--nav-bg-color);
     color: var(--primary-text-color);
   }
-  .login-box form input::placeholder, .singup-box form input::placeholder{
-    color: var(--nav-bg-color);
-  }
+  
   .user-box{
     height: 3rem;
     position: relative;
@@ -376,19 +375,14 @@ color: #d54d7b
   color: #d54d7b
 }
 
-.login-box form input:focus~label, .singup-box form input:focus~label{
+.login-box form input:focus~label, .singup-box form input:focus~label, .login-box form input:valid~label, .singup-box form input:valid~label {
   top: 0;
   font-size: 0.8rem;
   transform: translateY(-50%);
   background-color: var(--bg-color);
   
 }
-.login-box form input:not(:placeholder-shown)~label, .singup-box form input:not(:placeholder-shown)~label{
-  top: 0;
-  transform: translateY(-50%);
-  background-color: var(--bg-color);
-  font-size: 0.8rem;
-}
+
 .read-more-btn{
 	background-color: var(--color2);
 	border-radius:1rem;
@@ -427,17 +421,7 @@ color: #d54d7b
 
 
 
-.btn-fw{
-  width: 100%;
-  border: none;
-  padding: 0.5rem;
-  margin: 12px 0 10px 0;
-background: var(--bg-color);
-color: var(--primary-text-color);
-font-size: 17px;
-cursor: pointer;
-border-radius: 1rem;
-}
+
 
 /* toggle modal for delete post */
 
@@ -515,8 +499,57 @@ justify-content: space-around;
 flex-wrap: wrap;
 gap: 0.5rem;
 padding: 1rem;
-margin: 0.5rem 0 0.5rem 0;
+--border: 1px solid var(--primary-text-color);
+border-bottom: var(--border);
+border-left: var(--border);
+border-right: var(--border);
+border-bottom-right-radius: 0.5rem;
+border-bottom-left-radius: .5rem;
   }
+
+
+ 
+
+.button-40 {
+  background-color: var(--color2);
+  border: 1px solid transparent;
+  border-radius: .75rem;
+  box-sizing: border-box;
+  color: var(--primary-text-color);
+
+  cursor: pointer;
+  flex: 0 0 auto;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+  padding: .75rem 1.2rem;
+  text-align: center;
+  text-decoration: none #6B7280 solid;
+  text-decoration-thickness: auto;
+  transition-duration: .2s;
+  transition-property: background-color,border-color,color,fill,stroke;
+  transition-timing-function: cubic-bezier(.4, 0, 0.2, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+}
+
+.button-40:hover {
+  background-color: var(--nav-bg-color);
+}
+
+.button-40:focus {
+  box-shadow: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+.button-40 a{
+  text-decoration: none;
+color: var(--primary-text-color);
+}
+
 
   
 
@@ -585,7 +618,7 @@ margin: 0.5rem 0 0.5rem 0;
   text-decoration: underline;
 }
 .textbox-wrapper form{
-  width: 85%;
+  width: 80%;
   display: flex;
   flex-direction: column;
 
@@ -594,11 +627,12 @@ margin: 0.5rem 0 0.5rem 0;
   align-self: flex-start;
   font-size: 1.3rem;
 }
-.textbox-wrapper form input,textarea{
+.textbox-wrapper form input{
   outline: none;
-  margin: 1rem 0 1rem ;
+  margin: 1rem 0 1rem 0;
   padding: 1rem;
   border: 1px solid var(--primary-text-color);
+
   background: var(--bg-color);
   font-size: 1.3em;
   border-radius: 0.5rem;
@@ -609,6 +643,15 @@ margin: 0.5rem 0 0.5rem 0;
 .textbox-wrapper textarea{
   resize: none;
   overflow: auto;
+  outline: none;
+  padding: 1rem;
+  background: var(--bg-color);
+  font-size: 1.3em;
+  margin-top: 1rem;
+  border: 1px solid var(--primary-text-color);
+  border-top-right-radius: .5rem;
+  border-top-left-radius: .5rem;
+  color: var(--primary-text-color);
  
 }
 ::-webkit-scrollbar{
@@ -636,8 +679,8 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-  font-size: 1.2em;
-  line-height: 1.4em;
+  font-size: 1rem;
+  line-height: 1.5em;
   z-index: -1;
     text-align: center;
  
