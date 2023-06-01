@@ -320,12 +320,13 @@ router.post("/newpost",  islogin, userStatusChecker, async (req,res)=>{
         try{
 
               await new Posts({
-            
+                 
+               
                 creator:req.session.name,
                 title,
                 html,
                 contain,
-                createdAt: `${date.getDate()}/${date.getMonth()+1}/ ${date.getFullYear()}`,
+                createdAt: `${date.getDate()}/${date.toLocaleString('default',{month:'short'})}/ ${date.getFullYear()}`,
                 uid: req.session.uid,
                 profileURL:req.session.profileURL
             }).save();
