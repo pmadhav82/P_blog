@@ -699,6 +699,7 @@ align-items: center;
   line-height: 1.5em;
   z-index: -1;
     text-align: center;
+   
  
  
 
@@ -720,12 +721,17 @@ text-align: left;
 width: 80%;
 background: var(--nav-bg-color);
 padding: 0.5rem 0 0.5rem 0.5rem;
-
+line-height: 1.5;
 }
 .single_post_contain p{
   margin: 1rem auto;
 }
 
+.single_post_contain img{
+  overflow: hidden;
+  max-width: 100%;
+  padding:0.5rem .5rem 0.5rem 0rem;
+}
 
  .single_post_contain ol, .single_post_contain ul, .single_post_contain pre{
   padding: 0 1rem;
