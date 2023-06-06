@@ -234,6 +234,13 @@ grid-template-columns: repeat(auto-fit,minmax(min(var(--min-column-size),100%),1
   border-radius: 1rem;
   margin: 1.5rem;
   max-width: 30rem ;
+  line-height: 1.5;
+
+  }
+  .post_title{
+    
+    font-weight: 550;
+    
   }
   .post_card footer{
     margin-top: 1rem;
@@ -715,6 +722,10 @@ align-items: center;
   opacity: 0.6;
   margin-bottom: 2rem ;
 }
+.single_post_title{
+  padding: 0 .3rem;
+}
+
 
 .single_post_contain{
 text-align: left;

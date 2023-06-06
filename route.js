@@ -76,7 +76,7 @@ router.get("/api/:email", async(req,res)=>{
 router.get("/welcome", islogin, userStatusChecker, async (req,res)=>{
    const {name, email,profileURL} = userStatus;   
     try{
-            const posts = await Posts.find({uid:req.session.uid}).sort({"_id": -1}).lean()
+            const posts = await Posts.find({uid:req.session.uid}).sort({_id: -1}).lean()
       
 res.render("welcome",{
   
@@ -101,7 +101,7 @@ router.get("/",  userStatusChecker,  async (req,res)=>{
     
 
     try{
-const posts = await Posts.find().sort({"_id": -1}).lean()
+const posts = await Posts.find().sort({_id: -1}).lean()
 res.render("home",{
    posts, 
  userStatus,
@@ -128,7 +128,7 @@ router.get("/user", userStatusChecker, async(req,res)=>{
   
   try{
   const userInfo = await Users.findById({_id:id},{"profileURL":1,"name":1, "email":1, "_id":0}).lean();
-    const posts = await Posts.find({uid:id}).lean().sort({"id":-1});
+    const posts = await Posts.find({uid:id}).lean().sort({_id:-1});
 const {name,profileURL,email} = userInfo
     res.render("userProfile",{
     userStatus,
