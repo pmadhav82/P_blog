@@ -1,30 +1,38 @@
 
 <div class="textbox-wrapper">
-  <h3>Write a new post</h3>
+  <h3>Edit your post</h3>
 {{#if errorMessage}}
   <div class="messages error-message">
   {{errorMessage}}
   </div>
+  {{/if}}
+  
 <form action="/editPost/{{id}}"  method="post" class="form">
 
 {{>-form}}
 
 <!-- Submit button -->
 <div class="btn-group">
- <a class="btn-link" href="/welcome">
- Cancle
- </a>
+
+<button class="button-40">
+   <a class="" href="/welcome">
+   Cancle
+   </a>
+
+    </button>
 
 
-<button type="submit" class="btn btn-secondary">
-  Save
-</button>
+
+ <button type="submit" class="button-40">
+    Save
+  </button>
 
 
 </div>
 
 
 </form>
+
 </div>
 
 
