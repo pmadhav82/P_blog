@@ -5,6 +5,7 @@ let subMenuLinks = document.querySelectorAll(".sub-menu-link");
 let modal = document.querySelector(".modal");
 
 const showMenu = ()=>{  
+
 modal.classList.toggle("modalOn");
 subMenu.classList.toggle("open");
 
@@ -19,8 +20,12 @@ subMenu.classList.toggle("open");
     }else
     return
 })
- 
-trigerBtn.addEventListener("click",showMenu)
+
+
+if(trigerBtn){
+
+    trigerBtn.addEventListener("click",showMenu)
+} 
 
 subMenuLinks.forEach(link=>{
     link.addEventListener("click",showMenu);
@@ -54,8 +59,12 @@ themeName.innerHTML = "Light mode";
 }
 let theme = localStorage.getItem("mode");
 
-    console.log("Theme changed to " + theme);
+    
 }
 
-toggleBtn.addEventListener("click", themToggler)
+
+if(toggleBtn){
+
+    toggleBtn.addEventListener("click", themToggler)
+}
 
