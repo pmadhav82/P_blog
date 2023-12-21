@@ -2,16 +2,29 @@
 
 
   <div class="single_post_card">
-    <div class="creator">
-      <div class="user_pic">
-        <img src="{{post.profileURL}}" />
-      </div>
-      <h4> <a href="/user?id={{post.uid}}">
-          {{post.creator}}
-        </a>
-      </h4>
+   <div class="user-info">
+    <div class="userPic">
+    <img  src= "{{post.uid.profileURL}}"/>
 
     </div>
+<div class="user-name">
+<h4> 
+    <a href="/user?id={{post.uid._id}}">
+    
+{{post.uid.name}}
+</a>
+
+    </h4>
+<div class="post_date">
+   
+   <p>
+
+   {{post.createdAt}}
+   </p>
+</div>
+</div>
+    
+</div>
 
     <div>
       <h3 class=" single_post_title">
@@ -21,13 +34,7 @@
     </div>
 
 
-    <div class="single_post_date">
 
-      <p>
-
-        {{post.createdAt}}
-      </p>
-    </div>
 
 
     <div class="single_post_contain">

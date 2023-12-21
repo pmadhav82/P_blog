@@ -57,6 +57,9 @@ next();
     }
 }
 
+
+
+router.use(userStatusChecker)
 // API to get blogs
 router.get("/api/:email", async(req,res)=>{
     let email = req.params.email;
@@ -73,11 +76,11 @@ router.get("/api/:email", async(req,res)=>{
 
 
 //get routes
-router.get("/welcome", islogin, userStatusChecker, async (req,res)=>{
+router.get("/welcome", islogin,  async (req,res)=>{
    const {name, email,profileURL} = userStatus;   
     try{
-            const posts = await Posts.find({uid:req.session.uid}).sort({_id: -1}).lean()
-      
+            const posts = await Posts.find({uid:req.session.uid}).populate("uid").sort({_id: -1}).lean()
+  
 res.render("welcome",{
   
     posts,
@@ -97,11 +100,10 @@ res.render("welcome",{
 })
 
 // Home Route
-router.get("/",  userStatusChecker,  async (req,res)=>{
+router.get("/",   async (req,res)=>{
     
-
     try{
-const posts = await Posts.find().sort({_id: -1}).lean()
+const posts = await Posts.find().sort({_id: -1}).populate("uid").lean()
 res.render("home",{
    posts, 
  userStatus,
@@ -119,7 +121,7 @@ res.render("home",{
 
 // A user posts
 
-router.get("/user", userStatusChecker, async(req,res)=>{
+router.get("/user",  async(req,res)=>{
   const id = req.query.id;
 
   if(req.session.uid === id){
@@ -128,7 +130,7 @@ router.get("/user", userStatusChecker, async(req,res)=>{
   
   try{
   const userInfo = await Users.findById({_id:id},{"profileURL":1,"name":1, "email":1, "_id":0}).lean();
-    const posts = await Posts.find({uid:id}).lean().sort({_id:-1});
+    const posts = await Posts.find({uid:id}).populate("uid").lean().sort({_id:-1});
 const {name,profileURL,email} = userInfo
     res.render("userProfile",{
     userStatus,
@@ -160,6 +162,7 @@ router.get("/forgot-pass", ifLogin, (req,res)=>{
     res.render("reset")
  })
 
+ 
 // password reset post route
 
 router.post("/passport-reset", async (req,res)=>{
@@ -293,7 +296,7 @@ res.redirect("/login");
 
 
  //get post route 
- router.get("/newpost", islogin, userStatusChecker, (req,res)=>{
+ router.get("/newpost", islogin, (req,res)=>{
 
         res.render("newpost",{
             userStatus
@@ -305,7 +308,7 @@ res.redirect("/login");
 
  //post post route
 
-router.post("/newpost",  islogin, userStatusChecker, async (req,res)=>{
+router.post("/newpost",  islogin,  async (req,res)=>{
     const {title, contain} = req.body;
     if(title.trim() === "" || contain.trim() === ""){
         res.render("newpost",{
@@ -322,13 +325,11 @@ router.post("/newpost",  islogin, userStatusChecker, async (req,res)=>{
               await new Posts({
                  
                
-                creator:req.session.name,
                 title,
                 html,
                 contain,
                 createdAt: `${date.getDate()}/${date.toLocaleString('default',{month:'short'})}/ ${date.getFullYear()}`,
-                uid: req.session.uid,
-                profileURL:req.session.profileURL
+                uid: req.session.uid
             }).save();
 
             res.redirect("/welcome")
@@ -347,7 +348,7 @@ router.post("/newpost",  islogin, userStatusChecker, async (req,res)=>{
 
 
 //Singup route
-router.post("/signup", userStatusChecker, async (req,res)=>{
+router.post("/signup", async (req,res)=>{
 try{
 
     let name = req.body.name;
@@ -395,7 +396,7 @@ res.redirect("/welcome")
 
 
 // render file upload form
-router.get("/changeProfile", islogin, userStatusChecker, (req,res)=>{
+router.get("/changeProfile", islogin, (req,res)=>{
 res.render("uploadForm",{
   userStatus  
 })
@@ -405,7 +406,7 @@ res.render("uploadForm",{
 
 
 //Login route
-router.post("/login", userStatusChecker, async (req,res)=>{
+router.post("/login", async (req,res)=>{
 try{
 let foundUser = await Users.findOne({email:req.body.email})
 
@@ -443,7 +444,7 @@ req.flash("error","Invalid email or passport")
 
 
 //logout
-router.get("/logout",islogin, userStatusChecker,(req,res)=>{
+router.get("/logout",islogin, (req,res)=>{
 
     req.session.destroy();
     res.redirect("/");
@@ -451,11 +452,11 @@ router.get("/logout",islogin, userStatusChecker,(req,res)=>{
 
 
 // Getting a single post
-router.get("/:id", userStatusChecker, async(req,res)=>{
+router.get("/:id",  async(req,res)=>{
      const{id}  = req.params;
 let post;
     try{
-    post = await Posts.findById({_id: id}).lean();
+    post = await Posts.findById({_id: id}).populate("uid").lean();
 
 }catch(er){
 
@@ -481,7 +482,7 @@ post,
 // Deteling a post
 
 
-router.post("/delete/:id", islogin, userStatusChecker, async (req,res)=>{
+router.post("/delete/:id", islogin,  async (req,res)=>{
  if(req.session.name && req.session.email){
 let success =  await Posts.deleteOne({_id:req.params.id});
 if(success){
@@ -505,7 +506,7 @@ if(success){
 
 //Send edip post in edit form
 
-router.post("/:id", islogin,userStatusChecker, async (req,res)=>{
+router.post("/:id", islogin, async (req,res)=>{
     try{
         const article = await Posts.findById(req.params.id);
         res.render("editPost",{
@@ -524,7 +525,7 @@ router.post("/:id", islogin,userStatusChecker, async (req,res)=>{
 
 // updating database to edit article
 
-router.post("/editPost/:id", islogin, userStatusChecker, async (req,res)=>{
+router.post("/editPost/:id", islogin, async (req,res)=>{
 
 let {title, contain}= req.body;
 
@@ -580,27 +581,21 @@ router.post("/upload/profile",  upload.single("userProfile"), async(req,res)=>{
     }
     else{   
         
-        let success1 ;
-        let success2;
+       
         let filePath = `/images/${req.file.filename}`;
+
         try{
-           success1 = await Posts.updateMany({uid:req.session.uid},{profileURL:filePath});
-           req.session.profileURL = filePath;
-        }catch(er){
-            console.log(er)
-        }
-        try{
-success2 = await Users.findByIdAndUpdate(req.session.uid,{
+        req.session.profileURL = filePath;
+ await Users.findByIdAndUpdate(req.session.uid,{
     profileURL: filePath
 })
-        }catch(er){
-            console.log(er)
-        }
-        if(success1&&success2){
-           
-            res.redirect("/welcome")
-        } else{
+
+res.redirect("/welcome")
+       
+}catch(er){
             res.redirect("/changeProfile")
+
+            console.log(er)
         }
     }
 })

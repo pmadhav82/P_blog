@@ -3,18 +3,18 @@
  {{#each posts}}
 <div class="post_card">
 <div class="user-info">
-    <a href="/user?id={{this.uid}}">
-    <img class="userPic" src= "{{this.profileURL}}"/>
+    <div class="userPic">
+    <img  src= "{{this.uid.profileURL}}"/>
+
+    </div>
+<div class="user-name">
 <h4> 
-{{this.creator}}
+    <a href="/user?id={{this.uid._id}}">
+    
+{{this.uid.name}}
 </a>
 
     </h4>
-    
-</div>
-<hr>
-    
-   
 <div class="post_date">
    
    <p>
@@ -22,6 +22,12 @@
    {{this.createdAt}}
    </p>
 </div>
+</div>
+    
+</div>
+
+    
+   
 <div class="post_title">
 
  
@@ -29,9 +35,10 @@
  
 </div>
 <div class="post-card-footer">
+    
     <button class="btn">
- <a  href="/{{ this._id}}"> Read more</a>
-
+        
+<a href="/{{this._id}}">Read more</a>
     </button>
 </div>
 

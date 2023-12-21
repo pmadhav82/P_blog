@@ -1,13 +1,11 @@
 const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema({
-    creator:{
-        type: String,
-        required:true
-    },
+ 
     uid:{
-        type: String,
-        required:true
+        type:mongoose.Schema.Types.ObjectId,
+        require:true,
+        ref:"Users"   
     },
     title:{
         type: String,
@@ -22,10 +20,6 @@ const postSchema = new mongoose.Schema({
         required:true
     },
     createdAt:{
-        type:String,
-        required:true
-    },
-    profileURL:{
         type:String,
         required:true
     }

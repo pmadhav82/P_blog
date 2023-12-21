@@ -6,15 +6,18 @@
  {{#each posts}}
 <div class="post_card">
 <div class="user-info">
-    <img class="userPic"  src= "{{this.profileURL}}"/>
-<h4> <a href="#">
-{{this.creator}}
-</a>
-    </h4>
-</div>
-<hr>
+    <div class="userPic">
+    <img  src= "{{this.uid.profileURL}}"/>
+
+    </div>
+<div class="user-name">
+<h4> 
+    <a href="/user?id={{this.uid._id}}">
     
-   
+{{this.uid.name}}
+</a>
+
+    </h4>
 <div class="post_date">
    
    <p>
@@ -22,6 +25,12 @@
    {{this.createdAt}}
    </p>
 </div>
+</div>
+    
+</div>
+
+   
+
 <div class="post_title">
    <h4>
 <a  href="/{{this._id}}"> {{this.title}}</a> 
