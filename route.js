@@ -15,6 +15,7 @@ const crypto = require("crypto");
 const createDomPurify = require("dompurify");
 const {JSDOM} = require("jsdom");
 const {marked} = require("marked");
+const { logEvents } = require("./utils/logger");
 const window = new JSDOM('').window;
 const DOMPurify = createDomPurify(window);
 
@@ -457,7 +458,7 @@ router.get("/:id",  async(req,res)=>{
 let post;
     try{
     post = await Posts.findById({_id: id}).populate("uid").lean();
-
+logEvents(JSON.stringify(post.uid),"postlog.log");
 }catch(er){
 
     console.log(er)
