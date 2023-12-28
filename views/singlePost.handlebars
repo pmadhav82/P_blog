@@ -117,5 +117,11 @@ title={{post.title}}&summary= {{post.title}} &source=">
 
 
   </div>
+  <h3>Comments</h3>
+{{#if userStatus.login}}
+
+  {{> -commentInput }}
+
+  {{/if}}
 
 </div>

@@ -1,66 +1,30 @@
 const express = require ("express");
 const router = express.Router();
-const Users = require("./module/user");
-const Posts = require("./module/posts");
-const Token = require("./module/token");
+const Users = require("../module/user");
+const Posts = require("../module/posts");
 const bcrypt = require("bcrypt");
 const  session = require("express-session");
-const upload = require("./fileUpload");
-const sendEmail = require("./utils/sendEmail");
-const {generateToken, isValidToken} = require ("./utils/tokenHandeler");
-const {islogin, ifLogin} = require("./utils/loginHandeler");
+const upload = require("../fileUpload");
+const sendEmail = require("../utils/sendEmail");
+const {generateToken, isValidToken} = require ("../utils/tokenHandeler");
+const {islogin, ifLogin} = require("../utils/loginHandeler");
 const flash = require("connect-flash");
 const crypto = require("crypto");
 // markedjs, dompurify and jsdom init
 const createDomPurify = require("dompurify");
 const {JSDOM} = require("jsdom");
 const {marked} = require("marked");
-const { logEvents } = require("./utils/logger");
 const window = new JSDOM('').window;
 const DOMPurify = createDomPurify(window);
 
+//password validator
+const passwordValidator = require("../utils/passWordValidator");
 
 
-
-// middleware fucntion to associate connect-flash on response
-router.use((req,res,next)=>{
-res.locals.message = req.flash();
-next()
-})
+// userStatus
+const {userStatus} = require("../utils/userStatusChecker");
 
 
-// User initial status
-let userStatus = {
-    login:false,
-    name:null,
-    profileURL:null,
-    email:null
-}
-
-
-
-
-
-//middleware function to check status
-const  userStatusChecker = (req,res,next)=>{
-    if(req.session.name &&  req.session.email){
-userStatus.login = true;
-userStatus.name = req.session.name;
-userStatus.profileURL = req.session.profileURL;
-userStatus.email = req.session.email;
-next();
-    }else{
-        userStatus.login = false;
-        userStatus.name = null;
-        userStatus.profileURL = null;
-        userStatus.email=null;
-     next();
-    }
-}
-
-
-
-router.use(userStatusChecker)
 // API to get blogs
 router.get("/api/:email", async(req,res)=>{
     let email = req.params.email;
@@ -182,7 +146,6 @@ const html = `<b> Hi ${user.name}, </b>
 <a href = "${link}"> Reset Password </a>
 `
 
-console.log(link);
 
 const payload = {
     email,
@@ -252,26 +215,19 @@ try{
     console.log(er)
 }
 if(isValid){
+
 const {password, repeatPassword}=req.body;
+const {isValidPassword, message} = passwordValidator(password.trim(), repeatPassword.trim())
 
-if(password.length<6){
-    
-   return  res.render("newPasswordForm",{
-    token,
-    id,
-    errorMessage:"Password need to have minimum 6 characters"
-   })
-}
-if (password!== repeatPassword){
-   return  res.render("newPasswordForm",{
-    token,
-    id,
-    errorMessage:" Password is not match."
-   })
+if(!isValidPassword){
+    res.render("newPasswordForm",{
+        token,
+            id,
+         errorMessage: message
+    })
 }
 
-
-if(password == repeatPassword && password.length>6){
+if(isValidPassword){
 try{
     let hashedPassword = await bcrypt.hash(repeatPassword,10);
     let update_success = await Users.updateOne({_id:id},{password:hashedPassword});
@@ -358,7 +314,18 @@ try{
     let passwordRepeat =req.body.repeatpassword;
 let foundUser = await Users.findOne({email:email});
 
-if( !foundUser && password == passwordRepeat && password.length>=6){
+const {isValidPassword, message} = passwordValidator(password.trim(), passwordRepeat.trim())
+
+if(foundUser){
+    req.flash("error","User is exists already");
+    res.redirect("/signup")
+}
+if(!isValidPassword){
+    req.flash("error", `${message}`)
+    res.redirect("/signup")
+}
+
+if( !foundUser && isValidPassword){
 
 let newUser = await new Users({
     name,
@@ -373,21 +340,9 @@ req.session.profileURL = newUser.profileURL
 
 res.redirect("/welcome")
 
-}else {
-    if(foundUser){
-       req.flash("error","User is exists already");
-       res.redirect("/signup")
-   }
-
-    if(password.length<6){
-        req.flash("error","Password need to have minimum 6 characters")
-         res.redirect("/signup")
-    }
-    if (password!== passwordRepeat){
-        req.flash("error","Password is not match")
-         res.redirect("/signup")
-    }
 }
+
+
 }catch(err){
     console.log(err);
 }
@@ -455,20 +410,20 @@ router.get("/logout",islogin, (req,res)=>{
 // Getting a single post
 router.get("/:id",  async(req,res)=>{
      const{id}  = req.params;
-let post;
+
     try{
-    post = await Posts.findById({_id: id}).populate("uid").lean();
-logEvents(JSON.stringify(post.uid),"postlog.log");
+  let  post = await Posts.findById({_id: id}).populate("uid").lean();
+  if(post){
+      res.render("singlePost",{         
+  post,
+         userStatus
+   })
+  }
+
 }catch(er){
 
     console.log(er)
 
-}
-if(post){
-    res.render("singlePost",{         
-post,
-       userStatus
- })
 }
 
 })

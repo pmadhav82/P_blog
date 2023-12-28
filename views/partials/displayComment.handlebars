@@ -1,0 +1,17 @@
+{{#if comments}}
+<div class="comment">
+{{#each comments}}
+<p>{{this.text}}</p>
+
+{{#if this.replies}}
+<div class="reply">
+    {{> displayComment comments = this.replies}}
+</div>
+{{/if}}
+
+{{/each}}
+
+</div>
+
+
+{{/if}}

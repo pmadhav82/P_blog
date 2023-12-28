@@ -3,12 +3,14 @@ const express = require("express");
 const handlebars = require("express-handlebars");
 const PORT = process.env.PORT || 8000;
 const mongoose = require("mongoose");
-const route = require("./route");
+const route = require("./routes/route");
+const commentRoute = require("./routes/comment");
 const app = express();
 const path = require("path");
 const cors = require("cors");
 const session = require("express-session");
 const flash = require("connect-flash");
+const {userStatusChecker} = require("./utils/userStatusChecker");
 
 app.use(
   session({
@@ -20,8 +22,25 @@ app.use(
 
 app.use(flash());
 
+
+
+// middleware fucntion  associate connect-flash on response
+app.use((req,res,next)=>{ 
+  res.locals.message = req.flash();
+  next()
+  })
+  
+
+
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
+
+
+
+// userstatus checker function
+app.use(userStatusChecker)
+
+
 
 //database connection
 
@@ -49,5 +68,6 @@ app.set("views", "./views");
 
 //router connection
 app.use("/", route);
+app.use("/comment", commentRoute);
 
 app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
