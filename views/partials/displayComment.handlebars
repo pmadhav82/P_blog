@@ -1,17 +1,44 @@
 {{#if comments}}
 <div class="comment">
 {{#each comments}}
-<p>{{this.text}}</p>
 
-{{#if this.replies}}
+<div class = "single-cmt-card">
+  <div class = "card-header">
+   <div class="user_pic">
+       <a href="/user?id={{this.postedBy._id}}">
+       
+        <img alt="user-pic" src="{{this.postedBy.profileURL}}" />
+       </a>
+        
+      </div>
+    <div class = "user-name">
+      <b>{{this.postedBy.name}}</b>
+            <span class="post_date"> {{formatDate this.commentedAt}}</span>
+    
+  </div>
+  </div>
+  <div class="card-body">
+ {{this.text}}
+    </div>
+      
+<div class = "action-btns"> 
+  <button class="reply-btn"> Reply 
+  </button>
+  <button class= "delete-btn"> Delete </button>
+</div>
+  
+</div>
+
+ {{#if this.replies}}
 <div class="reply">
     {{> displayComment comments = this.replies}}
 </div>
-{{/if}}
+{{/if}} 
 
 {{/each}}
 
 </div>
-
+{{else}}
+<p><b>No comment!</b></p>
 
 {{/if}}

@@ -5,7 +5,7 @@ const commentSchema = new Schema({
 postedBy:{
     type: Schema.Types.ObjectId,
     required:true,
-    ref:"users"
+    ref:"Users"
 },
 postId:{
 type:Schema.Types.ObjectId,
@@ -31,11 +31,10 @@ replies:[{
 }]
 
 });
-
-commentSchema.pre("find", (next)=>{
-    this.populate({path:"replies"});
+commentSchema.pre("find", function( next){
+    this.populate({path:"replies"})
     next()
 })
 
-const Comment = new model("comment", commentSchema);
+const Comment = new model("comments", commentSchema);
 module.exports = Comment;

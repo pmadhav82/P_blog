@@ -4,11 +4,44 @@
     align-items : center;
     flex-wrap: wrap;
   }
-  .cmt-user-pic{
-    width:50px;
-    height:50px;
-    border-radius:50%;
+
+  .comment{
+    margin-top: 1rem;
   }
 
+  .single-cmt-card{
+    margin: 1rem 0;
+   max-width: 500px;
+   word-wrap:break-word;
+padding: .5rem;
+  }
+  
+  
+  .card-header{
+    display:flex;
+    align-items:center;
+    
+  }
+  
+  .user-name{
+    display:flex;
+    flex-direction:column;
+  }
+  .card-body{
+    margin-top:.2rem;
+   
+  }
+  
+  .action-btns{
+    margin-top:.5rem;
+    display:flex;
+    gap:.5rem;
+  }
+  .action-btns button{
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    
+  }
 
  

@@ -16,6 +16,7 @@ const {JSDOM} = require("jsdom");
 const {marked} = require("marked");
 const window = new JSDOM('').window;
 const DOMPurify = createDomPurify(window);
+const Comment = require("../module/comment")
 
 //password validator
 const passwordValidator = require("../utils/passWordValidator");
@@ -307,11 +308,8 @@ router.post("/newpost",  islogin,  async (req,res)=>{
 //Singup route
 router.post("/signup", async (req,res)=>{
 try{
+const{name, email, password, passwordRepeat} = req.body;
 
-    let name = req.body.name;
-    let email = req.body.email;
-    let password = req.body.password;
-    let passwordRepeat =req.body.repeatpassword;
 let foundUser = await Users.findOne({email:email});
 
 const {isValidPassword, message} = passwordValidator(password.trim(), passwordRepeat.trim())
@@ -412,11 +410,14 @@ router.get("/:id",  async(req,res)=>{
      const{id}  = req.params;
 
     try{
-  let  post = await Posts.findById({_id: id}).populate("uid").lean();
-  if(post){
+  const  post = await Posts.findById({_id: id}).populate("uid").lean();
+const comments = await Comment.find({postId:id, parentComment:null}).sort({_id:1}).populate({path:"replies"}).populate("postedBy").lean();
+
+if(post){
       res.render("singlePost",{         
   post,
-         userStatus
+  comments,
+ userStatus
    })
   }
 

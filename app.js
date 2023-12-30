@@ -11,6 +11,7 @@ const cors = require("cors");
 const session = require("express-session");
 const flash = require("connect-flash");
 const {userStatusChecker} = require("./utils/userStatusChecker");
+const formatDate = require("./utils/formateDate");
 
 app.use(
   session({
@@ -61,10 +62,18 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.static(`${__dirname}/upload`));
 
 //init handlebars
-app.engine("handlebars", handlebars());
+app.engine("handlebars", handlebars({
+  helpers:{
+    formatDate
+  }
+}));
 
 app.set("view engine", "handlebars");
 app.set("views", "./views");
+
+
+
+
 
 //router connection
 app.use("/", route);
