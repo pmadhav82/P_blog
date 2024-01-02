@@ -32,7 +32,10 @@ replies:[{
 
 });
 commentSchema.pre("find", function( next){
-    this.populate({path:"replies"})
+    this.populate({path:"replies",
+populate:{path:"postedBy"}
+
+})
     next()
 })
 

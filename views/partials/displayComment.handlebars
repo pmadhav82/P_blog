@@ -1,8 +1,12 @@
-{{#if comments}}
+
+
+
+
+
 <div class="comment">
 {{#each comments}}
 
-<div class = "single-cmt-card">
+<div class = "single-cmt-card" id="{{this._id}}">
   <div class = "card-header">
    <div class="user_pic">
        <a href="/user?id={{this.postedBy._id}}">
@@ -19,18 +23,42 @@
   </div>
   <div class="card-body">
  {{this.text}}
+ 
     </div>
-      
+
 <div class = "action-btns"> 
+
   <button class="reply-btn"> Reply 
   </button>
-  <button class= "delete-btn"> Delete </button>
-</div>
-  
+  <form  action="/comment/{{this._id}}/delete/{{this.postId}}" method="post" >
+  <button type="submit" class= "delete-btn"> Delete </button>
+
+  </form>
 </div>
 
+
+
+
+ <div class = "reply-cmt">
+   
+  <form action="/comment/{{this._id}}/reply/{{this.postId}}" method="post">
+      <textarea class="reply-textarea" name="replyText" rows="3"  placeholder = 'Enter your reply'></textarea>
+      <div class = "action-btns">
+        <button type="submit"> Submit </button>
+        <button type="button" class = "cancle-btn"> Cancle </button>
+    
+      </div>
+
+  </form>
+    </div>
+
+</div>
+
+ 
+
+
  {{#if this.replies}}
-<div class="reply">
+<div class="reply" style="margin-left: 5px; border-left: solid 1px var(--primary-text-color);">
     {{> displayComment comments = this.replies}}
 </div>
 {{/if}} 
@@ -38,7 +66,7 @@
 {{/each}}
 
 </div>
-{{else}}
-<p><b>No comment!</b></p>
 
-{{/if}}
+
+
+

@@ -32,10 +32,10 @@ router.get("/api/:email", async(req,res)=>{
     
     try{
         let user = await Users.findOne({email});
-    let blogs = await Posts.find({uid:user._id}).sort({_id:-1});
+    let blogs = await Posts.find({uid:user._id}).populate({path:"uid", select:"-password"}).sort({_id:-1}).lean();
     res.status(200).json(blogs)
     }catch(err){
-    res.status(404).json({message:"Something went wrong"})
+    res.status(404).json({message:err.message})
     }
     
     })
@@ -96,7 +96,9 @@ router.get("/user",  async(req,res)=>{
   
   try{
   const userInfo = await Users.findById({_id:id},{"profileURL":1,"name":1, "email":1, "_id":0}).lean();
-    const posts = await Posts.find({uid:id}).populate("uid").lean().sort({_id:-1});
+  
+const posts = await Posts.find({uid:id}).populate({path:"uid", select:"-password"}).lean().sort({_id:-1});
+
 const {name,profileURL,email} = userInfo
     res.render("userProfile",{
     userStatus,
@@ -309,7 +311,6 @@ router.post("/newpost",  islogin,  async (req,res)=>{
 router.post("/signup", async (req,res)=>{
 try{
 const{name, email, password, passwordRepeat} = req.body;
-
 let foundUser = await Users.findOne({email:email});
 
 const {isValidPassword, message} = passwordValidator(password.trim(), passwordRepeat.trim())
@@ -324,11 +325,11 @@ if(!isValidPassword){
 }
 
 if( !foundUser && isValidPassword){
-
+    let hashedPassword = await bcrypt.hash(passwordRepeat,10);
 let newUser = await new Users({
     name,
     email,
-    password
+    password:hashedPassword
 }).save();
 
 req.session.name = newUser.name
@@ -410,9 +411,9 @@ router.get("/:id",  async(req,res)=>{
      const{id}  = req.params;
 
     try{
-  const  post = await Posts.findById({_id: id}).populate("uid").lean();
-const comments = await Comment.find({postId:id, parentComment:null}).sort({_id:1}).populate({path:"replies"}).populate("postedBy").lean();
-
+  const  post = await Posts.findById({_id: id}).populate({path:"uid",select:"-password"}).lean();
+ 
+const comments = await Comment.find({postId:id, parentComment:null}).sort({_id:1}).populate({path:"replies"}).populate({path:"postedBy", select:"-password"}).lean();
 if(post){
       res.render("singlePost",{         
   post,
@@ -428,8 +429,6 @@ if(post){
 }
 
 })
-
-
 
 
 

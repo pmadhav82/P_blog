@@ -68,3 +68,35 @@ if(toggleBtn){
     toggleBtn.addEventListener("click", themToggler)
 }
 
+
+
+
+const replybtn = document.querySelectorAll(".reply-btn");
+
+const cancleBtn = document.querySelectorAll(".cancle-btn");
+const replyTextArea = document.querySelectorAll(".reply-cmt");
+const textArea = document.querySelectorAll(".reply-textarea")
+
+
+
+
+const toggleReplyTextArea = (index) =>{
+  replyTextArea[index].classList.toggle("reply-cmt-show");
+ return textArea[index].value = ""
+}
+
+
+replybtn.forEach((btn,i)=>{
+  btn.addEventListener("click", ()=>{
+  toggleReplyTextArea(i)
+  }) 
+})
+
+cancleBtn.forEach((btn,i)=>{
+  btn.addEventListener("click",()=>{
+      toggleReplyTextArea(i)
+
+  })
+})
+
+
