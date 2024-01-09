@@ -720,7 +720,7 @@ align-items: center;
   z-index: 1;
     text-align: center;
     max-width: 1300px;
-
+width: 100%;
    
      overflow-wrap: break-word;
 }
@@ -926,7 +926,7 @@ background-color: var(--color3);
 
 
 
-@media (max-width:700px) {
+@media (max-width:520px) {
   .login-box form, .singup-box form, .main form{
     width: 90%;  
   }
@@ -948,9 +948,7 @@ background-color: var(--color3);
   .image-modal-contain img{
     max-width: 90%;
   } 
-  .single_post_card{
-    width: 100%;
-  }
+
   .single_post_contain{
     width: 100%;
   
