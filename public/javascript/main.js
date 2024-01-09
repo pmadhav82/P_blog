@@ -73,7 +73,7 @@ if(toggleBtn){
 
 const replybtn = document.querySelectorAll(".reply-btn");
 
-const cancleBtn = document.querySelectorAll(".cancle-btn");
+const cancelBtn = document.querySelectorAll(".cancel-btn");
 const replyTextArea = document.querySelectorAll(".reply-cmt");
 const textArea = document.querySelectorAll(".reply-textarea")
 
@@ -92,7 +92,7 @@ replybtn.forEach((btn,i)=>{
   }) 
 })
 
-cancleBtn.forEach((btn,i)=>{
+cancelBtn.forEach((btn,i)=>{
   btn.addEventListener("click",()=>{
       toggleReplyTextArea(i)
 

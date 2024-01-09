@@ -440,7 +440,9 @@ if(post){
 
 router.post("/delete/:id", islogin,  async (req,res)=>{
  if(req.session.name && req.session.email){
+    const{id} = req.params;
 let success =  await Posts.deleteOne({_id:req.params.id});
+await Comment.deleteMany({postId:id})
 if(success){
   
     res.redirect("/welcome");

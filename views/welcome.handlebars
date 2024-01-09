@@ -49,7 +49,7 @@
           <h4> Do you want to delete this post?</h4>
           <div class="action-btn">
 
-  <button class="canclebtn btn-primary">Cancle</button>
+  <button class="cancelbtn btn-primary">cancel</button>
 <form method="post" action="delete/{{this._id}}">
 <button class="btn-secondary" type="submit">Delete</button>
 </form>
@@ -68,7 +68,7 @@
 
 let modals = document.querySelectorAll(".modal-wrapper");
 let tiggerbtn = document.querySelectorAll(".tiggerbtn") ;
-let canclebtns = document.querySelectorAll(".canclebtn");
+let cancelbtns = document.querySelectorAll(".cancelbtn");
 
 
 
@@ -83,8 +83,8 @@ modals[i].classList.toggle("show-modal");
 })
 
 //cancle modal when cancle btn is clicked
-canclebtns.forEach((btn,i)=>{
-  canclebtns[i].addEventListener("click",()=>{
+cancelbtns.forEach((btn,i)=>{
+  cancelbtns[i].addEventListener("click",()=>{
     modals[i].classList.toggle("show-modal");
   })
 })
@@ -92,7 +92,7 @@ canclebtns.forEach((btn,i)=>{
 
 
 
-// cancle modal when user clicked outside the box
+// cancel modal when user clicked outside the box
 window.addEventListener("click", (e)=>{
 
 for(const modal of modals){
