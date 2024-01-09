@@ -749,7 +749,7 @@ align-items: center;
   display: flex;
   flex-direction: column;
 text-align: left;
-width: 80%;
+width: 70%;
 padding: 0.5rem 0 0.5rem 0.5rem;
 line-height: 1.5;
 }
@@ -926,7 +926,7 @@ background-color: var(--color3);
 
 
 
-@media (max-width:500px) {
+@media (max-width:700px) {
   .login-box form, .singup-box form, .main form{
     width: 90%;  
   }
