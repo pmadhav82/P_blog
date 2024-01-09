@@ -746,6 +746,8 @@ align-items: center;
 
 
 .single_post_contain{
+  display: flex;
+  flex-direction: column;
 text-align: left;
 width: 80%;
 padding: 0.5rem 0 0.5rem 0.5rem;
