@@ -14,3 +14,4 @@
 4. Syntax highlight
 5. User can upload profile picture
 6. User can toggle dark mode or light mode
+7. User can comment to a post and add reply to other comment as well
