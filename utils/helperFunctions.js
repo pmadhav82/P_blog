@@ -1,17 +1,6 @@
 
 const {userStatus} = require("./userStatusChecker");
-
-
-
-
 const moment = require("moment");
-
-
-
-
-
-
-
 
 
 const formatDate = (date) =>{
@@ -23,11 +12,18 @@ const formatDate = (date) =>{
 
 
 
-const isCorrentUser = (userId)=>{
-    const {login, uid} = userStatus
-if(login && uid && uid ===userId.toString())return true
-else return false
+const showBtns = (buttonType, userId) =>{
+    const {uid, login} = userStatus
+switch(buttonType){
+   case "reply":
+    return login
+    case "delete":
+        return login && uid === userId.toString();
+        default:
+        return false
+}
+
 }
 
 
-module.exports = {formatDate, isCorrentUser}
+module.exports = {formatDate, showBtns}

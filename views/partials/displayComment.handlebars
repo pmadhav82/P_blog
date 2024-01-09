@@ -26,23 +26,32 @@
  
     </div>
 
+
+
 <div class = "action-btns"> 
 
-  <button class="reply-btn"> Reply 
+{{#if (showBtns "reply")}}
+<button class="reply-btn"> Reply 
   </button>
+{{/if}}
+
+  {{#if (showBtns "delete" this.postedBy._id)}}
   <form  action="/comment/{{this._id}}/delete/{{this.postId}}" method="post" >
   <button type="submit" class= "delete-btn"> Delete </button>
-
   </form>
+  {{/if}}
+
+
+
 </div>
 
 
 
 
+{{#if (showBtns "reply")}}
  <div class = "reply-cmt">
-   
   <form action="/comment/{{this._id}}/reply/{{this.postId}}" method="post">
-      <textarea class="reply-textarea" name="replyText" rows="3"  placeholder = 'Enter your reply'></textarea>
+      <textarea required class="reply-textarea" name="replyText" rows="3"  placeholder = 'Enter your reply'></textarea>
       <div class = "action-btns">
         <button type="submit"> Submit </button>
         <button type="button" class = "cancle-btn"> Cancle </button>
@@ -51,6 +60,10 @@
 
   </form>
     </div>
+
+{{/if}}
+
+
 
 </div>
 

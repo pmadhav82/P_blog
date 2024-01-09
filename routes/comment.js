@@ -43,8 +43,8 @@ try{
 
 
 commentRoute.post("/:commentId/reply/:postId", islogin,[body("replyText").trim().escape().notEmpty()], async(req,res)=>{
-const commentId = req.params.commentId;
-const postId = req.params.postId;
+const {commentId, postId} = req.params;
+
     const errors = validationResult(req)
 const {replyText} = req.body;
 if(errors.isEmpty()){
@@ -73,31 +73,26 @@ res.redirect(`/${postId}#${commentId}`)
 
 
 commentRoute.post("/:commentId/delete/:postId", islogin, async(req,res)=>{
-const commentId = req.params.commentId;
-const postId = req.params.postId;
+    const {commentId, postId} = req.params;
+
 try{
     const comment = await Comment.findOne({_id:commentId, postId}).lean()
-    console.log(comment.postedBy.toString())
+
     if(comment && comment.postedBy.toString() === req.session.uid){
         await Comment.deleteMany({_id:{$in:comment.replies}})
-        const deleted = await Comment.deleteOne({_id:commentId})
-        if(deleted){
-            
-res.redirect(`/${postId}#comment-field`)
-        }
+         await Comment.deleteOne({_id:commentId})
     }else{
-              
         req.flash("error", `Comment failed to delete`)
-
-        res.redirect(`/${postId}#comment-field`)
     }
 
 }catch(er){
     console.log(er.message)
+   
 }
 
-
+res.redirect(`/${postId}#comment-field`)
 
 })
 
 module.exports = commentRoute;
+

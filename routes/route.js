@@ -407,13 +407,13 @@ router.get("/logout",islogin, (req,res)=>{
 
 
 // Getting a single post
-router.get("/:id",  async(req,res)=>{
-     const{id}  = req.params;
+router.get("/:postId",  async(req,res)=>{
+     const{postId}  = req.params;
 
     try{
-  const  post = await Posts.findById({_id: id}).populate({path:"uid",select:"-password"}).lean();
+  const  post = await Posts.findById({_id: postId}).populate({path:"uid",select:"-password"}).lean();
  
-const comments = await Comment.find({postId:id, parentComment:null}).sort({_id:1}).populate({path:"replies"}).populate({path:"postedBy", select:"-password"}).lean();
+const comments = await Comment.find({postId, parentComment:null}).sort({_id:1}).populate({path:"replies"}).populate({path:"postedBy", select:"-password"}).lean();
 if(post){
       res.render("singlePost",{         
   post,

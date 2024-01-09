@@ -11,7 +11,7 @@ const cors = require("cors");
 const session = require("express-session");
 const flash = require("connect-flash");
 const {userStatusChecker} = require("./utils/userStatusChecker");
-const {formatDate, isCorrentUser} = require("./utils/helperFunctions");
+const {formatDate, showBtns} = require("./utils/helperFunctions");
 
 app.use(
   session({
@@ -65,7 +65,7 @@ app.use(express.static(`${__dirname}/upload`));
 app.engine("handlebars", handlebars({
   helpers:{
     formatDate,
-    isCorrentUser
+ showBtns
   }
 }));
 
@@ -80,4 +80,4 @@ app.set("views", "./views");
 app.use("/", route);
 app.use("/comment", commentRoute);
 
-app.listen(PORT, () => console.log(`Server is running on ${PORT}`));
+app.listen(PORT, () => console.log(`Server is running on ${PORT} `));
