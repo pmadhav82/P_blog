@@ -12,7 +12,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const {userStatusChecker} = require("./utils/userStatusChecker");
 const {formatDate, showBtns} = require("./utils/helperFunctions");
-
+const {userStatus} = require("./utils/userStatusChecker");
 app.use(
   session({
     secret: process.env.SECRET,
@@ -23,6 +23,11 @@ app.use(
 
 app.use(flash());
 
+// setting global variable for userStatus
+app.use((req,res,next)=>{
+  res.locals.userStatus = userStatus;
+  next()
+})
 
 
 // middleware fucntion  associate connect-flash on response
@@ -79,5 +84,8 @@ app.set("views", "./views");
 //router connection
 app.use("/", route);
 app.use("/comment", commentRoute);
+app.use("/*", (req,res)=>{
+  res.render("404");
+})
 
 app.listen(PORT, () => console.log(`Server is running on ${PORT} `));
