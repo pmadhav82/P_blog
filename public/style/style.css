@@ -1,16 +1,15 @@
 :root{
-    --bg-color:	#ffffff;
-
-    --primary-text-color: #222;
+    --bg-color:	#F5F5F5;
+   --primary-text-color: #222;
     --secondary-text-color: #444444;
     --nav-bg-color:#FFFBF5;
     --logo-color: #d54d7b;
     --transition-value:0.5s;
 
     --color1:#e3e4e8;
-    --color2:#d2d4d8;
+    --color2:#ffffff;
     --color3:#f1faee;
-    
+    --color4:#007bff;
   }
   
   
@@ -34,16 +33,16 @@
 
   
   .dark-mode{
-    --bg-color:#121212;;
+    --bg-color:#0d1117;;
     --primary-text-color: #fff;
     --secondary-text-color: #f5f5f5;
   --nav-bg-color:#000;
   --logo-color: #d54d7b;
   --color1:#3d3b3b;
-    --color2:#5160f9;
+    --color2:#30363d;
     --color3:#1a033b;
-
-  --transition-value:0.5s;
+--color4:#6c757d;
+  --transition-value:1s;
 
   }
   #toggleBtn{
@@ -54,7 +53,19 @@
     cursor: pointer;
     
   }
-  
+
+.btn-2 {
+  background-color: var(--color4); /* Default blue color for the button */
+  color: #ffff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+
+
   .logo {
     color:var(--logo-color);
     font-family: "Great Vibes", cursive;
@@ -228,7 +239,7 @@ grid-template-columns: repeat(auto-fit,minmax(min(var(--min-column-size),100%),1
   }
   .post_card{
    
-     background: var(--bg-color);
+     background: var(--color2);
      border: none;
      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
 
@@ -236,7 +247,9 @@ grid-template-columns: repeat(auto-fit,minmax(min(var(--min-column-size),100%),1
   border-radius: 1rem;
   margin: 1.5rem;
   min-width: 250px;
+  max-width: 500px;
   line-height: 1.5;
+
 
   }
   .post_title{
@@ -273,7 +286,8 @@ grid-template-columns: repeat(auto-fit,minmax(min(var(--min-column-size),100%),1
 
 .post-card-footer a{
   text-decoration: none;
-  color: var(--primary-text-color);
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .btn{
@@ -318,7 +332,7 @@ grid-template-columns: repeat(auto-fit,minmax(min(var(--min-column-size),100%),1
     flex-direction: column;
    justify-content: center;
    align-items: center;
-   background:var(--nav-bg-color);
+   background:var(--color2);
    color: var(--primary-text-color);
    padding: 1rem 2rem;
   }
@@ -331,7 +345,7 @@ grid-template-columns: repeat(auto-fit,minmax(min(var(--min-column-size),100%),1
     border: 1px solid #bababa;
     border-radius: 1rem;
     transition: 0.3s all ease;
-    background-color: var(--nav-bg-color);
+    
     color: var(--primary-text-color);
   }
   
@@ -388,7 +402,9 @@ color: #d54d7b
   top: 0;
   font-size: 0.8rem;
   transform: translateY(-50%);
-  background-color: var(--bg-color);
+  background-color: var(--color2);
+  padding: 0.2rem;
+  color: var(--primary-text-color);
   
 }
 
@@ -484,7 +500,7 @@ color: #d54d7b
   position: absolute;
   top: 2%;
   right: 3%;
-  color: var(--color2);
+  color: var(--primary-text-color);
   font-size: 2rem;
   font-weight: bold;
   cursor: pointer;
@@ -492,7 +508,7 @@ color: #d54d7b
 }
 .close:hover, .close:focus{
 
-  color: var(--color1);
+  color: var(--secondary-text-color);
   text-decoration: none;
   
 }
@@ -721,7 +737,7 @@ align-items: center;
     text-align: center;
     max-width: 1300px;
 width: 100%;
-   
+   background-color: var(--color2);
      overflow-wrap: break-word;
 }
  
@@ -779,10 +795,10 @@ font-size: 1rem;
 
 .profile-wrapper{
   display: grid;
-  margin: 1rem 0 1rem 0 ;
+background-color: var(--color2);
   grid-template-columns: repeat(2,1fr);
   grid-template-rows: auto;
-  background-color: var(--nav-bg-color);
+border-bottom: 1px solid var(--color1);
   
 }
 .profile-pic{
@@ -795,7 +811,7 @@ font-size: 1rem;
   
 }
 .main-wrapper{
-  margin-top: .5rem;
+  
   display: flex;
   flex-direction: column;
   min-height: 60vh;
@@ -814,7 +830,7 @@ background: var(--bg-color);
   cursor: pointer;
 }
 .user-intro{
-  
+  min-width: 300px;
   padding: 1rem;
   
  display: flex;
@@ -822,8 +838,11 @@ background: var(--bg-color);
  justify-content: center;
  align-items: flex-start;
 }
+
+
 .user-intro p{
-  font-weight: 600;
+
+  line-height: 1.5rem;
   padding: 0.5rem;
 }
 
@@ -926,7 +945,7 @@ background-color: var(--color3);
 
 
 
-@media (max-width:520px) {
+@media (max-width:600px) {
   .login-box form, .singup-box form, .main form{
     width: 90%;  
   }

@@ -3,13 +3,10 @@ const router = express.Router();
 const Users = require("../module/user");
 const Posts = require("../module/posts");
 const bcrypt = require("bcrypt");
-const  session = require("express-session");
 const upload = require("../fileUpload");
 const sendEmail = require("../utils/sendEmail");
 const {generateToken, isValidToken} = require ("../utils/tokenHandeler");
 const {islogin, ifLogin} = require("../utils/loginHandeler");
-const flash = require("connect-flash");
-const crypto = require("crypto");
 // markedjs, dompurify and jsdom init
 const createDomPurify = require("dompurify");
 const {JSDOM} = require("jsdom");
@@ -20,10 +17,7 @@ const Comment = require("../module/comment")
 
 //password validator
 const passwordValidator = require("../utils/passWordValidator");
-
-
-// userStatus
-const {userStatus} = require("../utils/userStatusChecker");
+const setUserDataInSession = require("../utils/setUserDataInSession");
 
 
 // API to get blogs
@@ -43,21 +37,17 @@ router.get("/api/:email", async(req,res)=>{
 
 //get routes
 router.get("/welcome", islogin,  async (req,res)=>{
-   const {name, email,profileURL} = userStatus;   
+   
     try{
-            const posts = await Posts.find({uid:req.session.uid}).populate("uid").sort({_id: -1}).lean()
-  
+        const userId = req.session.uid;
+            const posts = await Posts.find({uid:userId}).populate("uid").sort({_id: -1}).lean()
+  const user = await Users.findById(userId).lean();
 res.render("welcome",{
-  
+  user,
     posts,
-    userStatus,
     postNum:posts.length,
-    profileURL,
-    name,
-    email
     
 })
-
      }catch(err){
         console.log(err)
      }
@@ -71,8 +61,7 @@ router.get("/",   async (req,res)=>{
     try{
 const posts = await Posts.find().sort({_id: -1}).populate("uid").lean()
 res.render("home",{
-   posts, 
- userStatus,
+   posts
  
     
 });
@@ -101,7 +90,6 @@ const posts = await Posts.find({uid:id}).populate({path:"uid", select:"-password
 
 const {name,profileURL,email} = userInfo
     res.render("userProfile",{
-    userStatus,
     posts,
     postNum:posts.length,
     profileURL,
@@ -259,7 +247,7 @@ res.redirect("/login");
  router.get("/newpost", islogin, (req,res)=>{
 
         res.render("newpost",{
-            userStatus
+            
         })
 
 
@@ -272,7 +260,6 @@ router.post("/newpost",  islogin,  async (req,res)=>{
     const {title, contain} = req.body;
     if(title.trim() === "" || contain.trim() === ""){
         res.render("newpost",{
-            userStatus,
             title:req.body.title,
             contain:req.body.contain.trim(),
             errorMessage:"All fields are required to fill."
@@ -283,8 +270,6 @@ router.post("/newpost",  islogin,  async (req,res)=>{
         try{
 
               await new Posts({
-                 
-               
                 title,
                 html,
                 contain,
@@ -296,7 +281,6 @@ router.post("/newpost",  islogin,  async (req,res)=>{
         }
             catch(er){
                 res.render("newPost",{
-                    userStatus,
                     title,
                     contain
                 })
@@ -332,10 +316,7 @@ let newUser = await new Users({
     password:hashedPassword
 }).save();
 
-req.session.name = newUser.name
-req.session.email = newUser.email
-req.session.uid = newUser._id
-req.session.profileURL = newUser.profileURL
+setUserDataInSession(req, newUser);
 
 res.redirect("/welcome")
 
@@ -353,7 +334,7 @@ res.redirect("/welcome")
 // render file upload form
 router.get("/changeProfile", islogin, (req,res)=>{
 res.render("uploadForm",{
-  userStatus  
+    
 })
 })
 
@@ -375,12 +356,9 @@ if(foundUser){
         console.log(er)
     }
     if(matchPassword){
-        req.session.name = foundUser.name;
-        req.session.email = foundUser.email
-        req.session.uid = foundUser._id
-        req.session.profileURL = foundUser.profileURL
+    setUserDataInSession(req, foundUser);
        
-      res.redirect("/welcome")
+      res.redirect("/welcome") 
 
     } else{
 req.flash("error","Invalid email or passport")
@@ -418,7 +396,7 @@ if(post){
       res.render("singlePost",{         
   post,
   comments,
- userStatus
+ 
    })
   }
 
@@ -471,7 +449,7 @@ router.post("/:id", islogin, async (req,res)=>{
             id:article._id,
             title:article.title,
             contain:article.contain,
-            userStatus
+            
         })
 
 
@@ -492,7 +470,7 @@ if(title.trim()=== "" || contain.trim()=== ""){
         title,
         contain:contain.trim(),
         errorMessage:"All fields are required to field",
-        userStatus
+        
     })
 }else{
 let html = DOMPurify.sanitize(marked.parse(contain));
@@ -509,7 +487,7 @@ try{
             title,
             contain:contain.trim(),
             errorMessage:"Something wrong, try again latter",
-           userStatus
+           
         })
     }
 
@@ -519,7 +497,7 @@ try{
         title,
         contain:contain.trim(),
         errorMessage:"Something wrong, try again latter",
-        userStatus
+        
     })
 }
 }

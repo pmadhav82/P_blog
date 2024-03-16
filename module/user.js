@@ -20,12 +20,19 @@ const userSchema = new mongoose.Schema({
         min: 6,
         max: 1024
     },
+    bio:{
+        type:String
+    },
     profileURL:{
         type:String,
         default:"images/userProfile.png"
     }
 
-})
+},
+{timestamps:true}
+
+
+)
 
 
 
