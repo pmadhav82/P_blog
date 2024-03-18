@@ -4,7 +4,7 @@ const handlebars = require("express-handlebars");
 const PORT = process.env.PORT || 8000;
 const mongoose = require("mongoose");
 const route = require("./routes/route");
-const commentRoute = require("./routes/comment");
+const commentRoute = require("./routes/commentRoute");
 const app = express();
 const path = require("path");
 const cors = require("cors");
@@ -13,6 +13,11 @@ const flash = require("connect-flash");
 const {userStatusChecker} = require("./utils/userStatusChecker");
 const {formatDate, showBtns} = require("./utils/helperFunctions");
 const {userStatus} = require("./utils/userStatusChecker");
+const editProfileRoute = require("./routes/editProfileRoute");
+const signupRoute = require("./routes/signupRoute");
+const loginRoute = require("./routes/loginRoute");
+const passwordResetRoute = require("./routes/passwordResetRoute");
+
 app.use(
   session({
     secret: process.env.SECRET,
@@ -82,8 +87,12 @@ app.set("views", "./views");
 
 
 //router connection
-app.use("/", route);
 app.use("/comment", commentRoute);
+app.use("/editProfile", editProfileRoute);
+app.use("/forgot-pass", passwordResetRoute);
+app.use("/signup", signupRoute);
+app.use("/login", loginRoute);
+app.use("/", route);
 app.use("/*", (req,res)=>{
   res.render("404");
 })

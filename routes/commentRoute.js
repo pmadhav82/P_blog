@@ -1,5 +1,4 @@
 const commentRoute = require("express").Router()
-const flash = require("connect-flash");
 const {body, validationResult} = require("express-validator")
 const {islogin} = require("../utils/loginHandeler")
 const Comment = require("../module/comment");

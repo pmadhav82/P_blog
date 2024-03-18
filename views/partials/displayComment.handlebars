@@ -51,7 +51,7 @@
 {{#if (showBtns "reply")}}
  <div class = "reply-cmt">
   <form action="/comment/{{this._id}}/reply/{{this.postId}}" method="post">
-      <textarea required class="reply-textarea" name="replyText" rows="3"  placeholder = 'Enter your reply'></textarea>
+      <textarea required class="reply-textarea" name="replyText" rows="3" maxlength="1000" placeholder = 'Enter your reply'></textarea>
       <div class = "action-btns">
         <button type="submit"> Submit </button>
         <button type="button" class = "cancel-btn"> Cancel </button>

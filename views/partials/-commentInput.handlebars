@@ -10,9 +10,9 @@
   <div class = "comment-input" >
   <form action="/comment/{{post._id}}" method="post">
   
-    <textarea required rows = "5" placeholder="Enter your comment"  cols="40" name="comment"></textarea>
-    <br>
-    <button class="btn" type = "submit"> Submit </button>
+    <textarea required rows = "5" placeholder="Enter your comment"  cols="40" name="comment" maxlength="2000"></textarea>
+    
+    <button class="btn-2" type = "submit"> Submit </button>
     </form>
   
   </div>

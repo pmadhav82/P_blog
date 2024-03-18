@@ -12,6 +12,9 @@ alt="userPic">
     {{user.name}}
 
     </h1>
+   <form method="get" action="/editProfile">
+   <button class="btn-2">Edit profile</button>
+   </form>
  
   </div>
   <div class="bio">
@@ -20,14 +23,22 @@ alt="userPic">
 Full-stack MERN developer skilled in building performant web applications. Proficient in ReactJS, Redux, NodeJS, ExpressJS, and MongoDB. Experienced with AWS and Firebase.
 </P>
   </div>
-  <div class="email">
-    <p>{{user.email}}</p>
-  </div>
-  <div class="num-post">
-   <p>
+  <div class="user-footer">
+     <span>
 {{postNum}} posts
-   </p> 
+     </span>
+   
+<span>
+
+    {{user.email}}
+</span>
+<span>
+ {{user.email}}
+</span>
+   
+  
   </div>
+
 </div>
 <div class="image-modal-wrapper">
 <div class="image-modal-contain">

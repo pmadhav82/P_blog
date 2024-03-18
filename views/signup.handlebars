@@ -4,34 +4,30 @@
     
     <div class="messages">
     {{>message}}
-       {{!-- <p class="message">{{userExists}} </p>
-       <br>
-         <p class="message">{{passMatch}}</p>
-         <br>
-          <p class="message">{{passLength}}</p>  --}}
+      
     </div>
 
     
 <form action="/signup" method="POST">
-  <h2>Sign up</h2>
+  <h2>Create new account</h2>
 <div class="user-box">
-<input type="text" name="name"  value = "{{message.name}}"required>
+<input type="text" name="name"  value = "{{name}}">
 <label > Name </label>
 </div>
 
 <div class="user-box">
-<input  type="email" name="email" value="{{message.email}}" required >
+<input  type="email" name="email" value="{{email}}"  >
 <label > Email </label>
 </div>
 
 <div class="user-box">
-<input type="password" name="password"  required>
+<input type="password" name="password"  value="{{password}}" >
 <label > Password </label>
 </div>
 
 <div class="user-box">
-<input  type="password" name="passwordRepeat"  required>
-<label > Repeat Password </label>
+<input  type="password" value="{{passwordRepeat}}" name="passwordRepeat">
+<label > Confirm Password </label>
 </div>
 <button type="submit"> Sign up</button>
  
