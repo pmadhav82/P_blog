@@ -49,6 +49,7 @@ if(! foundUser){
         }
         if(matchPassword){
         setUserDataInSession(req, foundUser);  
+    
           res.redirect("/welcome") 
     
         } else{

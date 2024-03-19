@@ -17,6 +17,10 @@ const editProfileRoute = require("./routes/editProfileRoute");
 const signupRoute = require("./routes/signupRoute");
 const loginRoute = require("./routes/loginRoute");
 const passwordResetRoute = require("./routes/passwordResetRoute");
+const rootRoute = require("./routes/rootRoute");
+const userRoute = require("./routes/userRoute");
+const postRoute = require("./routes/postRoute");
+const editPostRoute = require("./routes/editPostRoute");
 
 app.use(
   session({
@@ -92,7 +96,12 @@ app.use("/editProfile", editProfileRoute);
 app.use("/forgot-pass", passwordResetRoute);
 app.use("/signup", signupRoute);
 app.use("/login", loginRoute);
-app.use("/", route);
+app.use("/welcome", userRoute);
+app.use("/post", postRoute);
+app.use("/editPost", editPostRoute);
+app.use("/", rootRoute);
+
+
 app.use("/*", (req,res)=>{
   res.render("404");
 })

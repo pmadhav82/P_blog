@@ -39,7 +39,7 @@
 </div>
 <footer>
 
-<form action="/{{this._id}}" method="post">
+<form action="/editPost?postId={{this._id}}" method="post">
 <button class="btn" type="submit"> Edit </button>
 </form>
 <button class="tiggerbtn btn btn-outline">Delete</button>
@@ -50,7 +50,7 @@
           <div class="action-btn">
 
   <button class="cancelbtn btn-primary">cancel</button>
-<form method="post" action="delete/{{this._id}}">
+<form method="post" action="/post/delete/{{this._id}}">
 <button class="btn-secondary" type="submit">Delete</button>
 </form>
           </div>
