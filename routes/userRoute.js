@@ -12,12 +12,11 @@ userRoute.get("/", async (req, res) => {
   try {
     const userId = req.session.uid;
     const posts = await Posts.find({ uid: userId })
-      .populate("uid")
+      .populate({path:"uid", select: "_id, name, profileURL"})
       .sort({ _id: -1 })
-      .select()     
+      .select("_id title createdAt")     
       .lean();
-    const user = await Users.findById(userId).lean();
-
+    const user = await Users.findById(userId).select("-password").lean();
     res.render("welcome", {
       user,
       posts,

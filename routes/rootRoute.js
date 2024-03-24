@@ -32,19 +32,20 @@ rootRoute.get("/user", async (req, res) => {
     return res.redirect("/welcome");
   } 
   try {
-    const userInfo = await Users.findById({ _id: id })
+    const user = await Users.findById({ _id: id })
       .select("-password")
       .lean();
 
     const posts = await Posts.find({ uid: id })
       .populate({ path: "uid", select: "_id name profileURL" })
       .sort({ _id: -1 })
+      .select("_id title createdAt")
       .lean();
 
     res.render("userProfile", {
       posts,
       postNum: posts.length,
-      userInfo,
+      user,
     });
   } catch (er) {
     res.redirect("/");
@@ -58,7 +59,7 @@ rootRoute.get("/:postId", async (req, res) => {
 
   try {
     const post = await Posts.findById({ _id: postId })
-      .populate({ path: "uid", select: "-password" })
+      .populate({ path: "uid", select: "_id name profileURL" })
       .lean();
 
     const comments = await Comment.find({ postId, parentComment: null })
@@ -84,6 +85,7 @@ rootRoute.get("/", async (req, res) => {
     const posts = await Posts.find()
       .sort({ _id: -1 })
       .populate({ path: "uid", select: "_id name profileURL" })
+      .select("_id title createdAt")
       .lean();
     res.render("home", {
       posts,

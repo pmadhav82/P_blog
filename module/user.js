@@ -23,6 +23,12 @@ const userSchema = new mongoose.Schema({
     bio:{
         type:String
     },
+    linkedIn:{
+        type:String
+    },
+    website:{
+type:String
+    },
     profileURL:{
         type:String,
         default:"images/userProfile.png"

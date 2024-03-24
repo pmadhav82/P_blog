@@ -1,5 +1,95 @@
 <div class="main-wrapper">
 
-<h2>Edit Profile</h2>
+
+<div class = "form-wrapper">
+  <h1> Edit profile </h1>
+    <div class="messages">
+    {{>message}}
+  </div>
+
+  <form enctype="multipart/form-data" method="post" action="/editProfile">
+    <div class = "form-controller">
+    <label> Profile picture</label>
+        <div class = "user-profile">
+
+  <div class="image-preview">
+<img id="imageOutPut"  src= "{{user.profileURL}}"/>
+<p id="imageName"></p>
+</div>
+     
+      <label class= "choose-photo" for ="upload-file">Choose photo </label>
+    <input id = "upload-file" type = "file"  accept="image/*"   name="userProfile" />
+        
+      </div>
+  </div>
+  <div class = "form-controller">
+    <label> Name </label>
+    <input value="{{user.name}}" name="name" type = "text" />
+  </div>
+  
+    <div class = "form-controller">
+    <label> Email </label>
+    <input name="email" type = "email" value="{{user.email}}"  />
+  </div>
+  
+    <div class = "form-controller">
+    <label> LinkedIn </label>
+    <input value="{{user.linkedIn}}" type = "url" maxlength="100" name="linkedIn" />
+  </div>
+    <div class = "form-controller">
+    <label> Website URL </label>
+    <input value="{{user.website}}" type = "url" maxlength="100" name="website"/>
+  </div>
+  
+    <div class = "form-controller">
+    <label> Bio </label>
+      <textarea  name="bio" id="bio" maxLength = "200" rows = "4" >{{user.bio}}</textarea>
+      <span class="text-length">0/200</span>
+  </div>
+  
+  <input id="submit" type = "submit" value = "Save Profile Information"/>
+  
+  
+  </form>
+  
+</div>
+  
 
 </div>
+
+
+
+
+<script defer>
+const textarea = document.getElementById("bio");
+const showTextLength = document.querySelector(".text-length");
+
+
+const updateTextLength = ()=>{
+
+  const writtenText = textarea.value.length;
+  
+  showTextLength.innerText = `${writtenText}/200`;
+}
+textarea.addEventListener("keyup", updateTextLength);
+
+
+
+let uploadImage = document.getElementById("upload-file");
+let imageOutput = document.getElementById("imageOutPut");
+let imageName = document.getElementById("imageName");
+uploadImage.onchange = (ev)=>{
+    imageOutput.alt = "preview";
+    imageOutput.src = URL.createObjectURL(ev.target.files[0]);
+    imageName.innerHTML = `<b> ${ev.target.files[0].name} </b>`
+    imageOutput.onload = ()=>{
+        URL.revokeObjectURL(imageOutput.src);
+    }
+}
+
+
+
+
+
+
+</script>

@@ -256,7 +256,8 @@ grid-template-columns: repeat(auto-fit,minmax(min(var(--min-column-size),100%),1
   }
   .post_title{
     
-    font-weight: 550;
+    font-size: 1.5rem;
+    line-height: 1.25;
     
   }
   .post_card footer{
@@ -806,21 +807,19 @@ background: var(--bg-color);
   cursor: pointer;
 }
 .user-intro{
-  min-width: 300px;
-  padding: .5rem 0;
+  width: 100%;
+  padding: .5rem;
   max-width: 650px;
  display: flex;
  flex-direction: column;
  justify-content: center;
+ gap: .5rem;
  align-items: flex-start;
+ line-height: 1.4rem;
 }
 
 
-.user-intro p{
 
-  line-height: 1.5rem;
-  padding: 0.5rem;
-}
 .user-intro .name{
 display: flex;
 flex-wrap: wrap;
@@ -831,10 +830,11 @@ gap: 1rem;
 .user-footer{
   display: flex;
   flex-wrap: wrap;
-  color: var(--secondary-text-color);
-  font-size: 14px;
+  font-size: 16px;
   gap: .5rem;
-  padding: 0 .75rem;
+  margin-top: .5rem;
+  padding: .3rem .75rem;
+  align-items: center;
 }
 .footer-wrapper{
   
@@ -925,12 +925,7 @@ background-color: var(--color3);
   
 
 
-.image-preview img{
-  height: 13rem;
-  width: 13rem;
-  padding: 0.5rem;
-  background-color: var(--nav-bg-color);
-}
+
 
 
 
@@ -946,9 +941,7 @@ background-color: var(--color3);
     grid-template-rows: auto;
   }
   
-  .user-intro{
-    align-items: center;
-  }
+
   .sub-menu-wrapper{
     right: 0;
     width: 90%;

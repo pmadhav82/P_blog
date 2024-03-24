@@ -1,0 +1,100 @@
+
+
+  .form-wrapper{
+    width: 100%;
+    background-color: var(--color2);
+     max-width:500px;
+    padding: .5rem;
+    color: var(--primary-text-color);
+  }
+  
+  .form-controller{
+    margin: 1rem 0;
+  
+    gap:.5rem;
+    display:flex;
+    flex-direction:column;
+  }
+  .form-controller label{
+    font-size: 1.25rem;
+    
+  }
+  .form-controller input, .form-controller textarea{
+
+    padding: .3em;
+    outline: none;
+    font-size: 1rem;
+    border: 2px solid rgb(212,212,212);
+    border-radius: 0.375rem;
+    line-height:1.5;
+    background-color: var(--color2);
+    color:var(--primary-text-color);
+    transition: all 0.3s;
+  }
+  .form-controller input:focus{
+    border-color:var(--color3);
+  }
+  
+  #imageOutPut{
+    width: 150px;
+    border-radius: 50%;
+      height: 150px;
+  }
+  
+  .form-controller textarea{
+
+    background-color: var(--color2);
+    resize: vertical;
+  } 
+  .form-controller textarea:focus{
+    background-color: var(--color2);
+  }
+   input[type = "submit"]{
+    cursor:pointer;
+       border-radius: 0.375rem;
+    background-color: #3b49df;
+    border: none;
+    color:#f9f9f9;
+    margin: .5rem;
+    display:inline-block;
+    text-align:center;
+    height: 32px;
+    padding: 6px 8px;
+     font-size:18px;
+  }
+
+
+input[type = "url"]:invalid{
+  border-color: red;
+}
+  .user-profile{
+    display:flex;
+    gap:1rem;
+    width:100%;
+    align-items:center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  input[type="file"]{
+    display:none;
+    
+  }
+  .choose-photo{
+    height:33px;
+    width: auto;
+    background:blue;
+    color:white;
+    border-radius:0.375rem;
+    padding: 6px 8px;
+    cursor:pointer;
+    
+  }
+   input[type = "submit"]:hover{
+    background-color: blueviolet;
+} 
+
+.text-length{
+  text-align: right;
+  color:var( --secondary-text-color);
+  opacity: .7;
+}

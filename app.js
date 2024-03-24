@@ -101,7 +101,6 @@ app.use("/post", postRoute);
 app.use("/editPost", editPostRoute);
 app.use("/", rootRoute);
 
-
 app.use("/*", (req,res)=>{
   res.render("404");
 })
