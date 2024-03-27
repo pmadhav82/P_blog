@@ -18,7 +18,7 @@ switch(buttonType){
    case "reply":
     return login
     case "delete":
-        case "editProfile" :
+        case "edit" :
             return login && uid == userId.toString();
         default:
         return false

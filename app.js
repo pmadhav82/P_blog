@@ -3,7 +3,6 @@ const express = require("express");
 const handlebars = require("express-handlebars");
 const PORT = process.env.PORT || 8000;
 const mongoose = require("mongoose");
-const route = require("./routes/route");
 const commentRoute = require("./routes/commentRoute");
 const app = express();
 const path = require("path");

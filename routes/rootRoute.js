@@ -39,7 +39,7 @@ rootRoute.get("/user", async (req, res) => {
     const posts = await Posts.find({ uid: id })
       .populate({ path: "uid", select: "_id name profileURL" })
       .sort({ _id: -1 })
-      .select("_id title createdAt")
+      .select("_id title createdAt html")
       .lean();
 
     res.render("userProfile", {
@@ -85,7 +85,7 @@ rootRoute.get("/", async (req, res) => {
     const posts = await Posts.find()
       .sort({ _id: -1 })
       .populate({ path: "uid", select: "_id name profileURL" })
-      .select("_id title createdAt")
+      .select("_id title createdAt html")
       .lean();
     res.render("home", {
       posts,

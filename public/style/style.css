@@ -143,8 +143,8 @@
   .sub-menu-wrapper{
     width: 18rem;
     position: absolute;
-    top:15%;
-    right: 10%;
+    top:8%;
+    right: 8%;
     max-height: 0px;
     overflow: hidden;
     transition: var(--transition-value);
@@ -228,35 +228,39 @@
       width: 200px;
     
   }
-  .posts{
-    --min-column-size:30rem;
-    align-items: center;
-    justify-content: center;
-max-width: 1300px;
+   .posts{
     width: 100%;
-display: grid;
-gap: 1rem;
-grid-template-columns: repeat(auto-fit,minmax(min(var(--min-column-size),100%),1fr));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-  }
+  } 
+
+  .text-container {
+    margin-top: .3rem;
+max-height: 72px;  /* Adjust as needed */
+    white-space: nowrap;  /* Prevents text from wrapping */
+    overflow: hidden;    /* Hides the text that goes beyond the width */
+    text-overflow: ellipsis; /* Adds an ellipsis (…) at the end */
+    font-size: 14px;
+}
   .post_card{
    
      background: var(--color2);
      border: none;
-     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);
+    border-bottom: 1px solid var(--logo-color);
 
     padding: 1rem;
-  border-radius: 1rem;
-  margin: 1.5rem;
-  min-width: 250px;
-  max-width: 500px;
+ width: 100%;
+ max-width: 750px;
   line-height: 1.5;
 
 
   }
   .post_title{
     
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     line-height: 1.25;
     
   }
