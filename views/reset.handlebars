@@ -4,13 +4,13 @@
  <div class="messages">
   {{>message}}
  </div>
- 
-  <form action="/passport-reset" method="POST">
   <h2>Reset your password</h2>
+ 
+  <form action="/forgot-pass" method="POST">
 
     <div class="user-box">
      
-      <input type="text" name="email" value="{{email}}" required>
+      <input type="text" name="email" value="{{email}}">
       <label>Email address</label>
     </div>
 <button type="submit">Send link</button>

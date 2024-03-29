@@ -1,21 +1,47 @@
+
 .comment-wrapper{
-    display:flex;
-    justify-content:center;
-    align-items : center;
+  display:flex;
+  justify-content:center;
+  align-items : center;
+  width: 100%;
+  
+}
+
+.cmt-section{
+  border-top: 1px solid var(--color1);
+  width: 100%;
+  padding: .5rem 0;
+}
+  .comment-input{
     width: 100%;
+  max-width: 750px;
+  padding: 0 .1rem;
+  }
+  .comment-input form{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    gap: .5rem;
+  }
+.comment-wrapper textarea{
+ width: 100%;
+ resize: none;
+ padding: .5rem;
+ outline: none;
+  border-radius: .5rem;
+  background-color: var(--color2);
+}
+  .comment{
+    text-align: left;
+    margin: .5rem 0;
+    width:70%;
+    border-top: var(--color1);
     
   }
 
-  
-.comment-wrapper textarea{
-  width: 18rem;
-  border-radius: .5rem;
-}
-  .comment{
-    margin-top: 1rem;
-  }
-
   .single-cmt-card{
+    font-size: 18px;
    max-width: 500px;
    margin-top: .5rem;
    word-wrap:break-word;
@@ -68,7 +94,7 @@ padding: .3rem;
     width:100%;
     outline:none;
     cursor:text;
-    background: var(--bg-color);
+    background: var(--color2);
     color: var(--primary-text-color);
   }
 
@@ -80,12 +106,15 @@ padding: .3rem;
   }
 
   
-@media (max-width:360px) {
+@media (max-width:600px) {
   .comment-wrapper{
     justify-content: flex-start;
     align-items: flex-start;
+   
   }
-  .comment-wrapper textarea{
-    width: 15rem;
+  .comment{
+    padding: 0 .2rem;
+    width: 100%;
   }
+
 }

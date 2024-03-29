@@ -3,8 +3,7 @@ const express = require("express");
 const handlebars = require("express-handlebars");
 const PORT = process.env.PORT || 8000;
 const mongoose = require("mongoose");
-const route = require("./routes/route");
-const commentRoute = require("./routes/comment");
+const commentRoute = require("./routes/commentRoute");
 const app = express();
 const path = require("path");
 const cors = require("cors");
@@ -13,11 +12,26 @@ const flash = require("connect-flash");
 const {userStatusChecker} = require("./utils/userStatusChecker");
 const {formatDate, showBtns} = require("./utils/helperFunctions");
 const {userStatus} = require("./utils/userStatusChecker");
+const editProfileRoute = require("./routes/editProfileRoute");
+const signupRoute = require("./routes/signupRoute");
+const loginRoute = require("./routes/loginRoute");
+const passwordResetRoute = require("./routes/passwordResetRoute");
+const rootRoute = require("./routes/rootRoute");
+const userRoute = require("./routes/userRoute");
+const postRoute = require("./routes/postRoute");
+const editPostRoute = require("./routes/editPostRoute");
+const googleLoginRoute = require("./routes/googleLoginRoute");
+
+
+app.use(express.json());
+
 app.use(
   session({
     secret: process.env.SECRET,
     resave: true,
     saveUninitialized: true,
+  
+  
   })
 );
 
@@ -82,8 +96,17 @@ app.set("views", "./views");
 
 
 //router connection
-app.use("/", route);
 app.use("/comment", commentRoute);
+app.use("/editProfile", editProfileRoute);
+app.use("/forgot-pass", passwordResetRoute);
+app.use("/signup", signupRoute);
+app.use("/login", loginRoute);
+app.use("/welcome", userRoute);
+app.use("/post", postRoute);
+app.use("/editPost", editPostRoute);
+app.use("/googleLogin", googleLoginRoute);
+app.use("/", rootRoute);
+
 app.use("/*", (req,res)=>{
   res.render("404");
 })

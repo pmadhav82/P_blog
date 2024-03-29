@@ -9,7 +9,7 @@
     </div>
 <div class="user-name">
 <h4> 
-    <a href="/user?id={{post.uid._id}}">
+     <a href="/user?id={{post.uid._id}}">
     
 {{post.uid.name}}
 </a>
@@ -115,9 +115,9 @@ title={{post.title}}&summary= {{post.title}} &source=">
 
     </div>
 
-
-  </div>
+<div class="cmt-section">
   <h3>Comments</h3>
+</div>
   
 {{#if userStatus.login}}
 
@@ -130,4 +130,7 @@ title={{post.title}}&summary= {{post.title}} &source=">
 {{else}}
 <h5>No comments</h5>
 {{/if}}
+
+
+  </div>
 </div>

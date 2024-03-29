@@ -1,12 +1,15 @@
 
+<div class="main-wrapper">
   <div class="textbox-wrapper">
-    <h3>Write a new post</h3>
+  
+ 
+    <h3>New post</h3>
 {{#if errorMessage}}
     <div class="messages error-message">
     {{errorMessage}}
     </div>
     {{/if}}
-<form action="/newpost"  method="post" class="form">
+<form action="/post"  method="post" class="form">
   
   
 
@@ -15,18 +18,8 @@
   <!-- Submit button -->
   <div class="btn-group">
 
-
-    
-    <button class="button-40">
-   <a class="" href="/welcome">
-   Cancel
-   </a>
-
-    </button>
-
-
- <button type="submit" class="button-40">
-    Save
+ <button type="submit" class="btn-2">
+    Save post
   </button>
 
 
@@ -35,5 +28,11 @@
   
 </form>
 </div>
+
+
+
+
+</div>
+
 
 

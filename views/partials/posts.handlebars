@@ -9,7 +9,7 @@
     </div>
 <div class="user-name">
 <h4> 
-    <a href="/user?id={{this.uid._id}}">
+   <a href="/user?id={{this.uid._id}}">
     
 {{this.uid.name}}
 </a>
@@ -29,17 +29,21 @@
     
    
 <div class="post_title">
+<h3>
 
- 
  {{this.title}} 
+</h3>
  
+ <div class="text-container">
+{{{this.html}}}
+ </div>
 </div>
 <div class="post-card-footer">
+
+    <form method="get" action="/{{this._id}}">
+<button class="btn-2">Read more</button>
+    </form>
     
-    <button class="btn-2">
-        
-<a href="/{{this._id}}">Read more</a>
-    </button>
 </div>
 
     </div>

@@ -14,14 +14,29 @@ const userSchema = new mongoose.Schema({
         type: String,
         required:true
     },
+    authMethod:{
+        type:String,
+        enum:["Email/Password", "Google"],
+        default:"Email/Password"
+            },
+
     password: {
         type: String,
-        required: true,
+        required: function(){
+            return this.authMethod === "Email/Password";
+        },
         min: 6,
         max: 1024
     },
+  
     bio:{
         type:String
+    },
+    linkedIn:{
+        type:String
+    },
+    website:{
+type:String
     },
     profileURL:{
         type:String,

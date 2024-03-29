@@ -8,6 +8,7 @@ destination:(req,file,cb)=>{
 cb(null,"./upload/images")
 },
 filename:(req,file,cb)=>{
+
     let ext = path.extname(file.originalname);
 cb(null,`${req.session.uid}.${ext}`)
 }
@@ -18,6 +19,7 @@ cb(null,`${req.session.uid}.${ext}`)
         if(allowedFileType.includes(file.mimetype.split("/")[1])){
             cb(null,true)
         }else{
+            console.log("Something wrong..")
             cb(null,false)
         }
     }
