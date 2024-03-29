@@ -37,8 +37,12 @@ if(! foundUser){
     req.flash("error","Invalid email or passport")
     res.redirect("/login")
 }
-
+if(foundUser && foundUser.authMethod === "Google"){
+    req.flash("error","You have used Google ID to login")
+    res.redirect("/login")
+}
     if(foundUser && errors.isEmpty()){
+
         let submitedPass = password;
         let hashPassword = foundUser.password;
         let matchPassword ;

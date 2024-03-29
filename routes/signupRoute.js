@@ -28,7 +28,7 @@ signupRoute.post("/", signupValidation, async (req,res)=>{
     })
   }
     try{
-    let foundUser = await Users.findOne({email:email});
+    let foundUser = await Users.findOne({email});
     if(foundUser){
         req.flash("error","User exists already");
         res.redirect("/signup")

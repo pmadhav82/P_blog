@@ -25,7 +25,10 @@ passwordResetRoute.post("/", async(req,res)=>{
 
     try{
 let user = await Users.findOne({email});
-
+if(user && user.authMethod === "Google"){
+    req.flash("error","You have used Google ID to login")
+   return res.redirect("/forgot-pass")
+}
 if(user){
     const resetToken =  await generateToken(user._id);
     const link= `${req.protocol}://${req.get('host')}/forgot-pass/password-reset-link?token=${resetToken}&id=${user._id}`;
@@ -43,7 +46,6 @@ const payload = {
     subject:"Password reset request",
     html
 }
-console.log(payload);
 sendEmail(payload);
 
 

@@ -324,6 +324,7 @@ max-height: 72px;  /* Adjust as needed */
   .login-box, .singup-box{
     width: 100%;
     margin-top:2rem;
+  
     display: flex;
     align-items: center;
     justify-content: center;
@@ -335,7 +336,8 @@ max-height: 72px;  /* Adjust as needed */
   }
   .login-box form, .singup-box form{
     display: flex;
-    width: 20rem;
+    max-width: 600px;
+    width: 100% ;
     flex-direction: column;
    justify-content: center;
    align-items: center;
@@ -344,7 +346,7 @@ max-height: 72px;  /* Adjust as needed */
    padding: 1rem 2rem;
   }
   .login-box form input, .singup-box form input{
-    width: 19rem;
+    width: 100% ;
     height: 100%;
     padding-left: 1rem;
     outline: none;
@@ -360,6 +362,7 @@ max-height: 72px;  /* Adjust as needed */
     height: 3rem;
     position: relative;
     margin-top: 2rem;
+    width: 100% ;
   }
   .user-box label{
     position: absolute;
@@ -527,7 +530,7 @@ color: #d54d7b
   }
   .btn-group{
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     flex-wrap: wrap;
     gap: 0.5rem;
     padding: 1rem;
@@ -713,7 +716,7 @@ align-items: center;
   line-height: 1.5em;
   z-index: 1;
     text-align: center;
-    max-width: 1300px;
+    max-width: 1000px;
 width: 100%;
    background-color: var(--color2);
      overflow-wrap: break-word;
@@ -744,7 +747,7 @@ width: 100%;
   display: flex;
   flex-direction: column;
 text-align: left;
-width: 70%;
+width: 80%;
 padding: 0.5rem 0 0.5rem 0.5rem;
 line-height: 1.5;
 
@@ -835,7 +838,7 @@ gap: 1rem;
   display: flex;
   flex-wrap: wrap;
   font-size: 16px;
-  gap: .5rem;
+  gap: 1rem;
   margin-top: .5rem;
   padding: .3rem .75rem;
   align-items: center;

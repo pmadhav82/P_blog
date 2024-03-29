@@ -20,12 +20,18 @@ const rootRoute = require("./routes/rootRoute");
 const userRoute = require("./routes/userRoute");
 const postRoute = require("./routes/postRoute");
 const editPostRoute = require("./routes/editPostRoute");
+const googleLoginRoute = require("./routes/googleLoginRoute");
+
+
+app.use(express.json());
 
 app.use(
   session({
     secret: process.env.SECRET,
     resave: true,
     saveUninitialized: true,
+  
+  
   })
 );
 
@@ -98,6 +104,7 @@ app.use("/login", loginRoute);
 app.use("/welcome", userRoute);
 app.use("/post", postRoute);
 app.use("/editPost", editPostRoute);
+app.use("/googleLogin", googleLoginRoute);
 app.use("/", rootRoute);
 
 app.use("/*", (req,res)=>{

@@ -19,6 +19,7 @@
     "express-handlebars": "^5.3.4",
     "express-session": "^1.17.2",
     "express-validator": "^7.0.1",
+    "firebase-admin": "^12.0.0",
     "jsdom": "^19.0.0",
     "marked": "^4.0.17",
     "moment": "^2.30.1",

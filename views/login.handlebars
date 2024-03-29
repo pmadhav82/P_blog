@@ -9,17 +9,19 @@
   <form action="/login" method="POST">
    <h2>Login</h2>
     <div class="user-box">
-      <input type="text" name="email" value="{{email}}" >
+      <input type="text" name="email" required value="{{email}}" >
       <label>Useremail</label>
     </div>
     <div class="user-box">
-      <input type="password" name="password"  value="{{password}}">
+      <input type="password" name="password" required value="{{password}}">
       <label>Password</label>
     </div>
 <button type="submit">Submit</button>
 
  <a class="forgot-pass" href="/forgot-pass">Fogrot password?</a>
- <hr>
+ 
+ {{> googleLogin}}
+ 
  <a class="new-acc" href="/signup"> Create new account</a>
   </form>
 

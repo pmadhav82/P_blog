@@ -11,26 +11,26 @@
 <form action="/signup" method="POST">
   <h2>Create new account</h2>
 <div class="user-box">
-<input type="text" name="name"  value = "{{name}}">
+<input type="text" name="name" required  value = "{{name}}">
 <label > Name </label>
 </div>
 
 <div class="user-box">
-<input  type="email" name="email" value="{{email}}"  >
+<input  type="email" name="email" required value="{{email}}"  >
 <label > Email </label>
 </div>
 
 <div class="user-box">
-<input type="password" name="password"  value="{{password}}" >
+<input type="password" name="password" required value="{{password}}" >
 <label > Password </label>
 </div>
 
 <div class="user-box">
-<input  type="password" value="{{passwordRepeat}}" name="passwordRepeat">
+<input  type="password" required value="{{passwordRepeat}}" name="passwordRepeat">
 <label > Confirm Password </label>
 </div>
 <button type="submit"> Sign up</button>
  
+{{> googleLogin}}
 </form>
-
 </div>
