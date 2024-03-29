@@ -29,9 +29,9 @@ const auth = getAuth(app)
 
 
 const sendUserIdToken = async(userIdToken)=>{
-  const URL = `${location.origin}/googleLogin`;
+
   try{
-   const res = await fetch(URL,{
+   const res = await fetch("/googleLogin",{
     headers:{
 "Content-Type":"application/json"
     },
