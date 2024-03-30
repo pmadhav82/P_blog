@@ -16,7 +16,7 @@
   * {
     margin: 0;
     padding: 0;
-    font-family:  "Poppins", sans-serif;
+    font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", Times, serif;
     box-sizing: border-box;
   }
   
@@ -238,7 +238,7 @@
   } 
 
   .text-container {
-    margin-top: .3rem;
+    margin-top: 1rem;
 max-height: 72px;  /* Adjust as needed */
     white-space: nowrap;  /* Prevents text from wrapping */
     overflow: hidden;    /* Hides the text that goes beyond the width */
@@ -251,16 +251,20 @@ max-height: 72px;  /* Adjust as needed */
      border: none;
     border-bottom: 1px solid var(--logo-color);
 
-    padding: 1rem;
+    padding: 1.5rem;
  width: 100%;
  max-width: 750px;
   line-height: 1.5;
 
 
   }
+  .post_card a{
+    text-decoration: none;
+    color: var(--primary-text-color);
+  }
   .post_title{
     
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 1.25;
     
   }
@@ -712,8 +716,6 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-  font-size: 1.25rem;
-  line-height: 1.5em;
   z-index: 1;
     text-align: center;
     max-width: 1000px;
@@ -739,7 +741,22 @@ width: 100%;
   margin-bottom: 2rem ;
 }
 .single_post_title{
-  padding: 0 .3rem;
+  max-width: 680px;
+  line-height: 32px;
+  font-size: 22px;
+  margin: 1rem 0;
+}
+.user-info-container{
+  display: flex;
+  width: 100%;
+  max-width: 680px;
+  padding: .5rem;
+  margin: .5rem 0;
+  justify-content: start;
+}
+.user-info-container a{
+  text-decoration: none;
+  color: var(--primary-text-color);
 }
 
 
@@ -747,12 +764,17 @@ width: 100%;
   display: flex;
   flex-direction: column;
 text-align: left;
-width: 80%;
+width: 100%;
+max-width: 680px;
 padding: 0.5rem 0 0.5rem 0.5rem;
-line-height: 1.5;
-
+line-height: 32px;
+font-size: 20px;
 }
-.single_post_contain p{
+.single_post_contain a{
+  color: var(--primary-text-color);
+}
+.single_post_contain p, .single_post_contain li{
+  
   margin: 1rem auto;
 }
 
@@ -763,17 +785,18 @@ line-height: 1.5;
 }
 
 
- .single_post_contain ol, .single_post_contain ul, .single_post_contain pre{
+ .single_post_contain ol, .single_post_contain ul{
   padding: 0 1rem;
+
 }
 
 code{
  
   background-color: var(--color1);
   color: #e5305d;
-  padding: 2px 5px;
+  padding: 2px 4px;
   border-radius: 2px;
-font-size: 1rem;
+font-size: 75%;
 }
 
 .profile-wrapper{
@@ -965,7 +988,7 @@ background-color: var(--color3);
     
   }
  
-.single_post_contain p{
+.single_post_contain{
 
   font-size: 18px;
 }

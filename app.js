@@ -72,7 +72,7 @@ mongoose
   .catch(() => {
     console.log("Failed to connect to the database");
   });
-
+   
 //uses of public folder
 
 app.use(express.static(path.join(__dirname, "/public")));
