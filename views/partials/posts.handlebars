@@ -2,6 +2,9 @@
 <div class="posts">
  {{#each posts}}
 <div class="post_card">
+    
+
+   <a href="/user?id={{this.uid._id}}">
 <div class="user-info">
     <div class="userPic">
     <img  src= "{{this.uid.profileURL}}"/>
@@ -9,10 +12,8 @@
     </div>
 <div class="user-name">
 <h4> 
-   <a href="/user?id={{this.uid._id}}">
     
 {{this.uid.name}}
-</a>
 
     </h4>
 <div class="post_date">
@@ -25,6 +26,7 @@
 </div>
     
 </div>
+</a>
 
     
    
