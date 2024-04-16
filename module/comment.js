@@ -23,7 +23,7 @@ parentComment:{
 },
 commentedAt:{
     type:Date,
-default: Date.now()
+default: Date.now
 }, 
 replies:[{
     type: Schema.Types.ObjectId,
