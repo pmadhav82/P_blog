@@ -1,13 +1,19 @@
 
 <div class="main-wrapper">
 <div class="textbox-wrapper">
-  <h3>Edit your post</h3>
+  <h3>Edit post</h3>
 {{#if errorMessage}}
   <div class="messages error-message">
   {{errorMessage}}
   </div>
   {{/if}}
-  
+      <div class="close-btn">
+
+<a href="/welcome">
+
+     <span class="close">&times;</span>
+</a>
+    </div>
 <form action="/editPost/{{id}}"  method="post" class="form">
 
 {{>-form}}

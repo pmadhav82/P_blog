@@ -629,6 +629,7 @@ border-bottom-left-radius: .5rem;
 
 
 .textbox-wrapper{
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
