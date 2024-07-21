@@ -234,6 +234,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: .5rem;
 
   } 
 
@@ -774,10 +775,7 @@ font-size: 20px;
 .single_post_contain a{
   color: var(--primary-text-color);
 }
-.single_post_contain p, .single_post_contain li{
-  
-  margin: 1rem auto;
-}
+
 
 .single_post_contain img{
   overflow: hidden;

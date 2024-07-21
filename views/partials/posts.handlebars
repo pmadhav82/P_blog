@@ -1,45 +1,46 @@
-
 <div class="posts">
- {{#each posts}}
-<div class="post_card">
-    
+    {{#each posts}}
+    <div class="post_card">
 
-   <a href="/user?id={{this.uid._id}}">
-<div class="user-info">
-    <div class="userPic">
-    <img  src= "{{this.uid.profileURL}}"/>
+        <a href="/user?id={{this.uid._id}}">
+            <div class="user-info">
+                <div class="userPic">
+                    <img src="{{this.uid.profileURL}}" />
+                </div>
+                <div class="user-name">
+                    <h4>
 
-    </div>
-<div class="user-name">
-<h4> 
-    
-{{this.uid.name}}
+                        {{this.uid.name}}
 
-    </h4>
-<div class="post_date">
-   
-   <p>
+                    </h4>
+                    <div class="post_date">
 
-   {{this.createdAt}}
-   </p>
-</div>
-</div>
-    
-</div>
-</a>
+                        <p>
 
-    
-   
-<div class="post_title">
-<h3>
+                            {{this.createdAt}}
+                        </p>
+                    </div>
+                </div>
+            </div>
 
- {{this.title}} 
-</h3>
- 
- <div class="text-container">
-{{{this.html}}}
+        </a>
+
+
+        <a href="/{{this._id}}">
+
+            <div class="post_title">
+                <h3>
+                    {{this.title}}
+                </h3>
  </div>
-</div>
+                <div class="text-container">
+                    {{{this.html}}}
+                </div>
+           
+
+        </a>
+
+
 <div class="post-card-footer">
 
     <form method="get" action="/{{this._id}}">
@@ -49,5 +50,5 @@
 </div>
 
     </div>
-{{/each}} 
+    {{/each}}
 </div>
