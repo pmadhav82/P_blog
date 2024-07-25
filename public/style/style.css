@@ -53,6 +53,7 @@
     cursor: pointer;
     
   }
+  
 
 .btn-2 {
   background-color: var(--color4); /* Default blue color for the button */
@@ -66,7 +67,15 @@
   font-weight: 500;
 }
 
+.btn-3{
+  background-color: var(--color3);
+  color: var(--primary-text-color);
+}
 
+.btn-4{
+  background-color: var(--color2);
+  color: var(--secondary-text-color);
+}
 
   .logo {
     color:var(--logo-color);
@@ -167,6 +176,7 @@
     align-items: center;
     flex-wrap: wrap;
   }
+  
   
   .user-info img{
     width: 50px;
@@ -630,6 +640,7 @@ border-bottom-left-radius: .5rem;
 
 
 .textbox-wrapper{
+  margin-top: .5rem;
   position: relative;
   display: flex;
   justify-content: center;
@@ -713,7 +724,7 @@ border-radius: .5rem;
 
 
 .single_post_card{
-  
+  margin-top: .5rem;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -952,8 +963,6 @@ font-weight: bold;
 background-color: var(--color3);
   }
   
-
-
 
 
 

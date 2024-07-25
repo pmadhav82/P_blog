@@ -23,7 +23,8 @@ postRoute.get("/", (req,res)=>{
 
 
 postRoute.post("/", postValidation, async (req, res) => {
-    const { title, contain } = req.body;
+    const { title, contain, action } = req.body;
+    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.render("newpost", {
@@ -37,7 +38,7 @@ postRoute.post("/", postValidation, async (req, res) => {
       const html = DOMPurify.sanitize(marked.parse(contain));
       let date = new Date();
       try {
-        await new Posts({
+       const post =  await new Posts({
           title,
           html,
           contain,
@@ -47,7 +48,7 @@ postRoute.post("/", postValidation, async (req, res) => {
           uid: req.session.uid,
         }).save();
   
-        res.redirect("/welcome");
+         res.redirect(`/${post._id}`);
       } catch (er) {
         res.render("newPost", {
           title,
