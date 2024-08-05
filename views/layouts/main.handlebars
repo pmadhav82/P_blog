@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,26 +8,30 @@
     <title>P_Blog</title>
 
 
+
+
+    <script src="javascript/main.js" defer></script>
   
 
-<script src="javascript/main.js" defer></script>
-   
-         <link rel="stylesheet" href="style/style.css">
-         <link rel="stylesheet" href="style/comment.css">
-          <link rel="stylesheet" href="style/editProfile.css">
-    <link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/monokai-sublime.min.css">
-
-<link rel="icon" href="/images/favicon.png">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/comment.css">
+    <link rel="stylesheet" href="style/editProfile.css">
+  
+     
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/monokai-sublime.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script> 
+    <link rel="icon" href="/images/favicon.png">
 </head>
+
 <body>
     {{>nav}}
- 
+
     {{{body}}}
 
- 
-{{>footer}}
- <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
-<script>hljs.highlightAll();</script>
+
+    {{>footer}}
+
 </body>
+
 </html>

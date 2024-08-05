@@ -21,7 +21,7 @@ const userRoute = require("./routes/userRoute");
 const postRoute = require("./routes/postRoute");
 const editPostRoute = require("./routes/editPostRoute");
 const googleLoginRoute = require("./routes/googleLoginRoute");
-
+const previewRoute = require("./routes/previewRoute");
 
 app.use(express.json());
 
@@ -106,6 +106,7 @@ app.use("/welcome", userRoute);
 app.use("/post", postRoute);
 app.use("/editPost", editPostRoute);
 app.use("/googleLogin", googleLoginRoute);
+app.use("/preview", previewRoute);
 app.use("/", rootRoute);
 
 app.use("/*", (req,res)=>{
