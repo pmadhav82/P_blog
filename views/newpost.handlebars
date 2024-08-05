@@ -1,45 +1,136 @@
-
 <div class="main-wrapper">
   <div class="textbox-wrapper">
-  
- 
+
+
     <h3>New post</h3>
-{{#if errorMessage}}
+    {{#if errorMessage}}
     <div class="messages error-message">
-    {{errorMessage}}
+      {{errorMessage}}
     </div>
     {{/if}}
     <div class="close-btn">
 
-<a href="/welcome">
+      <a href="/welcome">
 
-     <span class="close">&times;</span>
-</a>
+        <span class="close">&times;</span>
+      </a>
     </div>
-<form action="/post"  method="post" class="form">
-  
-  
+    <form id="new-post-form" action="/post" method="post" class="form">
 
- {{>-form}}
 
-  <!-- Submit button -->
-  <div class="btn-group">
 
- <button type="submit" class="btn-2">
-    Save post
-  </button>
+      {{>-form}}
+
+      <!-- Submit button -->
+      <div class="btn-group">
+
+        <button value="publish" name="action" type="submit" class="btn-2">
+          Publish
+        </button>
+        <button class="btn-2 btn-3">Save draft</button>
+        <button type="button" id="previewBtn" class="btn-2 btn-4">Preview</button>
+
+      </div>
+
+
+    </form>
+  </div>
+  <div class="preview-modal">
+
+    <div id="preview">
+
+    </div>
+
 
 
   </div>
- 
-  
-</form>
-</div>
+
+
+  <script>
+
+    const previewBtn = document.getElementById("previewBtn");
+    const previewModal = document.querySelector(".preview-modal");
+    const form = document.getElementById("new-post-form")
+
+    const getPreviewHTML = async (data) => {
+      const URL = `${location.origin}/preview`;
+      try {
+        const res = await fetch(URL, {
+          method: "POST",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+
+        })
+
+        if (!res.ok) {
+          const { message } = await res.json();
+
+          throw new Error(message);
+        }
+
+        const result = await res.json();
+        return {
+          result,
+          error: null
+        }
+
+      } catch (er) {
+        return { result: null, error: er }
+      }
+    }
 
 
 
 
-</div>
+    previewBtn.addEventListener("click", async () => {
+previewModal.classList.toggle("show-modal");
+      const previewContainer = document.getElementById("preview");
+      const formData = new FormData(form);
+      const { contain, title } = Object.fromEntries(formData.entries());
+      const closeBtn = ` <span id = "preview-modal-close" class="preview-modal-close">&times;</span>`;
+      const { result, error } = await getPreviewHTML({ contain });
 
 
+      if (error) {
+        previewContainer.innerHTML = `${closeBtn}
+        
+         <div class= error-message> ${error.message} </div>
+         `
+      }
+      if (result) {
 
+        const html = `
+   
+     ${closeBtn}
+        <div class = "single_post_card">
+      <h1 class=" single_post_title">
+        ${title}
+      </h1>
+    
+  <div class="single_post_contain">
+
+      ${result?.html}
+      </div>
+        </div>
+
+
+  `
+        previewContainer.innerHTML = html;
+      }
+
+
+    })
+
+// close preview-modal when close button or outside of preview box clicked.
+window.addEventListener("click",(e)=>{
+  const matches = e.target.matches(".preview-modal") || e.target.matches(".preview-modal-close");
+  if(matches){
+    previewModal.classList.toggle("show-modal");
+  }
+
+})
+
+  </script>

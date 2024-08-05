@@ -67,14 +67,15 @@ rootRoute.get("/:postId", async (req, res) => {
       .populate({ path: "replies" })
       .populate({ path: "postedBy", select: "-password" })
       .lean();
-    if (post) {
+      if(!post) return res.render("404")
+    
       res.render("singlePost", {
         post,
         comments,
       });
-    }
+    
   } catch (er) {
-    console.log(er);
+    res.render("404")
   }
 });
 

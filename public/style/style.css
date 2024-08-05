@@ -53,6 +53,7 @@
     cursor: pointer;
     
   }
+  
 
 .btn-2 {
   background-color: var(--color4); /* Default blue color for the button */
@@ -66,7 +67,15 @@
   font-weight: 500;
 }
 
+.btn-3{
+  background-color: var(--color3);
+  color: var(--primary-text-color);
+}
 
+.btn-4{
+  background-color: var(--color2);
+  color: var(--secondary-text-color);
+}
 
   .logo {
     color:var(--logo-color);
@@ -167,6 +176,7 @@
     align-items: center;
     flex-wrap: wrap;
   }
+  
   
   .user-info img{
     width: 50px;
@@ -480,6 +490,20 @@ color: #d54d7b
   z-index: 10;
  
   }
+
+  .preview-modal{
+   position: fixed;
+   left: 0;
+  top:0;
+    width: 100%;
+    height: 100%;
+    overflow-y : auto;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0,0,0,.6);
+    visibility: hidden;
+    z-index: 1;
+  }
   
   .modal-contain{
   margin: auto;
@@ -530,6 +554,7 @@ color: #d54d7b
   
  
   .show-modal{
+   
     visibility: visible;
    
   }
@@ -630,6 +655,7 @@ border-bottom-left-radius: .5rem;
 
 
 .textbox-wrapper{
+  margin-top: .5rem;
   position: relative;
   display: flex;
   justify-content: center;
@@ -713,7 +739,7 @@ border-radius: .5rem;
 
 
 .single_post_card{
-  
+  margin-top: .5rem;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -789,13 +815,48 @@ font-size: 20px;
 
 }
 
-code{
+
+
+
+
+  code{
  
   background-color: var(--color1);
   color: #e5305d;
   padding: 2px 4px;
   border-radius: 2px;
-font-size: 75%;
+
+}
+
+
+  pre {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background-color: var(--color1);
+  color: #e5305d;
+  
+    font-family: 'Courier New', Courier, monospace;
+    
+  } 
+  .preview-modal-close{
+    font-size: 2rem;
+    color: black;
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    cursor: pointer;
+  }
+
+
+#preview{
+  background: var(--bg-color);
+  line-height: 1.5;
+  position: relative;
+  width: 100%;
+  max-width: 680px;
 }
 
 .profile-wrapper{
@@ -952,8 +1013,6 @@ font-weight: bold;
 background-color: var(--color3);
   }
   
-
-
 
 
 
