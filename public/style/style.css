@@ -845,8 +845,8 @@ font-size: 20px;
     font-size: 2rem;
     color: black;
     position: absolute;
-    top: 2%;
-    right: 2%;
+    top: 0;
+    right: 0;
     cursor: pointer;
   }
 
@@ -856,7 +856,7 @@ font-size: 20px;
   line-height: 1.5;
   position: relative;
   width: 100%;
-  max-width: 680px;
+  max-width: 1000px;
 }
 
 .profile-wrapper{
