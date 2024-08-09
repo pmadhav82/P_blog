@@ -83,6 +83,8 @@ rootRoute.get("/:postId", async (req, res) => {
 
 rootRoute.get("/", async (req, res) => {
   try {
+//  let statusFieldAddedSuccessfully = await Posts.updateMany({status:{$exists:false}}, {$set:{status: "published"}});
+//     console.log(statusFieldAddedSuccessfully);
     const posts = await Posts.find()
       .sort({ _id: -1 })
       .populate({ path: "uid", select: "_id name profileURL" })
@@ -93,6 +95,7 @@ rootRoute.get("/", async (req, res) => {
     });
   } catch (err) {
     console.error(err);
+    res.json({message: err.message});
   }
 });
 

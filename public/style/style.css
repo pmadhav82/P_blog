@@ -322,6 +322,14 @@ max-height: 72px;  /* Adjust as needed */
   cursor: pointer;
   color: var(--primary-text-color);
 }
+.draft-btn{
+  display: inline-block;
+  background-color: #ffcc00; 
+  color: #000; 
+  padding: .2rem .4rem;
+  border-radius: 5px;
+  border: 1px solid #e6b800;
+}
 .btn:hover, .btn:focus{
   background: var(--color3);
 }
@@ -508,9 +516,10 @@ color: #d54d7b
   .modal-contain{
   margin: auto;
     padding: 1rem;
-    width: 18rem;
+    width: 100%;
+    max-width: 600px;
     border-radius: 1rem;
-    background-color: var(--color3);
+    background-color: var(--color2);
     
   } 
 .image-modal-contain{
@@ -819,6 +828,7 @@ font-size: 20px;
   color: #e5305d;
   padding: 2px 4px;
   border-radius: 2px;
+  font-size: 75%;
 
 }
 
@@ -835,6 +845,13 @@ font-size: 20px;
     font-family: 'Courier New', Courier, monospace;
     
   } 
+
+  .if-draft-post{
+    margin: .3rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
   .preview-modal-close{
     font-size: 2rem;
     color: black;

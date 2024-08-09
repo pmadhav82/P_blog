@@ -5,7 +5,24 @@
 
 
     <div>
+    {{#if (isDraftPost post.status)}}
+    <div class="if-draft-post">
+
+<p class="draft-btn">This post has not published yet.</p>
+
+{{#if (showBtns "edit" post.uid._id)}}
+
+        <form action="/editPost?postId={{post._id}}" method="post">
+          <button class="btn-2" type="submit">Click to edit </button>
+        </form>
+{{/if}}
+    </div>
+   
+    {{/if}}
+
+
       <h1 class=" single_post_title">
+
         {{post.title}}
 
       </h1>

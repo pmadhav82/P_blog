@@ -10,7 +10,7 @@ const cors = require("cors");
 const session = require("express-session");
 const flash = require("connect-flash");
 const {userStatusChecker} = require("./utils/userStatusChecker");
-const {formatDate, showBtns} = require("./utils/helperFunctions");
+const {formatDate, showBtns, isDraftPost} = require("./utils/helperFunctions");
 const {userStatus} = require("./utils/userStatusChecker");
 const editProfileRoute = require("./routes/editProfileRoute");
 const signupRoute = require("./routes/signupRoute");
@@ -85,7 +85,8 @@ app.use(express.static(`${__dirname}/upload`));
 app.engine("handlebars", handlebars({
   helpers:{
     formatDate,
- showBtns
+ showBtns,
+ isDraftPost
   }
 }));
 
