@@ -1031,9 +1031,7 @@ background-color: var(--color3);
 
 
 @media (max-width:600px) {
-  .login-box form, .singup-box form, .main form{
-    width: 90%;  
-  }
+ 
  
 
   .profile-wrapper{
