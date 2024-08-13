@@ -29,7 +29,7 @@ switch(buttonType){
 
 
 const isDraftPost = (status) =>{
-    if(status === "draft") return true
+  return status === "draft";
 }
 
 
