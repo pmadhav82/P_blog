@@ -37,8 +37,8 @@ editPostRoute.post("/:id", postValidation, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.render("newpost", {
-      title: req.body.title,
-      contain: req.body.contain.trim(),
+      title,
+      contain,
       errorMessage: errors.array()[0].msg,
     });
   }
@@ -48,10 +48,11 @@ editPostRoute.post("/:id", postValidation, async (req, res) => {
       await Posts.findByIdAndUpdate(id, {
         title,
         contain: contain.trim(),
+        status: action,
         html,
       });
 
-      res.redirect("/welcome");
+      res.redirect(`/${id}`);
     } catch (err) {
       console.log(err);
       res.render("editPost", {

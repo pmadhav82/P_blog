@@ -674,6 +674,7 @@ border-bottom-left-radius: .5rem;
   background: var(--color2);
   max-width: 1000px;
   padding-bottom: 1rem;
+  border-radius: 0.375rem;
 }
 
 
@@ -857,7 +858,7 @@ font-size: 20px;
     color: black;
     position: absolute;
     top: 0;
-    right: 0;
+    right: 10px;
     cursor: pointer;
   }
 
