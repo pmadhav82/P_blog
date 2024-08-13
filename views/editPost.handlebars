@@ -14,21 +14,33 @@
      <span class="close">&times;</span>
 </a>
     </div>
-<form action="/editPost/{{id}}"  method="post" class="form">
+<form id="post-form" action="/editPost/{{id}}"  method="post" class="form">
 
 {{>-form}}
 
 <!-- Submit button -->
-<div class="btn-group">
+  <div class="btn-group">
+{{#if (isDraftPost status)}}
 
- 
- <button type="submit" class="btn-2">
-    Save changes
-  </button>
+        <button value="publish" name="action" type="submit" class="btn-2">
+          Publish
+        </button>
+        <button value="draft" name="action" class="btn-2 btn-3">Save as draft</button>
+{{else}}
+
+
+        <button value="publish" name="action" type="submit" class="btn-2">
+          Save change
+        </button>
+
+{{/if}}
 
 
 
-</div>
+     {{> preview}}
+
+      </div>
+
 
 
 </form>

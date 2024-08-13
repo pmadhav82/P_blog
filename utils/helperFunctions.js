@@ -27,4 +27,10 @@ switch(buttonType){
 }
 
 
-module.exports = {formatDate, showBtns}
+
+const isDraftPost = (status) =>{
+    if(status === "draft") return true
+}
+
+
+module.exports = {formatDate, showBtns, isDraftPost}
