@@ -10,8 +10,7 @@ userRoute.use(islogin);
 userRoute.get("/", async (req, res) => {
 
   try {
-    // let authMethodAddedSuccessfully = await Users.updateMany({authMethod:{$exists:false}}, {$set:{authMethod: "doesNot fit"}});
-    // console.log(authMethodAddedSuccessfully);
+ 
     const userId = req.session.uid;
     const posts = await Posts.find({ uid: userId })
       .populate({path:"uid", select: "_id name profileURL"})

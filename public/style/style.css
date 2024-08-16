@@ -842,10 +842,12 @@ font-size: 20px;
     word-wrap: break-word;
     background-color: var(--color1);
   color: #e5305d;
+  padding: .1rem;
   
     font-family: 'Courier New', Courier, monospace;
     
   } 
+
 
   .if-draft-post{
     margin: .3rem;
