@@ -1,0 +1,98 @@
+<div class="image-upload-toolbar"><label title="Upload image" class="upload-image"><svg class="icons"
+            style="width:20px;height:20px; margin:3px 0 0 2px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path fill="currentColor"
+                d="M20 5H4v14l9.292-9.294a1 1 0 011.414 0L20 15.01V5zM2 3.993A1 1 0 012.992 3h18.016c.548 0 .992.445.992.993v16.014a1 1 0 01-.992.993H2.992A.993.993 0 012 20.007V3.993zM8 11a2 2 0 110-4 2 2 0 010 4z">
+            </path>
+        </svg><input type="file" id="image-upload-field" accept="image/*" ></label>
+    <div style="width: 90%;" aria-live="polite">
+        
+        <input data-testid="markdown-copy-link" type="text" style="width:50%;"
+                id="image-url" readonly="" value="![Image description](image url)">
+        
+                 <button type="button" id="copy-btn"
+            title="Copy" class="btn btn-outline"><svg class="icons" style="width:20px;height:20px; margin-right:5px" id="copy-icon"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill="currentColor"
+                    d="M7 6V3a1 1 0 011-1h12a1 1 0 011 1v14a1 1 0 01-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1 1 0 013 21l.003-14c0-.552.45-1 1.007-1H7zm2 0h8v10h2V4H9v2zm-2 5v2h6v-2H7zm0 4v2h6v-2H7z">
+                </path>
+            </svg>Copy...</button></div>
+</div>
+
+
+
+<script>
+const copyButton = document.getElementById("copy-btn");
+const url = document.getElementById("image-url");
+const copyIcon = document.getElementById("copy-icon");
+
+const imageInput = document.getElementById("image-upload-field");
+
+imageInput.addEventListener("change", (e)=>{
+const selectedImage = e.target.files[0];
+if(!selectedImage){
+    url.value = "No image selected";
+    return
+}
+
+const imageType = ["image/png", "image/jpg", "image/jpeg"];
+const fileSizeMB = (selectedImage.size/(1024 *1024).toFixed(2));
+const maxFileSizeMB = 10;
+
+
+switch(true){
+
+case !imageType.includes(selectedImage.type):
+url.value = "Please select a valid image file (PNG, JPG, JPEG)"
+break;
+case fileSizeMB > maxFileSizeMB:
+url.value = `Image size is more than ${maxFileSizeMB} MB`
+break;
+default:{
+    url.value = selectedImage.name;
+console.log("can send to backend...")
+
+}
+
+}
+
+copyButton.innerHTML = `<svg class="icons" style="width:20px;height:20px; margin-right:5px" id="copy-icon"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill="currentColor"
+                    d="M7 6V3a1 1 0 011-1h12a1 1 0 011 1v14a1 1 0 01-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1 1 0 013 21l.003-14c0-.552.45-1 1.007-1H7zm2 0h8v10h2V4H9v2zm-2 5v2h6v-2H7zm0 4v2h6v-2H7z">
+                </path>
+            </svg>Copy...`
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+copyButton.addEventListener("click", async()=>{
+const urlValue = url?.value;
+try{
+await navigator.clipboard.writeText(urlValue);
+copyButton.innerHTML = `<svg class="icons" style="width:20px;height:20px; margin-right:5px" id="copy-icon"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill="currentColor"
+                    d="M7 6V3a1 1 0 011-1h12a1 1 0 011 1v14a1 1 0 01-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1 1 0 013 21l.003-14c0-.552.45-1 1.007-1H7zm2 0h8v10h2V4H9v2zm-2 5v2h6v-2H7zm0 4v2h6v-2H7z">
+                </path>
+            </svg>Copied!`
+            
+}catch(er){
+    console.log(er.message)
+}
+
+})
+
+
+
+</script>
