@@ -2,7 +2,9 @@
 const path =  require("path");
 
 const upload = multer({
-    limits:800000,
+    limits:{
+fileSize:8000000
+    },
     storage: multer.diskStorage({
 destination:(req,file,cb)=>{
 cb(null,"./upload/images")
