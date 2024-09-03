@@ -1,7 +1,7 @@
 const errorHandler = (error, req,res,next) =>{
 
 const errorStatusCode = res.statusCode || 500;
-const errorMessage = error.message || "Something went wrong!";
+let errorMessage = error.message || "Something went wrong!";
 res.status(errorStatusCode).json({message: errorMessage, success: false});
 
 

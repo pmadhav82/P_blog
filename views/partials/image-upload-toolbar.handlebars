@@ -53,50 +53,49 @@
 
 
 
-const uploadImage = async (URL, file)=>{
-    const formData = new FormData();
-    formData.append("s3Image", file);
-    formData.append("description", "Image ready to upload to s3 bucket.")
-    
-    try{
-
-    const res = await fetch(URL,{
-          method:"post",
-       body: formData
-        })
+    const uploadImage = async (URL, file) => {
+        const formData = new FormData();
+        formData.append("s3Image", file);
 
 
-if(res.ok){
-    const result = await res.json();
-    return result
-}
+        try {
 
-    }catch(er){
+            const res = await fetch(URL, {
+                method: "post",
+                body: formData
+            })
 
-        return er.message
+
+
+            const result = await res.json();
+
+            return result
+
+        } catch (error) {
+            console.log(error)
+        }
+
     }
-
-}
 
 
 
     imageInput.addEventListener("change", async (e) => {
-
-        const selectedImage = e.target.files[0];
-        if (!selectedImage) {
-            url.value = "No image selected";
-            return
-        }
-
-
-const {message, success} = await uploadImage("/aws-s3-upload-image", selectedImage);
-console.log({message, success});
-        
-
         copyButton.innerHTML = copyButtonWithIcon;
 
+        const selectedImage = e.target.files[0];
+        
+        if (!selectedImage) {
+                    url.value = "No image selected";
+                    return
+                } 
 
-})
+        const {message, success} = await uploadImage("/aws-s3-upload-image", selectedImage);
+        console.log({message, success})
+
+
+
+
+    })
 
 
 
@@ -114,8 +113,8 @@ console.log({message, success});
         try {
             await navigator.clipboard.writeText(urlValue);
             copyButton.innerHTML = copiedButtonWithIcon;
-            
-} catch (er) {
+
+        } catch (er) {
             console.log(er.message)
         }
 

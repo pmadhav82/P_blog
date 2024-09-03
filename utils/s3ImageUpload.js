@@ -1,19 +1,9 @@
 const multer = require("multer");
-const path = require("path");
 
-const upload = multer({
+const s3Upload = multer({
   limits: {
-    fileSize: 8000000,
+    fileSize: 12000000, //12mb
   },
-  storage: multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, "./upload/images");
-    },
-    filename: (req, file, cb) => {
-      let ext = path.extname(file.originalname);
-      cb(null, `${req.session.uid}.${ext}`);
-    },
-  }),
 
   fileFilter: (req, file, cb) => {
     const allowedFileType = ["image/png", "image/jpg", "image/jpeg"];
@@ -28,4 +18,5 @@ const upload = multer({
     cb(null, true);
   },
 });
-module.exports = upload;
+
+module.exports = s3Upload;
