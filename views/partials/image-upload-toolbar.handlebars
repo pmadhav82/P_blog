@@ -12,11 +12,11 @@
 
     <div style="width: 90%;" aria-live="polite">
 
-        <input data-testid="markdown-copy-link" type="text" style="width:50%;" id="image-url" readonly=""
-            value="![Image description](image url)">
+        <input data-testid="markdown-copy-link" type="text" style="width:50%;" id="image-url" readonly="" placeholder="Select image to get image url"
+            value="">
 
-        <button type="button" id="copy-btn" title="Copy" class="btn btn-outline"><svg class="icons"
-                style="width:20px;height:20px; margin-right:5px" id="copy-icon" viewBox="0 0 24 24"
+        <button type="button" id="copy-btn"  title="Copy" class="btn btn-outline"><svg class="icons"
+                style="width:20px;height:20px; margin-right:5px;" id="copy-icon" viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path fill="currentColor"
                     d="M7 6V3a1 1 0 011-1h12a1 1 0 011 1v14a1 1 0 01-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1 1 0 013 21l.003-14c0-.552.45-1 1.007-1H7zm2 0h8v10h2V4H9v2zm-2 5v2h6v-2H7zm0 4v2h6v-2H7z">
@@ -65,8 +65,9 @@
                 body: formData
             })
 
-
-
+if(!res.ok){
+    throw new Error("Something went wrong.")
+}
             const result = await res.json();
 
             return result
@@ -89,8 +90,16 @@
                     return
                 } 
 
-        const {message, success} = await uploadImage("/aws-s3-upload-image", selectedImage);
-        console.log({message, success})
+
+url.value = "Uploading...";
+
+        const result = await uploadImage("/aws-s3-upload-image", selectedImage);
+        if(!result?.success){
+            url.value = result?.message || "Failed to upload";
+            return
+        }
+
+url.value = `![Image description](${result?.url})`
 
 
 
