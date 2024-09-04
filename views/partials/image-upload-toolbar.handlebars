@@ -12,10 +12,10 @@
 
     <div style="width: 90%;" aria-live="polite">
 
-        <input data-testid="markdown-copy-link" type="text" style="width:50%;" id="image-url" readonly="" placeholder="Select image to get image url"
-            value="">
+        <input data-testid="markdown-copy-link" type="text" style="width:50%;" id="image-url" readonly=""
+            placeholder="Select image to get image url" value="">
 
-        <button type="button" id="copy-btn"  title="Copy" class="btn btn-outline"><svg class="icons"
+        <button type="button" id="copy-btn" title="Copy" class="btn btn-outline"><svg class="icons"
                 style="width:20px;height:20px; margin-right:5px;" id="copy-icon" viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path fill="currentColor"
@@ -57,24 +57,14 @@
         const formData = new FormData();
         formData.append("s3Image", file);
 
+        const res = await fetch(URL, {
+            method: "post",
+            body: formData
+        })
+        const result = await res.json();
+        return result;
 
-        try {
 
-            const res = await fetch(URL, {
-                method: "post",
-                body: formData
-            })
-
-if(!res.ok){
-    throw new Error("Something went wrong.")
-}
-            const result = await res.json();
-
-            return result
-
-        } catch (error) {
-            console.log(error)
-        }
 
     }
 
@@ -84,24 +74,32 @@ if(!res.ok){
         copyButton.innerHTML = copyButtonWithIcon;
 
         const selectedImage = e.target.files[0];
-        
+
         if (!selectedImage) {
-                    url.value = "No image selected";
-                    return
-                } 
-
-
-url.value = "Uploading...";
-
-        const result = await uploadImage("/aws-s3-upload-image", selectedImage);
-        if(!result?.success){
-            url.value = result?.message || "Failed to upload";
+            url.value = "No image selected";
             return
         }
 
-url.value = `![Image description](${result?.url})`
+
+        url.value = "Uploading...";
+        try {
+
+            const result = await uploadImage("/aws-s3-upload-image", selectedImage);
+
+            if (!result?.success) {
+                throw new Error(result?.message || "Failed to upload")
+                
+            }
+
+            url.value = `![Image description](${result?.imageURL})`
 
 
+
+
+        } catch (error) {
+            console.log(error)
+            url.value = error.message
+        }
 
 
     })

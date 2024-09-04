@@ -15,10 +15,12 @@ const bucketURL = "https://pblog-images-bucket.s3.ap-southeast-2.amazonaws.com";
 
 s3UploadImageRoute.post("/", s3Upload.single("s3Image"), async (req, res) => {
   if (!req.file) {
-    res.status(400);
-    throw new Error("No image selected");
-    
+    return res.status(400).json({
+      message: "No image selected",
+      success: false,
+    });
   }
+
   const fileName = `${crypto.randomBytes(16).toString("hex")}_${
     req.file.originalname
   }`;
@@ -34,12 +36,13 @@ s3UploadImageRoute.post("/", s3Upload.single("s3Image"), async (req, res) => {
     const response = await client.send(command);
     if (response.$metadata.httpStatusCode !== 200) {
       throw new Error("Failed to upload image to s3 bucket");
-      return;
+      
     }
 
-    res.json({ url: `${bucketURL}/${fileName}`, success: true });
+    res.json({ imageURL: `${bucketURL}/${fileName}`, success: true });
   } catch (er) {
-   res.status(400).json({message:er.message, success:false})
+    console.log(er);
+    res.status(500).json({ message: er.message, success: false });
   }
 });
 
