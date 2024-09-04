@@ -22,7 +22,8 @@ const postRoute = require("./routes/postRoute");
 const editPostRoute = require("./routes/editPostRoute");
 const googleLoginRoute = require("./routes/googleLoginRoute");
 const previewRoute = require("./routes/previewRoute");
-
+const s3UploadImageRoute = require("./routes/s3UploadImageRoute");
+const errorHandler = require("./utils/errorHandler");
 app.use(express.json());
 
 app.use(
@@ -108,10 +109,13 @@ app.use("/post", postRoute);
 app.use("/editPost", editPostRoute);
 app.use("/googleLogin", googleLoginRoute);
 app.use("/preview", previewRoute);
+app.use("/aws-s3-upload-image", s3UploadImageRoute);
 app.use("/", rootRoute);
 
 app.use("/*", (req,res)=>{
   res.render("404");
 })
+
+app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Server is running on ${PORT} `));

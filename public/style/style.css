@@ -692,7 +692,7 @@ width: 100%;
   align-self: flex-start;
   font-size: 1.3rem;
 }
-.textbox-wrapper form input{
+.textbox-wrapper form input[name="title"]{
   outline: none;
   margin: 1rem 0 1rem 0;
   padding: 1rem;
@@ -703,7 +703,33 @@ border: none;
   border-bottom: 1px solid var(--primary-text-color);
 }
 
+.image-upload-toolbar{
+  display: flex;
+  gap: 1rem;
+  padding: .5rem;
+  background: var(--nav-bg-color);
+}
 
+.image-upload-toolbar input{
+
+    padding: .3em;
+    outline: none;
+    font-size: 1rem;
+    border: 2px solid rgb(212,212,212);
+    border-radius: 0.375rem;
+    line-height:1.5;
+    background-color: var(--color2);
+    color:var(--primary-text-color);
+    transition: all 0.3s;
+  }
+ .image-upload-toolbar input:focus{
+    border-color:var(--color3);
+  }
+
+.upload-image{
+  cursor: pointer;
+  margin-top: .5rem;
+}
 .textbox-wrapper textarea{
   resize: none;
   overflow: auto;
