@@ -1,7 +1,7 @@
 const {marked} = require("marked");
 const {JSDOM} = require("jsdom");
 const createDOMPurify = require("dompurify");
-
+const {islogin} = require("../utils/loginHandeler");
 
 
 const window = new JSDOM('').window;
@@ -11,7 +11,7 @@ const previewRoute = require("express").Router();
 
 
 
-previewRoute.post("/", (req,res)=>{
+previewRoute.post("/", islogin, (req,res)=>{
 const {title,contain} = req.body;
 if(!contain && !title){
   return  res.status(400).json({message:"No content found to preview"})
