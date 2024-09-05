@@ -1,6 +1,7 @@
 const s3UploadImageRoute = require("express").Router();
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const crypto = require("crypto");
+const path = require("path");
 const s3Upload = require("../utils/s3ImageUpload");
 const {islogin} = require("../utils/loginHandeler");
 const client = new S3Client({
@@ -21,9 +22,9 @@ s3UploadImageRoute.post("/", islogin, s3Upload.single("s3Image"), async (req, re
     });
   }
 
-  const fileName = `${crypto.randomBytes(16).toString("hex")}_${
-    req.file.originalname
-  }`;
+  
+const fileExt = path.extname(req.file.originalname);
+  const fileName = `${crypto.randomBytes(16).toString("hex")}.${fileExt}`;
 
   const input = {
     Bucket: "pblog-images-bucket",
