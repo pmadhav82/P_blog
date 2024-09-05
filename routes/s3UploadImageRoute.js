@@ -2,7 +2,7 @@ const s3UploadImageRoute = require("express").Router();
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const crypto = require("crypto");
 const s3Upload = require("../utils/s3ImageUpload");
-
+const {islogin} = require("../utils/loginHandeler");
 const client = new S3Client({
   region: "ap-southeast-2",
   credentials: {
@@ -13,7 +13,7 @@ const client = new S3Client({
 
 const bucketURL = "https://pblog-images-bucket.s3.ap-southeast-2.amazonaws.com";
 
-s3UploadImageRoute.post("/", s3Upload.single("s3Image"), async (req, res) => {
+s3UploadImageRoute.post("/", islogin, s3Upload.single("s3Image"), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({
       message: "No image selected",
