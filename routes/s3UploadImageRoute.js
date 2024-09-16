@@ -4,6 +4,8 @@ const crypto = require("crypto");
 const path = require("path");
 const s3Upload = require("../utils/s3ImageUpload");
 const {islogin} = require("../utils/loginHandeler");
+
+
 const client = new S3Client({
   region: "ap-southeast-2",
   credentials: {
@@ -22,7 +24,7 @@ s3UploadImageRoute.post("/", islogin, s3Upload.single("s3Image"), async (req, re
     });
   }
 
-  
+
 const fileExt = path.extname(req.file.originalname);
   const fileName = `${crypto.randomBytes(16).toString("hex")}.${fileExt}`;
 

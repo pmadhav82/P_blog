@@ -2,15 +2,15 @@ const multer = require("multer");
 
 const s3Upload = multer({
   limits: {
-    fileSize: 12000000, //12mb
+    fileSize: 12000000,
   },
 
   fileFilter: (req, file, cb) => {
-    const allowedFileType = ["image/png", "image/jpg", "image/jpeg"];
+    const allowedFileType = ["image/png", "image/jpg", "image/jpeg", "image/gif"];
 
     if (!allowedFileType.includes(file.mimetype)) {
       return cb(
-        new Error("Please select a valid image file (PNG, JPG, JPEG)"),
+        new Error("Please select a valid image file (PNG, JPG, JPEG, GIF)"),
         false
       );
     }

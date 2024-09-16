@@ -1,6 +1,4 @@
 <div class="image-upload-toolbar">
-
-
     <label title="Upload image" class="upload-image"><svg class="icons"
             style="width:20px;height:20px; margin:3px 0 0 2px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path fill="currentColor"
@@ -8,114 +6,59 @@
             </path>
         </svg>
         <input type="file" id="image-upload-field" accept="image/*"></label>
-
-
     <div style="width: 90%; display:flex; align-items: center" aria-live="polite">
-
-        <input data-testid="markdown-copy-link" type="text" style="width:80%; max-width:360px;" id="image-url" readonly=""
-            placeholder="Select image to get image url" value="">
-
-        <button type="button"  id="copy-btn" title="Copy" class="btn btn-outline" style="display: none;" >
-            <svg class="icons"
-                style="width:20px;height:20px; margin-right:5px;" id="copy-icon" viewBox="0 0 24 24"
+        <input data-testid="markdown-copy-link" type="text" style="width:80%; max-width:360px;" id="image-url"
+            readonly="" placeholder="Select image to get image url" value="">
+        <button type="button" id="copy-btn" title="Copy" class="btn btn-outline" style="display: none;">
+            <svg class="icons" style="width:20px;height:20px; margin-right:5px;" id="copy-icon" viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path fill="currentColor"
                     d="M7 6V3a1 1 0 011-1h12a1 1 0 011 1v14a1 1 0 01-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1 1 0 013 21l.003-14c0-.552.45-1 1.007-1H7zm2 0h8v10h2V4H9v2zm-2 5v2h6v-2H7zm0 4v2h6v-2H7z">
                 </path>
             </svg>
-            
-            
-            
-            
-            </button>
+        </button>
     </div>
 </div>
-
-
-
 <script>
     const copyButton = document.getElementById("copy-btn");
     const url = document.getElementById("image-url");
-    const copyIcon = document.getElementById("copy-icon");
     const imageInput = document.getElementById("image-upload-field");
-
-
-
-
-
-
     const uploadImage = async (URL, file) => {
         const formData = new FormData();
         formData.append("s3Image", file);
-
         const res = await fetch(URL, {
             method: "post",
             body: formData
         })
         const result = await res.json();
         return result;
-
-
-
     }
-
-
-
     imageInput.addEventListener("change", async (e) => {
-copyButton.style.display = "none";
+        copyButton.style.display = "none";
         const selectedImage = e.target.files[0];
-
         if (!selectedImage) {
             url.value = "No image selected";
             return
         }
-
-
         url.value = "Uploading...";
         try {
-
             const result = await uploadImage("/aws-s3-upload-image", selectedImage);
-
             if (!result?.success) {
                 throw new Error(result?.message || "Failed to upload")
-
             }
-
             url.value = `![Image description](${result?.imageURL})`
-copyButton.style.display = "block";
-
-
-
+            copyButton.style.display = "block";
         } catch (error) {
             url.value = error.message
         }
-
-
     })
-
-
-
-
-
-
-
-
-
-
-
-
     copyButton.addEventListener("click", async () => {
         const urlValue = url?.value;
         try {
             await navigator.clipboard.writeText(urlValue);
-url.select();
-
+            url.select();
         } catch (er) {
             console.log(er.message)
         }
-
     })
-
-
-
 </script>
