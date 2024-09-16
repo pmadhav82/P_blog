@@ -44,11 +44,12 @@ editPostRoute.post("/:id", postValidation, async (req, res) => {
   }
   if (errors.isEmpty()) {
     let html = DOMPurify.sanitize(marked.parse(contain));
+    const status = action === "publish" ? "published" : "draft";
     try {
       await Posts.findByIdAndUpdate(id, {
         title,
         contain: contain.trim(),
-        status: action,
+        status,
         html,
       });
 
