@@ -15,7 +15,7 @@ userRoute.get("/", async (req, res) => {
     const posts = await Posts.find({ uid: userId })
       .populate({path:"uid", select: "_id name profileURL"})
       .sort({ _id: -1 })
-      .select("_id title createdAt html status")     
+      .select("_id title createdAt status")     
       .lean();
       
     const user = await Users.findById(userId).select("-password").lean();
