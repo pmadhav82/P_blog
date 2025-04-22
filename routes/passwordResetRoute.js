@@ -46,11 +46,16 @@ const payload = {
     subject:"Password reset request",
     html
 }
-sendEmail(payload);
+const{success, message} = await sendEmail(payload);
+if(success){
 
+    req.flash("success", message)
+    return    res.redirect("/login")
+}else{
+    req.flash("error",message)
+  return  res.redirect("/forgot-pass")
+}
 
-req.flash("success", "Check your email for the password reset link")
-    res.redirect("/login")
 }else{
     req.flash("error","We could not find any user, please check your email address again")
 res.redirect("/forgot-pass")
