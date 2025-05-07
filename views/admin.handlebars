@@ -1,0 +1,43 @@
+
+<script src="/javascript/showAndHideModel.js" defer></script>
+<div class="main-wrapper">
+
+    <div class="profile-container">
+
+        {{#each users}}
+
+        <div class="profile-card">
+            <img src="{{this.profileURL}}" alt="image1" class="profile-icon" />
+            <div class="profile-name">{{this.name}}</div>
+            <a href="/user?id={{this._id}}" class="link">View Profile</a>
+            
+ <button class="button tiggerbtn">Delete User</button>
+
+    <div class="modal-wrapper">
+          <div class="modal-contain">
+            <p>Do you want to delete user <b>{{this.name}}</b>?</p>
+            <div class="action-btn">
+
+              <button class="cancelbtn btn-primary">Cancel</button>
+              <form method="post" action="/admin/{{this._id}}">
+                <button class="btn-secondary" type="submit">Delete</button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+
+   </div>
+
+
+
+        {{/each}}
+
+
+
+    </div>
+
+</div>
+
+
+

@@ -40,7 +40,7 @@ type:String
     },
     profileURL:{
         type:String,
-        default:"images/userProfile.png"
+        default:"/images/userProfile.png"
     }
 
 },

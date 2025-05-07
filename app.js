@@ -24,6 +24,7 @@ const googleLoginRoute = require("./routes/googleLoginRoute");
 const previewRoute = require("./routes/previewRoute");
 const s3UploadImageRoute = require("./routes/s3UploadImageRoute");
 const errorHandler = require("./utils/errorHandler");
+const adminRoute = require("./routes/adminRoute");
 app.use(express.json());
 
 app.use(
@@ -99,6 +100,7 @@ app.set("views", "./views");
 
 
 //router connection
+app.use("/admin", adminRoute);
 app.use("/comment", commentRoute);
 app.use("/editProfile", editProfileRoute);
 app.use("/forgot-pass", passwordResetRoute);

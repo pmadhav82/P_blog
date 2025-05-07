@@ -1,18 +1,12 @@
 const s3UploadImageRoute = require("express").Router();
-const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const {  PutObjectCommand } = require("@aws-sdk/client-s3");
+const client = require("../utils/s3Client");
 const crypto = require("crypto");
 const path = require("path");
 const s3Upload = require("../utils/s3ImageUpload");
 const {islogin} = require("../utils/loginHandeler");
 
 
-const client = new S3Client({
-  region: "ap-southeast-2",
-  credentials: {
-    accessKeyId: process.env.AWS_S3_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY,
-  },
-});
 
 const bucketURL = "https://pblog-images-bucket.s3.ap-southeast-2.amazonaws.com";
 
