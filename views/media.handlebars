@@ -44,12 +44,12 @@
 <h2>Image Gallery</h2>
 
 <div class="gallery">
-{{#each imageURL}}
+{{#each imageKey}}
 <div class="img-section">
 
 
- <img  src="{{this}}" alt="Image" />
-    <form action="/admin/media" method="post">
+ <img  src="https://pblog-images-bucket.s3.ap-southeast-2.amazonaws.com/{{this}}" alt="Image" />
+    <form action="/admin/media/{{this}}" method="post">
 <button class="btn-secondary" type="submit">Delete</button>
 </form>
 
