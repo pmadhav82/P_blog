@@ -1,4 +1,5 @@
 
+
 const {userStatus} = require("./userStatusChecker");
 const moment = require("moment");
 
@@ -27,10 +28,20 @@ switch(buttonType){
 }
 
 
+const adminChecker= ()=>{
+
+const adminEmail ="pmadhav279@gmail.com"
+if(userStatus.email === adminEmail){
+    return true
+}
+
+}
+
+
 
 const isDraftPost = (status) =>{
   return status === "draft";
 }
 
 
-module.exports = {formatDate, showBtns, isDraftPost}
+module.exports = {formatDate, showBtns, isDraftPost, adminChecker}

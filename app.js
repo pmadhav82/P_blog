@@ -10,7 +10,7 @@ const cors = require("cors");
 const session = require("express-session");
 const flash = require("connect-flash");
 const {userStatusChecker} = require("./utils/userStatusChecker");
-const {formatDate, showBtns, isDraftPost} = require("./utils/helperFunctions");
+const {formatDate, showBtns, isDraftPost, adminChecker} = require("./utils/helperFunctions");
 const {userStatus} = require("./utils/userStatusChecker");
 const editProfileRoute = require("./routes/editProfileRoute");
 const signupRoute = require("./routes/signupRoute");
@@ -26,6 +26,7 @@ const s3UploadImageRoute = require("./routes/s3UploadImageRoute");
 const errorHandler = require("./utils/errorHandler");
 const adminRoute = require("./routes/adminRoute");
 const { islogin } = require("./utils/loginHandeler");
+const isAdmin = require("./utils/adminHandeler");
 app.use(express.json());
 
 app.use(
@@ -89,7 +90,8 @@ app.engine("handlebars", handlebars({
   helpers:{
     formatDate,
  showBtns,
- isDraftPost
+ isDraftPost,
+ adminChecker
   }
 }));
 
@@ -101,7 +103,7 @@ app.set("views", "./views");
 
 
 //router connection
-app.use("/admin", adminRoute);
+app.use("/admin", islogin, isAdmin, adminRoute);
 app.use("/comment", commentRoute);
 app.use("/editProfile", editProfileRoute);
 app.use("/forgot-pass", passwordResetRoute);

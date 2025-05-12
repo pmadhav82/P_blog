@@ -9,6 +9,13 @@ const islogin = (req,res,next)=>{
 
 }
 
+
+
+
+
+// 
+
+
 const ifLogin = (req,res,next)=>{
     if(req.session.name && req.session.email){
         res.redirect("/welcome");
