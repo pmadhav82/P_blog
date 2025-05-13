@@ -2,6 +2,8 @@
   <nav>
     <div class="logo"><a href="/">P_Blog</a></div>
 
+
+
     {{#if userStatus.login}}
 
       <div class="user_pic">
@@ -57,9 +59,30 @@
                     ></path>
                   </g>
                 </g></svg>
-              <p>Write a new post</p>
+              <p>Write a new post </p>
               <span>></span>
             </a>
+
+{{#if (adminChecker)}}
+
+   <a href="/admin" class="sub-menu-link">
+          <svg
+            class="icons"
+            style="width:24px;height:24px"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="currentColor"
+              d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4C7.58,4 4,7.58 4,12C4,16.42 7.58,20 12,20C16.42,20 20,16.42 20,12C20,7.58 16.42,4 12,4M11,6H13V12H11V6M11,14H13V16H11V14Z"
+            ></path>
+          </svg>
+              <p>Admin Panel </p>
+              <span>></span>
+            </a>
+
+{{/if}}
+
+
 
            
             <span class="sub-menu-link" id="toggleBtn">
@@ -76,6 +99,12 @@
               <p class="themeName">Dark mode</p>
               <span>></span>
             </span>
+
+
+
+
+
+
 
             <a href="/welcome/logout" class="sub-menu-link"> 
               <svg
@@ -102,7 +131,7 @@
 
       <ul class="menu-wrapper">
 
-        <li><a href="/login">Login</a></li>
+        <li><a href="/login" >Login</a></li>
         <li><a href="/signup">Sign Up</a></li>
               
       </ul>

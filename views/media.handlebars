@@ -1,0 +1,127 @@
+
+
+<style>
+
+
+    .gallery {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 15px;
+    }
+
+    .img-section img {
+      display: block;
+    width: 100%;
+    padding: 0;
+    aspect-ratio: 16 /9;
+    object-fit: cover;
+    max-height: 200px;
+    object-position: center;
+    margin-bottom: 0.5rem;
+    transition: 200ms transform ease-in-out;
+    }
+
+    .img-section img:hover {
+        cursor: pointer;
+      transform: scale(1.05);
+    }
+
+.img-section form{
+    border-radius: 5px;
+    background: var(--nav-bg-color);
+    padding:  .2rem;
+}
+ 
+
+</style>
+
+
+
+
+<div class="main-wrapper">
+
+{{> adminNavBar}}
+
+<div class="gallery">
+{{#each imageKey}}
+<div class="img-section">
+
+
+ <img  src="https://pblog-images-bucket.s3.ap-southeast-2.amazonaws.com/{{this}}" alt="Image" />
+    <form action="/admin/media/{{this}}" method="post">
+<button class="btn-secondary" type="submit">Delete</button>
+</form>
+
+</div>
+
+
+
+{{/each}}
+</div>
+
+<div class="image-modal-wrapper">
+<div class="image-modal-contain">
+  
+    <span class="close">&times;</span>
+ 
+
+    <img class="modal-img" src= "" alt="media">
+
+  </div>
+</div>
+
+<script>
+const galleryImages = document.querySelectorAll('.gallery img');
+const imageModal = document.querySelector(".image-modal-wrapper");
+const modalImg = document.querySelector(".modal-img");
+const imageCancleBtn = document.querySelector(".close");
+
+
+
+const showImageModal = ()=>{
+    
+  imageModal.classList.toggle("show-modal")
+}
+
+
+
+galleryImages.forEach(img=>{
+
+img.addEventListener("click", ()=>{
+    modalImg.src = img.src;
+    showImageModal();
+});
+
+})
+
+imageCancleBtn.addEventListener("click",showImageModal);
+
+window.addEventListener("click", (e)=>{
+
+  if(e.target.matches(".image-modal-contain")){
+    return showImageModal()
+  }else
+  return
+})
+
+
+
+  {{!-- const modal22 = document.getElementById('modal2');
+  const modal2Img = document.getElementById('modal2-img');
+  const galleryImages = document.querySelectorAll('.gallery img');
+
+  galleryImages.forEach(img => {
+    img.addEventListener('click', () => {
+    
+      modal2.style.display = 'flex';
+      modal2Img.src = img.src;
+    });
+  });
+
+  modal2.addEventListener('click', () => {
+    modal2.style.display = 'none';
+  }); --}}
+</script>
+
+
+</div>
