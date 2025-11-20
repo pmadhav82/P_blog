@@ -1,10 +1,6 @@
-const firebase = require("firebase-admin");
+const firebase = require("../utils/firebase-admin-config");
 const Users = require("../module/user");
-const serviceAccount = require("../service-account-key.json");
 const setUserDataInSession = require("../utils/setUserDataInSession");
-firebase.initializeApp({
-  credential: firebase.credential.cert(serviceAccount),
-});
 
 const googleLoginRoute = require("express").Router();
 
