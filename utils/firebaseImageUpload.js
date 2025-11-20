@@ -1,9 +1,13 @@
 const multer = require("multer");
 
+
+
+
 const firebaseUpload = multer({
   limits: {
     fileSize: 12000000,
   },
+storage: multer.memoryStorage(),
 
   fileFilter: (req, file, cb) => {
     const allowedFileType = ["image/png", "image/jpg", "image/jpeg", "image/gif"];

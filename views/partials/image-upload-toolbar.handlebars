@@ -25,7 +25,7 @@
     const imageInput = document.getElementById("image-upload-field");
     const uploadImage = async (URL, file) => {
         const formData = new FormData();
-        formData.append("s3Image", file);
+        formData.append("firebase-image", file);
         const res = await fetch(URL, {
             method: "post",
             body: formData
@@ -42,11 +42,13 @@
         }
         url.value = "Uploading...";
         try {
-            const result = await uploadImage("/aws-s3-upload-image", selectedImage);
+            const result = await uploadImage("/firebase-image-upload", selectedImage);
             if (!result?.success) {
                 throw new Error(result?.message || "Failed to upload")
             }
-            url.value = `![Image description](${result?.imageURL})`
+            
+       
+            url.value = `![Image description](${result?.publicUrl})`
             copyButton.style.display = "block";
         } catch (error) {
             url.value = error.message

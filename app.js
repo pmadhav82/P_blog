@@ -22,7 +22,8 @@ const postRoute = require("./routes/postRoute");
 const editPostRoute = require("./routes/editPostRoute");
 const googleLoginRoute = require("./routes/googleLoginRoute");
 const previewRoute = require("./routes/previewRoute");
-const s3UploadImageRoute = require("./routes/s3UploadImageRoute");
+//const s3UploadImageRoute = require("./routes/s3UploadImageRoute");
+const firebaseImageUploadRoute = require("./routes/firebaseUploadImageRoute");
 const errorHandler = require("./utils/errorHandler");
 const adminRoute = require("./routes/adminRoute");
 const { islogin } = require("./utils/loginHandeler");
@@ -114,7 +115,8 @@ app.use("/post", postRoute);
 app.use("/editPost", editPostRoute);
 app.use("/googleLogin", googleLoginRoute);
 app.use("/preview", previewRoute);
-app.use("/aws-s3-upload-image", s3UploadImageRoute);
+//app.use("/aws-s3-upload-image", s3UploadImageRoute);
+app.use("/firebase-image-upload", firebaseImageUploadRoute);
 app.use("/", rootRoute);
 
 app.use("/*", (req,res)=>{
