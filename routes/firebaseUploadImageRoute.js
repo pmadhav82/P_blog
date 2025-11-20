@@ -12,7 +12,7 @@ const BUCKET_NAME = "pblog-5795d.firebasestorage.app";
 const bucket = firebase.storage().bucket(BUCKET_NAME);
 
 
-firebaseImageUploadRoute.post("/", firebaseUpload.single("firebase-image"), async(req,res)=>{
+firebaseImageUploadRoute.post("/", islogin, firebaseUpload.single("firebase-image"), async(req,res)=>{
     if (!req.file) {
     return res.status(400).json({
       message: "No image selected",
@@ -38,7 +38,9 @@ const BASE_URL = "https://storage.googleapis.com";
 
 const publicUrl = `${BASE_URL}/${BUCKET_NAME}/${fileName}`;
 
-  res.json({success:true,message:"Image upload to firebase successfully...", publicUrl});
+
+
+  res.json({success:true, publicUrl});
 }catch(er){
  res.status(500).json({ message: er.message, success: false });
 }
