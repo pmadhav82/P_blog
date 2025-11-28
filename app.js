@@ -26,6 +26,7 @@ const previewRoute = require("./routes/previewRoute");
 const firebaseImageUploadRoute = require("./routes/firebaseUploadImageRoute");
 const errorHandler = require("./utils/errorHandler");
 const adminRoute = require("./routes/adminRoute");
+const adminManageMediaRoute = require("./routes/adminManageMediaRoute");
 const { islogin } = require("./utils/loginHandeler");
 const isAdmin = require("./utils/adminHandeler");
 app.use(express.json());
@@ -105,6 +106,7 @@ app.set("views", "./views");
 
 //router connection
 app.use("/admin", islogin, isAdmin, adminRoute);
+app.use("/admin/manage-media", islogin, isAdmin, adminManageMediaRoute);
 app.use("/comment", commentRoute);
 app.use("/editProfile", editProfileRoute);
 app.use("/forgot-pass", passwordResetRoute);

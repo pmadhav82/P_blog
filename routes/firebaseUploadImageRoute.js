@@ -51,38 +51,4 @@ module.exports = firebaseImageUploadRoute;
 
 
 
-
-
-// const storage = multer.memoryStorage();
-// const upload = multer({ storage: storage });
-
-
-// // Route to upload image
-// router.post("/upload", islogin, upload.single("image"), async (req, res) => {
-//     try {
-//         if (!req.file) {
-//             return res.status(400).json({ error: "No file uploaded" });
-//         }
-
-//         // Generate a unique filename
-//         const filename = `${crypto.randomBytes(16).toString("hex")}${path.extname(req.file.originalname)}`;
-
-//         // Upload to Firebase Storage
-//         const file = bucket.file(filename);
-//         await file.save(req.file.buffer, {
-//             metadata: { contentType: req.file.mimetype }
-//         });
-// await file.makePublic();
-
-//         // Get public URL
-//         const publicUrl = `https://storage.googleapis.com/${bucket.name}/${filename}`;
-
-      
-
-//         res.json({ success: true, url: publicUrl, id: docRef.id });
-//     } catch (err) {
-//         res.status(500).json({ error: err.message });
-//     }
-// });
-
-// module.exports = router;
+ 

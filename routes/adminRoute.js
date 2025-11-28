@@ -9,7 +9,7 @@ const {
 } = require("@aws-sdk/client-s3");
 
 const BUCKET_NAME = "pblog-images-bucket";
-
+//Route to delete user and its post and coments
 adminRoute.get("/", async (req, res) => {
   const users = await Users.find().select("-password").lean();
 
