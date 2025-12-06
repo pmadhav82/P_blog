@@ -26,9 +26,11 @@ const previewRoute = require("./routes/previewRoute");
 const firebaseImageUploadRoute = require("./routes/firebaseUploadImageRoute");
 const errorHandler = require("./utils/errorHandler");
 const adminRoute = require("./routes/adminRoute");
+const adminManageMediaRoute = require("./routes/adminManageMediaRoute");
 const { islogin } = require("./utils/loginHandeler");
 const isAdmin = require("./utils/adminHandeler");
 app.use(express.json());
+const dbURL = process.env.NODE_ENV === "development" ? process.env.MONGO_URL_LOCAL : process.env.MONGO_URL;
 
 app.use(
   session({
@@ -71,7 +73,7 @@ app.use(userStatusChecker)
 mongoose.set("strictQuery", false);
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(dbURL)
   .then(() => {
     console.log("connected to the database");
   })
@@ -105,6 +107,7 @@ app.set("views", "./views");
 
 //router connection
 app.use("/admin", islogin, isAdmin, adminRoute);
+app.use("/admin/manage-media", islogin, isAdmin, adminManageMediaRoute);
 app.use("/comment", commentRoute);
 app.use("/editProfile", editProfileRoute);
 app.use("/forgot-pass", passwordResetRoute);
