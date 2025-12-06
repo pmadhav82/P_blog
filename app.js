@@ -30,6 +30,7 @@ const adminManageMediaRoute = require("./routes/adminManageMediaRoute");
 const { islogin } = require("./utils/loginHandeler");
 const isAdmin = require("./utils/adminHandeler");
 app.use(express.json());
+const dbURL = process.env.NODE_ENV === "development" ? process.env.MONGO_URL_LOCAL : process.env.MONGO_URL;
 
 app.use(
   session({
@@ -72,7 +73,7 @@ app.use(userStatusChecker)
 mongoose.set("strictQuery", false);
 
 mongoose
-  .connect(process.env.MONGO_URL)
+  .connect(dbURL)
   .then(() => {
     console.log("connected to the database");
   })
